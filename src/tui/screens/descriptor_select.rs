@@ -33,47 +33,46 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     // Build combined list with scrolling
     let mut lines = vec![Line::from("")];
     let selected = app.character_builder.list_state;
-    let total_count = app.game_data.descriptors.len() + app.game_data.species.len();
+    let descriptor_count = app.game_data.descriptors.len();
+    let total_count = descriptor_count + app.game_data.species.len();
 
-    // Calculate visible range
-    let visible_items = (chunks[1].height as usize / 3).max(5);
+    // Calculate visible range - more generous to account for headers
+    let visible_items = (chunks[1].height as usize / 3).max(8); // Increased from 5
     let scroll_offset = if selected > visible_items / 2 {
         (selected - visible_items / 2).min(total_count.saturating_sub(visible_items))
     } else {
         0
     };
-    // Render descriptors section if any are visible
-if scroll_offset < app.game_data.descriptors.len() {
-    lines.push(Line::from(Span::styled(
-        "── Descriptors ──",
-        Style::default()
-            .fg(Color::Cyan)
-            .add_modifier(Modifier::BOLD),
-    )));
-    lines.push(Line::from(""));
-}
+    let scroll_end = (scroll_offset + visible_items).min(total_count);
 
-// Render descriptors
-for (i, descriptor) in app.game_data.descriptors.iter().enumerate() {
-    if i < scroll_offset {
-        continue;
+    // Always show descriptor header if we're rendering any descriptors
+    if scroll_offset < descriptor_count {
+        lines.push(Line::from(Span::styled(
+            "── Descriptors ──",
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        )));
+        lines.push(Line::from(""));
     }
-    if i >= scroll_offset + visible_items {
-        break;
-    }
-    
-    let is_selected = i == selected;
-    lines.push(highlighted_item(&descriptor.name, is_selected));
-    lines.push(Line::from(Span::styled(
-        format!("    {}", descriptor.tagline),
-        Style::default().fg(Color::Gray),
-    )));
-    lines.push(Line::from(""));
-}
 
-    // Render species section if any are visible
-    let descriptor_count = app.game_data.descriptors.len();
-    if scroll_offset + visible_items > descriptor_count {
+    // Render descriptors
+    for (i, descriptor) in app.game_data.descriptors.iter().enumerate() {
+        if i < scroll_offset || i >= scroll_end {
+            continue;
+        }
+        
+        let is_selected = i == selected;
+        lines.push(highlighted_item(&descriptor.name, is_selected));
+        lines.push(Line::from(Span::styled(
+            format!("    {}", descriptor.tagline),
+            Style::default().fg(Color::Gray),
+        )));
+        lines.push(Line::from(""));
+    }
+
+    // Always show species header if we're rendering any species
+    if scroll_end > descriptor_count {
         lines.push(Line::from(""));
         lines.push(Line::from(Span::styled(
             "── Species (replaces descriptor) ──",
@@ -88,11 +87,8 @@ for (i, descriptor) in app.game_data.descriptors.iter().enumerate() {
     for (i, species) in app.game_data.species.iter().enumerate() {
         let idx = descriptor_count + i;
         
-        if idx < scroll_offset {
+        if idx < scroll_offset || idx >= scroll_end {
             continue;
-        }
-        if idx >= scroll_offset + visible_items {
-            break;
         }
         
         let is_selected = idx == selected;
@@ -131,7 +127,7 @@ for (i, descriptor) in app.game_data.descriptors.iter().enumerate() {
             Style::default().fg(Color::DarkGray),
         )));
     }
-    if scroll_offset + visible_items < total_count {
+    if scroll_end < total_count {
         lines.push(Line::from(Span::styled(
             "↓ More below ↓",
             Style::default().fg(Color::DarkGray),
@@ -139,7 +135,6 @@ for (i, descriptor) in app.game_data.descriptors.iter().enumerate() {
     }
 
     let list = Paragraph::new(lines);
-
 
     f.render_widget(block, area);
     f.render_widget(instructions, chunks[0]);

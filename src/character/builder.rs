@@ -3,6 +3,7 @@
 
 use anyhow::{Context, Result};
 
+use crate::character::sheet::Gender;
 use crate::data::{CharacterType, Descriptor, Focus, GameData, Species};
 
 use super::sheet::{CharacterPools, CharacterSheet, Equipment, Skills};
@@ -15,6 +16,7 @@ use super::stats::{Edge, Effort, Pools};
 /// Builder for creating characters step by step
 pub struct CharacterBuilder {
     name: Option<String>,
+    gender: Gender,
     character_type: Option<CharacterType>,
     descriptor: Option<Descriptor>,
     species: Option<Species>,
@@ -29,6 +31,7 @@ impl CharacterBuilder {
     pub fn new() -> Self {
         Self {
             name: None,
+            gender: Gender::Female,
             character_type: None,
             descriptor: None,
             species: None,

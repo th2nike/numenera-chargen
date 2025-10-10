@@ -5,7 +5,7 @@ use anyhow::Result;
 use chrono;
 use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
 
-use crate::data::GameData;
+use crate::{character::sheet::Gender, data::GameData, CharacterSheet};
 
 /// Application state
 pub struct App {
@@ -13,6 +13,7 @@ pub struct App {
     pub should_quit: bool,
     pub current_screen: Screen,
     pub character_builder: CharacterBuilder,
+    pub generated_character: Option<CharacterSheet>,
 }
 
 /// Current screen in the UI
@@ -20,6 +21,7 @@ pub struct App {
 pub enum Screen {
     MainMenu,
     NameInput,
+    GenderSelect,
     TypeSelect,
     DescriptorSelect,
     FocusSelect,
@@ -32,6 +34,7 @@ pub enum Screen {
 #[derive(Debug, Clone)]
 pub struct CharacterBuilder {
     pub name: String,
+    pub gender: Gender,
     pub name_input_cursor: usize,
     pub character_type: Option<String>,
     pub descriptor_or_species: Option<String>,
@@ -54,6 +57,7 @@ impl App {
             should_quit: false,
             current_screen: Screen::MainMenu,
             character_builder: CharacterBuilder::new(),
+            generated_character: None,
         }
     }
 
@@ -79,6 +83,7 @@ impl App {
         match self.current_screen {
             Screen::MainMenu => self.handle_main_menu_keys(key),
             Screen::NameInput => self.handle_name_input_keys(key),
+            Screen::GenderSelect => self.handle_gender_select_keys(key),
             Screen::TypeSelect => self.handle_type_select_keys(key),
             Screen::DescriptorSelect => self.handle_descriptor_select_keys(key),
             Screen::FocusSelect => self.handle_focus_select_keys(key),
@@ -88,27 +93,37 @@ impl App {
         }
     }
 
-    fn handle_main_menu_keys(&mut self, key: KeyEvent) -> Result<()> {
-        match key.code {
-            KeyCode::Char('1') | KeyCode::Enter => {
-                self.current_screen = Screen::NameInput;
+        fn handle_main_menu_keys(&mut self, key: KeyEvent) -> Result<()> {
+            match key.code {
+                KeyCode::Char('1') | KeyCode::Enter => {
+                    self.current_screen = Screen::NameInput;
+                }
+                KeyCode::Char('2') => {
+                    // Random character generation
+                    match crate::generator::generate_random(&self.game_data) {
+                        Ok(character) => {
+                            // Store the generated character for preview
+                            self.generated_character = Some(character);
+                            self.current_screen = Screen::CharacterPreview;
+                        }
+                        Err(e) => {
+                            eprintln!("Failed to generate random character: {}", e);
+                        }
+                    }
+                }
+                KeyCode::Char('q') | KeyCode::Esc => {
+                    self.should_quit = true;
+                }
+                _ => {}
             }
-            KeyCode::Char('2') => {
-                // TODO: Random generation
-            }
-            KeyCode::Char('q') | KeyCode::Esc => {
-                self.should_quit = true;
-            }
-            _ => {}
+            Ok(())
         }
-        Ok(())
-    }
 
     fn handle_name_input_keys(&mut self, key: KeyEvent) -> Result<()> {
         match key.code {
             KeyCode::Enter => {
                 if !self.character_builder.name.is_empty() {
-                    self.current_screen = Screen::TypeSelect;
+                    self.current_screen = Screen::GenderSelect;
                     self.character_builder.reset_list_state();
                 }
             }
@@ -143,6 +158,28 @@ impl App {
             }
             KeyCode::Esc => {
                 self.current_screen = Screen::MainMenu;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_gender_select_keys(&mut self, key: KeyEvent) -> Result<()> {
+        match key.code {
+            KeyCode::Char('1') | KeyCode::Char('m') | KeyCode::Char('M') => {
+                self.character_builder.gender = Gender::Male;
+                self.current_screen = Screen::TypeSelect;
+            }
+            KeyCode::Char('2') | KeyCode::Char('f') | KeyCode::Char('F') => {
+                self.character_builder.gender = Gender::Female;
+                self.current_screen = Screen::TypeSelect;
+            }
+            KeyCode::Char('3') | KeyCode::Char('o') | KeyCode::Char('O') => {
+                self.character_builder.gender = Gender::Other;
+                self.current_screen = Screen::TypeSelect;
+            }
+            KeyCode::Esc => {
+                self.current_screen = Screen::NameInput;
             }
             _ => {}
         }
@@ -400,28 +437,37 @@ impl App {
 
     fn save_character(&self) -> Result<()> {
         use crate::character::build_character;
-        use crate::output::save_character_sheet;
         use chrono::Local;
 
-        // Build the character
-        let character = build_character(
-            &self.game_data,
-            self.character_builder.name.clone(),
-            self.character_builder.character_type.as_ref()
-                .ok_or_else(|| anyhow::anyhow!("No character type selected"))?,
-            self.character_builder.descriptor_or_species.as_ref()
-                .ok_or_else(|| anyhow::anyhow!("No descriptor/species selected"))?,
-            self.character_builder.focus.as_ref()
-                .ok_or_else(|| anyhow::anyhow!("No focus selected"))?,
-            self.character_builder.bonus_might,
-            self.character_builder.bonus_speed,
-            self.character_builder.bonus_intellect,
-            self.character_builder.selected_abilities.clone(),
-        )?;
+        // Check if we have a pre-generated character or need to build one
+        let character = if let Some(ref generated) = self.generated_character {
+            // Use the already-generated character
+            generated.clone()
+        } else {
+            // Build character from builder
+            let mut char_sheet = build_character(
+                &self.game_data,
+                self.character_builder.name.clone(),
+                self.character_builder.character_type.as_ref()
+                    .ok_or_else(|| anyhow::anyhow!("No character type selected"))?,
+                self.character_builder.descriptor_or_species.as_ref()
+                    .ok_or_else(|| anyhow::anyhow!("No descriptor/species selected"))?,
+                self.character_builder.focus.as_ref()
+                    .ok_or_else(|| anyhow::anyhow!("No focus selected"))?,
+                self.character_builder.bonus_might,
+                self.character_builder.bonus_speed,
+                self.character_builder.bonus_intellect,
+                self.character_builder.selected_abilities.clone(),
+            )?;
+            
+            // Set gender from builder
+            char_sheet.gender = self.character_builder.gender.clone();
+            char_sheet
+        };
 
         // Generate filename with timestamp: CharName_YYYY-MM-DD_HH-MM-SS.md
         let timestamp = Local::now().format("%Y-%m-%d_%H-%M-%S");
-        let sanitized_name = self.character_builder.name
+        let sanitized_name = character.name
             .chars()
             .map(|c| match c {
                 'a'..='z' | 'A'..='Z' | '0'..='9' | '-' | '_' => c,
@@ -430,10 +476,12 @@ impl App {
             })
             .collect::<String>();
         
-        let _filename = format!("{}_{}.md", sanitized_name, timestamp);
+        let filename = format!("{}_{}.md", sanitized_name, timestamp);
+        let output_path = format!("output/{}", filename);
         
-        // Save to output directory
-        save_character_sheet(&character, "output")?;
+        std::fs::create_dir_all("output")?;
+        let markdown = crate::output::format_character_sheet(&character);
+        std::fs::write(&output_path, markdown)?;
         
         Ok(())
     }
@@ -445,6 +493,7 @@ impl CharacterBuilder {
         Self {
             name: String::new(),
             name_input_cursor: 0,
+            gender: Gender::Female,
             character_type: None,
             descriptor_or_species: None,
             is_species: false,

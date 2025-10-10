@@ -4,6 +4,7 @@
 use anyhow::{Context, Result};
 use rand::Rng;
 
+use crate::character::sheet::Gender;
 use crate::character::{build_character, CharacterSheet};
 use crate::data::{get_suitable_foci, GameData};
 
@@ -15,8 +16,13 @@ use crate::data::{get_suitable_foci, GameData};
 pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
     let mut rng = rand::thread_rng();
 
-    // Random name
+    // Random name and gender
     let name = generate_random_name(&mut rng);
+    let gender = match rng.gen_range(0..3) {
+        0 => Gender::Male,
+        1 => Gender::Female,
+        _ => Gender::Other,
+    };
 
     // Random type
     let character_type = &game_data.types[rng.gen_range(0..game_data.types.len())];
@@ -64,7 +70,7 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
     let selected_abilities = select_random_abilities(&mut rng, character_type)?;
 
     // Build the character
-    build_character(
+    let mut character = build_character(
         game_data,
         name,
         &type_name,
@@ -74,7 +80,12 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
         speed,
         intellect,
         selected_abilities,
-    )
+    )?;
+    
+    // Set gender after building
+    character.gender = gender;
+    
+    Ok(character)
 }
 
 /// Generate a random character with a specific type
@@ -88,8 +99,13 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
         .find(|t| t.name.eq_ignore_ascii_case(type_name))
         .context("Character type not found")?;
 
-    // Random name
+    // Random name and gender
     let name = generate_random_name(&mut rng);
+    let gender = match rng.gen_range(0..3) {
+        0 => Gender::Male,
+        1 => Gender::Female,
+        _ => Gender::Other,
+    };
 
     // Random descriptor or species
     let (descriptor_or_species, is_species) = if !game_data.species.is_empty() && rng.gen_bool(0.2)
@@ -130,7 +146,7 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
     // Random abilities
     let selected_abilities = select_random_abilities(&mut rng, character_type)?;
 
-    build_character(
+    let mut character = build_character(
         game_data,
         name,
         &character_type.name,
@@ -140,7 +156,12 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
         speed,
         intellect,
         selected_abilities,
-    )
+    )?;
+    
+    // Set gender after building
+    character.gender = gender;
+    
+    Ok(character)
 }
 
 /// Generate a random character with specific type and descriptor/species
@@ -164,8 +185,13 @@ pub fn generate_random_with_type_and_descriptor(
         .iter()
         .any(|s| s.name.eq_ignore_ascii_case(descriptor_or_species));
 
-    // Random name
+    // Random name and gender
     let name = generate_random_name(&mut rng);
+    let gender = match rng.gen_range(0..3) {
+        0 => Gender::Male,
+        1 => Gender::Female,
+        _ => Gender::Other,
+    };
 
     // Random suitable focus
     let suitable_foci = get_suitable_foci(&game_data.foci, &character_type.name);
@@ -196,7 +222,7 @@ pub fn generate_random_with_type_and_descriptor(
     // Random abilities
     let selected_abilities = select_random_abilities(&mut rng, character_type)?;
 
-    build_character(
+    let mut character = build_character(
         game_data,
         name,
         &character_type.name,
@@ -206,7 +232,12 @@ pub fn generate_random_with_type_and_descriptor(
         speed,
         intellect,
         selected_abilities,
-    )
+    )?;
+    
+    // Set gender after building
+    character.gender = gender;
+    
+    Ok(character)
 }
 
 // ==========================================

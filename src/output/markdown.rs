@@ -37,10 +37,11 @@ pub fn format_character_sheet(sheet: &CharacterSheet) -> String {
     output.push_str(&format!("- **Experience Points:** {}\n", sheet.xp));
     output.push_str("\n");
 
-    // Stat Pools - Fixed table formatting
+    // Stat Pools
     output.push_str("## Stat Pools\n\n");
-    output.push_str("| Stat       | Current | Maximum |\n");
-    output.push_str("|------------|---------|----------|\n");
+    output.push_str("| Stat          | Current | Maximum |\n");
+    output.push_str("|---------------|---------|---------|");
+    output.push_str("\n");
     output.push_str(&format!(
         "| **Might**     | {} | {} |\n",
         sheet.pools.current.might, sheet.pools.maximum.might

@@ -9,11 +9,29 @@ use super::stats::{DamageTrack, Edge, Effort, Pools};
 // CHARACTER SHEET
 // ==========================================
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub enum Gender {
+    Male,
+    Female,
+    Other,
+}
+
+impl std::fmt::Display for Gender {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Gender::Male => write!(f, "Male"),
+            Gender::Female => write!(f, "Female"),
+            Gender::Other => write!(f, "Other"),
+        }
+    }
+}
+
 /// Complete character sheet
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CharacterSheet {
     // Basic Info
     pub name: String,
+    pub gender: Gender,
     pub tier: u32,
 
     // Character Sentence: "I am a [adjective] [noun] who [verbs]"
@@ -228,6 +246,7 @@ impl CharacterSheet {
     pub fn new(name: String) -> Self {
         Self {
             name,
+            gender: Gender::Female,
             tier: 1,
             character_type: String::new(),
             descriptor: None,

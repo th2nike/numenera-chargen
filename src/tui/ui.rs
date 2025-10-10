@@ -31,6 +31,7 @@ pub fn render(f: &mut Frame, app: &App) {
     match app.current_screen {
         Screen::MainMenu => screens::main_menu::render(f, chunks[1], app),
         Screen::NameInput => screens::name_input::render(f, chunks[1], app),
+        Screen::GenderSelect => screens::gender_select::render(f, chunks[1], app),
         Screen::TypeSelect => screens::type_select::render(f, chunks[1], app),
         Screen::DescriptorSelect => screens::descriptor_select::render(f, chunks[1], app),
         Screen::FocusSelect => screens::focus_select::render(f, chunks[1], app),
@@ -66,6 +67,7 @@ fn render_help_bar(f: &mut Frame, area: Rect, app: &App) {
     let help_text = match app.current_screen {
         Screen::MainMenu => "1: Interactive | 2: Random | Q: Quit",
         Screen::NameInput => "Type name | Enter: Continue | ESC: Back",
+        Screen::GenderSelect => "1: Male | 2: Female | 3: Other | ESC: Back",  // Add this
         Screen::TypeSelect => "↑↓/j/k: Navigate | Enter: Select | ESC: Back",
         Screen::DescriptorSelect => "↑↓/j/k: Navigate | Enter: Select | ESC: Back",
         Screen::FocusSelect => "↑↓/j/k: Navigate | Enter: Select | ESC: Back",

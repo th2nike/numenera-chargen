@@ -55,11 +55,29 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
 
         let instruction_text = Paragraph::new(instructions).alignment(Alignment::Center);
 
-        // Build ability list
+        // Build ability list with scrolling
         let mut lines = vec![Line::from("")];
         let current_index = app.character_builder.list_state;
+        let total_abilities = tier_abilities.abilities.len();
+
+        // Calculate visible range
+        let visible_items = (chunks[1].height as usize / 4).max(3); // Each ability takes ~4 lines
+        let scroll_offset = if current_index > visible_items / 2 {
+            (current_index - visible_items / 2).min(total_abilities.saturating_sub(visible_items))
+        } else {
+            0
+        };
 
         for (i, ability) in tier_abilities.abilities.iter().enumerate() {
+            // Skip items above viewport
+            if i < scroll_offset {
+                continue;
+            }
+            // Stop once past viewport
+            if i >= scroll_offset + visible_items {
+                break;
+            }
+            
             let is_selected = i == current_index;
             let is_checked = app
                 .character_builder
@@ -113,8 +131,22 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             lines.push(Line::from(""));
         }
 
-        let list = Paragraph::new(lines).alignment(Alignment::Left);
+        // Scroll indicators
+        if scroll_offset > 0 {
+            lines.insert(1, Line::from(Span::styled(
+                "↑ More above ↑",
+                Style::default().fg(Color::DarkGray),
+            )));
+        }
+        if scroll_offset + visible_items < total_abilities {
+            lines.push(Line::from(Span::styled(
+                "↓ More below ↓",
+                Style::default().fg(Color::DarkGray),
+            )));
+        }
 
+        let list = Paragraph::new(lines);
+        
         f.render_widget(block, area);
         f.render_widget(instruction_text, chunks[0]);
         f.render_widget(list, chunks[1]);
