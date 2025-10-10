@@ -62,4 +62,21 @@ mod tests {
             assert!(!focus.tier_1_ability.name.is_empty());
         }
     }
+
+    #[test]
+    fn test_species_data_valid() {
+        let data = load_all_data().unwrap();
+        
+        for species in &data.species {
+            assert!(!species.name.is_empty());
+            assert!(!species.tagline.is_empty());
+            assert!(!species.description.appearance.is_empty());
+            // Species should have stat modifiers
+            assert!(
+                species.stat_modifiers.might != 0 ||
+                species.stat_modifiers.speed != 0 ||
+                species.stat_modifiers.intellect != 0
+            );
+        }
+    }
 }
