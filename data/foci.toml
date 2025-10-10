@@ -1,0 +1,1082 @@
+# Numenera Character Generator - Foci Data
+# All foci from Discovery + Destiny core books
+# Structure: Tier 1 abilities only (simplified for initial implementation)
+
+# ==========================================
+# DISCOVERY FOCI
+# ==========================================
+
+[[foci]]
+name = "Bears a Halo of Fire"
+source = "Discovery"
+theme = "You are wreathed in living flame"
+suitable_types = ["Nano", "Glaive", "Jack"]
+
+connections = [
+    "Your fire cannot harm one chosen PC",
+    "You accidentally burned one PC; they still bear the scar",
+    "You're always trying to impress another PC with your flames",
+    "Near one PC your flames burn with strange patterns"
+]
+
+equipment = ["Fire-resistant artifact spray (treats starting gear)"]
+
+[foci.tier_1_ability]
+name = "Shroud of Flame"
+cost = "1 Intellect"
+type = "Enabler"
+description = "Your body becomes shrouded in flame for 10 minutes. You gain +2 Armor against external fire. Anyone touching or striking you in melee takes 2 fire damage."
+
+[[foci]]
+name = "Commands Mental Powers"
+source = "Discovery"
+theme = "You wield telepathy and telekinesis"
+suitable_types = ["Nano", "Jack"]
+
+connections = [
+    "One PC is oddly resistant to your mental powers",
+    "You accidentally read a PC's thoughts and learned something personal",
+    "One PC helps you focus when distracted",
+    "A PC's mind feels like home to you"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Telepathy"
+cost = "1 Intellect"
+type = "Action"
+description = "You can speak telepathically with one willing creature within short range. Communication is two-way and lasts for 10 minutes."
+
+[[foci]]
+name = "Crafts Illusions"
+source = "Discovery"
+theme = "You weave light and shadow into deceptive images"
+suitable_types = ["Nano", "Jack"]
+
+connections = [
+    "One PC can always see through your illusions",
+    "You once saved a PC with a perfect disguise",
+    "A PC is fascinated by your creations",
+    "You made an illusion that fooled a PC completely"
+]
+
+equipment = ["Collection of colored glass lenses"]
+
+[foci.tier_1_ability]
+name = "Minor Illusion"
+cost = "1 Intellect"
+type = "Action"
+description = "Create a simple, static illusion (up to human-sized) within immediate range. Lasts for 10 minutes. Creatures can see through it with a successful Intellect defense roll."
+
+[[foci]]
+name = "Employs Magnetism"
+source = "Discovery"
+theme = "You control magnetic forces"
+suitable_types = ["Nano", "Wright", "Jack"]
+
+connections = [
+    "Your power once saved a PC from falling",
+    "Metal objects around one PC behave oddly",
+    "A PC helped you understand your abilities",
+    "You accidentally damaged a PC's equipment with your magnetism"
+]
+
+equipment = ["Bag of iron filings", "Compass that spins wildly near you"]
+
+[foci.tier_1_ability]
+name = "Move Metal"
+cost = "1 Intellect"
+type = "Action"
+description = "You can move a metal object within short range. The object must be your size or smaller and not secured. You can move it up to a short distance or wield it as a crude weapon (2 damage)."
+
+[[foci]]
+name = "Exists Partially Out of Phase"
+source = "Discovery"
+theme = "You flicker between realities"
+suitable_types = ["Jack", "Nano"]
+
+connections = [
+    "One PC can always see you even when phased",
+    "You once phased through a wall to save a PC",
+    "A PC finds your flickering unsettling",
+    "You and one PC share a strange connection across dimensions"
+]
+
+equipment = ["Phase-detecting oddity"]
+
+[foci.tier_1_ability]
+name = "Walk Through Walls"
+cost = "2 Intellect"
+type = "Action"
+description = "Phase through up to 10 feet of solid matter. You must hold your breath and cannot see while inside solid material. If you run out of air or the ability ends while inside matter, you are violently shunted out and take 6 damage."
+
+[[foci]]
+name = "Explores Dark Places"
+source = "Discovery"
+theme = "You delve into ruins and dangerous depths"
+suitable_types = ["Delve", "Jack", "Glaive"]
+
+connections = [
+    "One PC saved you from a cave-in",
+    "You and a PC discovered a ruin together",
+    "One PC fears the dark places you love",
+    "A PC follows your lead into danger"
+]
+
+equipment = ["50 feet of rope", "Climbing gear", "Explorer's pack"]
+
+[foci.tier_1_ability]
+name = "Trained Explorer"
+cost = "0"
+type = "Enabler"
+description = "You are trained in climbing, jumping, running, and swimming tasks. You are also trained in initiative tasks."
+
+[[foci]]
+name = "Fights With Panache"
+source = "Discovery"
+theme = "Flamboyant duelist and showoff"
+suitable_types = ["Jack", "Glaive"]
+
+connections = [
+    "One PC appreciates your style",
+    "You're trying to impress another PC constantly",
+    "A PC taught you your best move",
+    "One PC finds your showing off irritating"
+]
+
+equipment = ["Stylish outfit or cape", "Quality light weapon"]
+
+[foci.tier_1_ability]
+name = "Attack Flourish"
+cost = "1 Speed"
+type = "Action"
+description = "Make a melee attack with such style that, on a success, your next action is eased. If you miss, your next action is hindered."
+
+[[foci]]
+name = "Fuses Flesh and Steel"
+source = "Discovery"
+theme = "Part machine, part human"
+suitable_types = ["Glaive", "Wright", "Jack"]
+
+connections = [
+    "One PC helped install your first cybernetics",
+    "A PC is disturbed by your modifications",
+    "You and one PC share a cyberneticist",
+    "One PC envies your enhancements"
+]
+
+equipment = ["Basic cybernetic implant (player's choice of location)"]
+
+[foci.tier_1_ability]
+name = "Enhanced Body"
+cost = "0"
+type = "Enabler"
+description = "You have a cybernetic enhancement. Choose one: +2 to your Might Pool, +2 to your Speed Pool, or +1 to your Armor. This choice is permanent."
+
+[[foci]]
+name = "Fuses Mind and Machine"
+source = "Discovery"
+theme = "Your consciousness extends into technology"
+suitable_types = ["Nano", "Wright"]
+
+connections = [
+    "One PC doesn't trust your machine connection",
+    "You once saved a PC by hacking a device",
+    "A PC helps you understand the datasphere",
+    "You and one PC built something together"
+]
+
+equipment = ["Neural jack or interface implant"]
+
+[foci.tier_1_ability]
+name = "Interface"
+cost = "1 Intellect"
+type = "Action"
+description = "You can mentally interface with any machine within immediate range. This eases all tasks related to understanding, manipulating, or using that machine for 10 minutes."
+
+[[foci]]
+name = "Hunts"
+source = "Discovery"
+theme = "Tracker, predator, or bounty hunter"
+suitable_types = ["Glaive", "Jack", "Delve"]
+
+connections = [
+    "One PC saved your life during a hunt gone wrong",
+    "You're tracking someone connected to another PC",
+    "One PC once hired you for a job",
+    "You compete with another PC for best hunter title"
+]
+
+equipment = ["Bow or crossbow with 12 arrows/bolts", "Trap kit"]
+
+[foci.tier_1_ability]
+name = "Tracker"
+cost = "0"
+type = "Enabler"
+description = "You are trained in tracking, spotting hidden creatures and objects, and all perception tasks related to your quarry."
+
+[[foci]]
+name = "Infiltrates"
+source = "Discovery"
+theme = "Spy, thief, or saboteur"
+suitable_types = ["Jack", "Glaive"]
+
+connections = [
+    "One PC helped you escape after a failed infiltration",
+    "One PC suspects you still work for their enemies",
+    "You and one PC previously shared a secret mission",
+    "One PC knows your true identity"
+]
+
+equipment = ["Lockpicks", "Climbing gear", "Dark clothing"]
+
+[foci.tier_1_ability]
+name = "Stealth Skills"
+cost = "0"
+type = "Enabler"
+description = "You are trained in sneaking, disguise, and blending into crowds. You are specialized in stealth tasks in dim light or darkness."
+
+[[foci]]
+name = "Masters Weaponry"
+source = "Discovery"
+theme = "Martial artist, weapon master, peerless duelist"
+suitable_types = ["Glaive"]
+
+connections = [
+    "One PC taught you your current weapon",
+    "You spar to the death (figuratively) with one PC",
+    "One PC envies your skill",
+    "A PC's style complements yours perfectly"
+]
+
+equipment = ["One weapon of your choice (your signature weapon)"]
+
+[foci.tier_1_ability]
+name = "Weapon Mastery"
+cost = "0"
+type = "Enabler"
+description = "Choose one type of weapon (swords, spears, bows, etc.). You are trained in that weapon and inflict +1 damage with it."
+
+[[foci]]
+name = "Moves Like a Cat"
+source = "Discovery"
+theme = "Graceful and agile like a feline predator"
+suitable_types = ["Jack", "Glaive"]
+
+connections = [
+    "One PC saved you from a dangerous fall",
+    "You taught a PC some of your moves",
+    "A PC is amazed by your grace",
+    "You accidentally made a PC look clumsy by comparison"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Greater Enhanced Speed"
+cost = "0"
+type = "Enabler"
+description = "You gain +5 to your Speed Pool."
+
+[[foci]]
+name = "Murders"
+source = "Discovery"
+theme = "Cold assassin, killer for cause or coin"
+suitable_types = ["Jack", "Glaive"]
+
+connections = [
+    "One PC suspects your profession",
+    "You saved one PC by killing their attacker",
+    "One PC once saw you on a hit",
+    "You spared a PC's friend—now indebted"
+]
+
+equipment = ["Black cloak", "Hidden knife"]
+
+[foci.tier_1_ability]
+name = "Surprise Attack"
+cost = "0"
+type = "Enabler"
+description = "When you attack a creature that is unaware of your presence or that you have surprised, you inflict +2 damage on the attack."
+
+[[foci]]
+name = "Needs No Weapons"
+source = "Discovery"
+theme = "Your body is your weapon"
+suitable_types = ["Glaive", "Jack"]
+
+connections = [
+    "You taught one PC basic self-defense",
+    "One PC fears your lethal hands",
+    "You and one PC trained together",
+    "A PC once saved you when you were unarmed"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Fists of Fury"
+cost = "0"
+type = "Enabler"
+description = "Your unarmed attacks inflict 2 additional damage. Your unarmed attacks count as light weapons."
+
+[[foci]]
+name = "Performs Feats of Strength"
+source = "Discovery"
+theme = "Mighty strongman or strongwoman"
+suitable_types = ["Glaive"]
+
+connections = [
+    "One PC is impressed by your power",
+    "You once broke something valuable belonging to a PC",
+    "A PC challenges you to contests of strength",
+    "You saved a PC by lifting something immense"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Mighty"
+cost = "0"
+type = "Enabler"
+description = "You gain +5 to your Might Pool."
+
+[[foci]]
+name = "Rages"
+source = "Discovery"
+theme = "Berserker channeling primal fury"
+suitable_types = ["Glaive", "Jack"]
+
+connections = [
+    "One PC calms your rage",
+    "One PC triggers your fury",
+    "You once fought a PC accidentally",
+    "You are loyal to one PC like kin"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Frenzy"
+cost = "1 Might"
+type = "Enabler"
+description = "When you enter combat, you can activate this ability to enter a fury. While furious, you inflict +1 damage in melee and gain +1 Armor, but all Intellect-based tasks are hindered. The fury lasts for 10 minutes or until combat ends."
+
+[[foci]]
+name = "Rides the Lightning"
+source = "Discovery"
+theme = "Living conduit of electrical power"
+suitable_types = ["Nano", "Jack"]
+
+connections = [
+    "One PC gets static shocks from you",
+    "A PC once saved you from electrocution",
+    "A PC helped install your conductive tattoos",
+    "You share an old lab experiment past"
+]
+
+equipment = ["Insulated gloves", "Copper ring oddity"]
+
+[foci.tier_1_ability]
+name = "Shock"
+cost = "1 Intellect"
+type = "Action"
+description = "You blast a creature within short range with electricity, inflicting 4 points of damage."
+
+[[foci]]
+name = "Stands Like a Bastion"
+source = "Discovery"
+theme = "Immovable defender"
+suitable_types = ["Glaive"]
+
+connections = [
+    "One PC always feels safe near you",
+    "You failed to protect a PC once—it haunts you",
+    "A PC questions your protective nature",
+    "You and one PC form an unbreakable line"
+]
+
+equipment = ["Medium or heavy shield"]
+
+[foci.tier_1_ability]
+name = "Defensive Stance"
+cost = "0"
+type = "Enabler"
+description = "When you wield a shield, you are trained in Speed defense tasks. If you are already trained, you are specialized instead."
+
+[[foci]]
+name = "Talks to Machines"
+source = "Discovery"
+theme = "Technology whisperer"
+suitable_types = ["Wright", "Nano"]
+
+connections = [
+    "One PC brought you a broken device once",
+    "A PC doesn't trust the machines you speak with",
+    "You and one PC discovered an ancient AI together",
+    "One PC relies on your technical expertise"
+]
+
+equipment = ["Toolkit", "Small collection of spare parts"]
+
+[foci.tier_1_ability]
+name = "Machine Affinity"
+cost = "0"
+type = "Enabler"
+description = "You are trained in all tasks involving identifying, understanding, and repairing technological devices. You are specialized in using or controlling machines that you have studied for at least 10 minutes."
+
+[[foci]]
+name = "Wields Power With Precision"
+source = "Discovery"
+theme = "Refined and controlled esoteric powers"
+suitable_types = ["Nano"]
+
+connections = [
+    "One PC helped you refine your control",
+    "You accidentally hurt a PC when you were less precise",
+    "A PC admires your disciplined approach",
+    "You teach one PC meditation techniques"
+]
+
+equipment = ["Meditation focus (crystal, prayer beads, etc.)"]
+
+[foci.tier_1_ability]
+name = "Precision"
+cost = "0"
+type = "Enabler"
+description = "You are trained in attack rolls with esoteries that target single creatures. This does not apply to area attacks or those affecting multiple targets."
+
+[[foci]]
+name = "Works Miracles"
+source = "Discovery"
+theme = "Faith healer or divine conduit"
+suitable_types = ["Nano", "Arkus"]
+
+connections = [
+    "One PC doubts your 'divine' source",
+    "One PC follows your faith",
+    "One PC nearly died in your care",
+    "One PC reminds you of someone you couldn't save"
+]
+
+equipment = ["Holy symbol or relic"]
+
+[foci.tier_1_ability]
+name = "Healing Touch"
+cost = "1 Intellect"
+type = "Action"
+description = "With a touch, you restore 1d6 points to one stat Pool of any creature. This ability is a difficulty 2 Intellect task. Each time you attempt to heal the same creature, the task is hindered by an additional step."
+
+# ==========================================
+# DESTINY FOCI
+# ==========================================
+
+[[foci]]
+name = "Absorbs Energy"
+source = "Destiny"
+theme = "You convert kinetic or radiant blows into usable power"
+suitable_types = ["Glaive", "Wright", "Jack"]
+
+connections = [
+    "One PC is strangely immune to your energy releases",
+    "You once saved another PC by drawing an explosion into yourself",
+    "You constantly try to impress a PC with your control",
+    "A PC's presence makes your stored energy surge unpredictably"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Absorb Kinetic Energy"
+cost = "0"
+type = "Enabler"
+description = "When struck, you can negate 1 point of damage and store 1 energy point. You can hold only 1 point at a time; excess bleeds off as harmless light."
+
+[[foci]]
+name = "Acts Without Consequence"
+source = "Destiny"
+theme = "You slip away unnoticed, consequences sliding off you"
+suitable_types = ["Jack", "Glaive"]
+
+connections = [
+    "One PC wonders if you're real sometimes",
+    "You saved a PC by vanishing with them",
+    "A PC is the only one who remembers your presence",
+    "You feel more solid around one PC"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Slip Into Shadow"
+cost = "2 Intellect"
+type = "Action"
+description = "You can duck out of sight even when being observed. You remain hidden for up to one minute or until you do something to reveal yourself (like attack or use an ability). You must be in dim light or shadow to use this ability."
+
+[[foci]]
+name = "Adjures the Leviathan"
+source = "Destiny"
+theme = "You command massive beasts and ancient creatures"
+suitable_types = ["Delve", "Arkus"]
+
+connections = [
+    "A PC helped you first tame a beast",
+    "One PC fears the creatures you control",
+    "You saved a PC from a leviathan attack",
+    "A PC shares your respect for ancient creatures"
+]
+
+equipment = ["Beast-calling horn", "Creature lore book"]
+
+[foci.tier_1_ability]
+name = "Adjure Creature"
+cost = "2 Intellect"
+type = "Action"
+description = "You can command a predatory beast of level 2 or lower within short range. The creature obeys simple commands for one minute. The task is eased if you have studied or interacted with the creature before."
+
+[[foci]]
+name = "Augments Flesh With Grafts"
+source = "Destiny"
+theme = "You improve yourself with biological modifications"
+suitable_types = ["Glaive", "Wright", "Jack"]
+
+connections = [
+    "One PC helped you recover from a grafting procedure",
+    "A PC finds your modifications fascinating",
+    "One PC is squeamish about your grafts",
+    "You and a PC share the same bio-engineer"
+]
+
+equipment = ["Bio-sculpting tools", "Healing salves"]
+
+[foci.tier_1_ability]
+name = "Anatomical Insight"
+cost = "0"
+type = "Enabler"
+description = "You are trained in tasks related to biological and creature lore. You know the weak points of living things and can identify useful biological materials."
+
+[[foci]]
+name = "Battles Automatons"
+source = "Destiny"
+theme = "Hunter of machines and synthetic beings"
+suitable_types = ["Glaive", "Delve"]
+
+connections = [
+    "One PC was saved from an automaton by you",
+    "A PC shares your hatred of machines",
+    "You accidentally destroyed a PC's prized automaton",
+    "One PC thinks your crusade is misguided"
+]
+
+equipment = ["Electromagnetic pulse grenade (level 4)"]
+
+[foci.tier_1_ability]
+name = "Machine Vulnerabilities"
+cost = "0"
+type = "Enabler"
+description = "You are trained in attacks against robots, automatons, golems, and other constructed beings. You inflict +1 damage against such creatures."
+
+[[foci]]
+name = "Breaks Down Walls"
+source = "Destiny"
+theme = "Nothing can stand in your way"
+suitable_types = ["Glaive", "Delve"]
+
+connections = [
+    "You once smashed through a wall to save a PC",
+    "One PC relies on you to break through obstacles",
+    "A PC is amazed by your destructive power",
+    "You accidentally destroyed something valuable to a PC"
+]
+
+equipment = ["Heavy maul or siege hammer"]
+
+[foci.tier_1_ability]
+name = "Breaker"
+cost = "0"
+type = "Enabler"
+description = "You are trained in breaking down doors, walls, and other physical barriers. You inflict +2 damage against inanimate objects."
+
+[[foci]]
+name = "Builds Tomorrow"
+source = "Destiny"
+theme = "Visionary constructor and inventor"
+suitable_types = ["Wright"]
+
+connections = [
+    "One PC believes in your vision of the future",
+    "A PC helped you build your first creation",
+    "One PC thinks your ideas are too ambitious",
+    "You promised to build something for a PC"
+]
+
+equipment = ["Prototype device (level 3, player's choice)", "Blueprint journal"]
+
+[foci.tier_1_ability]
+name = "Builder"
+cost = "0"
+type = "Enabler"
+description = "You are trained in all crafting tasks. When you create something, you can substitute Intellect for Might or Speed when paying the cost."
+
+[[foci]]
+name = "Dances With Dark Matter"
+source = "Destiny"
+theme = "You manipulate gravity and dark energy"
+suitable_types = ["Nano"]
+
+connections = [
+    "Objects around one PC sometimes float",
+    "You saved a PC from falling using gravity",
+    "A PC is unnerved by your reality-bending",
+    "You and one PC seem lighter together"
+]
+
+equipment = ["Gravity-detecting device"]
+
+[foci.tier_1_ability]
+name = "Hover"
+cost = "1 Intellect"
+type = "Action"
+description = "You float up to 1 foot off the ground for 10 minutes. While hovering, you ignore difficult terrain and can move across liquids or gaps as if they were solid ground."
+
+[[foci]]
+name = "Defends the Gate"
+source = "Destiny"
+theme = "Guardian of thresholds and boundaries"
+suitable_types = ["Glaive", "Arkus"]
+
+connections = [
+    "One PC trusts you to watch their back",
+    "You failed to guard something important to a PC",
+    "A PC questions your devotion to duty",
+    "You and one PC guard each other"
+]
+
+equipment = ["Gate key or ward token"]
+
+[foci.tier_1_ability]
+name = "Practiced Defender"
+cost = "0"
+type = "Enabler"
+description = "You are trained in Speed defense while you remain in immediate range of a designated ally, location, or object you have chosen to defend."
+
+[[foci]]
+name = "Defends the Weak"
+source = "Destiny"
+theme = "Protector of the innocent"
+suitable_types = ["Glaive", "Arkus"]
+
+connections = [
+    "One PC was a helpless victim you saved",
+    "A PC thinks you're too self-sacrificing",
+    "You and one PC both protect others",
+    "One PC questions who decides who is 'weak'"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Courageous"
+cost = "0"
+type = "Enabler"
+description = "You are trained in Intellect defense tasks against fear and intimidation. When you help defend someone else, the difficulty of your defense task is eased."
+
+[[foci]]
+name = "Descends From Nobility"
+source = "Destiny"
+theme = "Aristocrat or heir to power"
+suitable_types = ["Arkus"]
+
+connections = [
+    "One PC served your family once",
+    "A PC resents your privileged background",
+    "You owe a debt to one PC that transcends class",
+    "One PC is also from nobility"
+]
+
+equipment = ["Signet ring", "Fine clothing", "20 extra shins"]
+
+[foci.tier_1_ability]
+name = "Privileged"
+cost = "0"
+type = "Enabler"
+description = "You are trained in persuasion and etiquette. You start with an additional 20 shins and have connections to a noble house or wealthy family."
+
+[[foci]]
+name = "Emerged From the Obelisk"
+source = "Destiny"
+theme = "Touched by mysterious monolithic structures"
+suitable_types = ["Nano", "Wright"]
+
+connections = [
+    "One PC found you at the obelisk",
+    "A PC is fascinated by your origin",
+    "One PC fears what you might become",
+    "You share strange dreams with one PC"
+]
+
+equipment = ["Obelisk shard (glows faintly)"]
+
+[foci.tier_1_ability]
+name = "Resonance"
+cost = "1 Intellect"
+type = "Action"
+description = "You emit a harmonic resonance in short range. All devices and cyphers in range that are your level or lower function as if they were 1 level higher for 10 minutes."
+
+[[foci]]
+name = "Exists in Two Places at Once"
+source = "Destiny"
+theme = "Quantum duplicate or simultaneous existence"
+suitable_types = ["Nano", "Jack"]
+
+connections = [
+    "One PC has met both versions of you",
+    "A PC can't tell your duplicates apart",
+    "You saved a PC because you were in two places",
+    "One PC finds your duality disturbing"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Duplicate"
+cost = "2 Might"
+type = "Action"
+description = "You create a duplicate of yourself within immediate range. The duplicate is level 2 and lasts for one minute. It can perform simple tasks but cannot attack. You can see and hear through your duplicate."
+
+[[foci]]
+name = "Explores Yesterday"
+source = "Destiny"
+theme = "Archaeological investigator of lost ages"
+suitable_types = ["Delve"]
+
+connections = [
+    "You and one PC discovered a ruin together",
+    "One PC helped you decode an ancient text",
+    "A PC thinks the past should stay buried",
+    "You promised to find something lost for a PC"
+]
+
+equipment = ["Archaeological tools", "Ancient map or text fragment"]
+
+[foci.tier_1_ability]
+name = "Ruin Lore"
+cost = "0"
+type = "Enabler"
+description = "You are trained in history, archaeology, and identifying the function of ancient devices. You are specialized in tasks related to one specific ancient civilization of your choice."
+
+[[foci]]
+name = "Fights Dirty"
+source = "Destiny"
+theme = "No rules, only survival"
+suitable_types = ["Glaive", "Jack"]
+
+connections = [
+    "One PC disapproves of your tactics",
+    "You saved a PC using an underhanded trick",
+    "A PC taught you your dirtiest move",
+    "One PC appreciates your pragmatism"
+]
+
+equipment = ["Pocket sand", "Concealed blade"]
+
+[foci.tier_1_ability]
+name = "Cheap Shot"
+cost = "1 Speed"
+type = "Enabler"
+description = "When you attack with a light or medium weapon, you can aim for vulnerable spots to hinder your opponent's next action. If you hit, your target's next action is hindered."
+
+[[foci]]
+name = "Helps Their Friends"
+source = "Destiny"
+theme = "Natural team player and ally"
+suitable_types = ["Arkus", "Jack"]
+
+connections = [
+    "You and one PC have saved each other's lives",
+    "One PC always turns to you for help",
+    "A PC thinks you're too self-sacrificing",
+    "You share a secret bond with one PC"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Friendly Help"
+cost = "1 Intellect"
+type = "Action"
+description = "If you use an action to help another PC with a task, they gain a +2 asset to that task instead of the normal +1."
+
+[[foci]]
+name = "Hunts Abhumans"
+source = "Destiny"
+theme = "Specialized hunter of mutants and altered beings"
+suitable_types = ["Glaive", "Delve"]
+
+connections = [
+    "One PC was once mistaken for an abhuman by you",
+    "A PC helped you track a particularly dangerous abhuman",
+    "One PC questions your hatred",
+    "You saved a PC from an abhuman attack"
+]
+
+equipment = ["Abhuman tracking tools", "Protective charm"]
+
+[foci.tier_1_ability]
+name = "Abhuman Lore"
+cost = "0"
+type = "Enabler"
+description = "You are trained in all tasks involving identifying abhumans and their weaknesses. You inflict +1 damage against abhumans."
+
+[[foci]]
+name = "Imparts Wisdom"
+source = "Destiny"
+theme = "Teacher, sage, or enlightened mentor"
+suitable_types = ["Arkus"]
+
+connections = [
+    "You are teaching one PC a valuable skill",
+    "One PC was your student",
+    "A PC rejects your lessons",
+    "You and one PC learn from each other"
+]
+
+equipment = ["Collection of scrolls or books"]
+
+[foci.tier_1_ability]
+name = "Wise"
+cost = "0"
+type = "Enabler"
+description = "You are trained in two knowledge skills of your choice (such as history, geography, philosophy, etc.). Whenever an ally learns something from you, their task is eased."
+
+[[foci]]
+name = "Leads"
+source = "Destiny"
+theme = "Natural commander and inspiration to others"
+suitable_types = ["Arkus"]
+
+connections = [
+    "One PC follows your orders without question",
+    "A PC resents your authority",
+    "You promoted one PC to a position of trust",
+    "One PC challenges your leadership constructively"
+]
+
+equipment = ["Banner or symbol of leadership"]
+
+[foci.tier_1_ability]
+name = "Natural Leader"
+cost = "0"
+type = "Enabler"
+description = "You are trained in persuasion and intimidation. Any time you give a helpful suggestion or order to an ally, their task is eased."
+
+[[foci]]
+name = "Metes Out Justice"
+source = "Destiny"
+theme = "Judge, executioner, or arbiter of law"
+suitable_types = ["Arkus", "Glaive"]
+
+connections = [
+    "One PC respects your sense of justice",
+    "You once judged a PC and found them wanting",
+    "A PC was saved by your judgment",
+    "One PC thinks your justice is too harsh"
+]
+
+equipment = ["Lawkeeper's badge or scales symbol"]
+
+[foci.tier_1_ability]
+name = "Skills of Justice"
+cost = "0"
+type = "Enabler"
+description = "You are trained in discerning lies, intimidation, and persuasion related to law and justice. When you confront someone who has broken the law, tasks to apprehend or judge them are eased."
+
+[[foci]]
+name = "Possesses a Shard of the Sun"
+source = "Destiny"
+theme = "You wield concentrated solar energy"
+suitable_types = ["Nano"]
+
+connections = [
+    "Your light once blinded a PC temporarily",
+    "One PC feels warm and safe near you",
+    "A PC helped you contain your power",
+    "Your presence makes one PC's shadows dance strangely"
+]
+
+equipment = ["Sun shard (glowing crystal)"]
+
+[foci.tier_1_ability]
+name = "Solar Bolt"
+cost = "1 Intellect"
+type = "Action"
+description = "You fire a beam of concentrated sunlight at a target within long range, inflicting 4 points of damage. The attack is eased against creatures vulnerable to light or heat."
+
+[[foci]]
+name = "Radiates Vitality"
+source = "Destiny"
+theme = "Living font of health and renewal"
+suitable_types = ["Nano", "Arkus"]
+
+connections = [
+    "One PC always recovers faster around you",
+    "A PC was near death when your presence saved them",
+    "One PC is exhausted trying to match your energy",
+    "You share a life-bond with one PC"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Aura of Health"
+cost = "1 Intellect"
+type = "Enabler"
+description = "You emit a 10-foot radius aura of vitality. Allies within the aura gain +1 to their recovery rolls. The aura lasts for 10 minutes."
+
+[[foci]]
+name = "Sees Beyond"
+source = "Destiny"
+theme = "Mystic seer perceiving layers of reality"
+suitable_types = ["Nano", "Arkus"]
+
+connections = [
+    "You once saw a PC's possible future",
+    "One PC's presence clouds your visions",
+    "A PC helps you interpret what you see",
+    "You and one PC share prophetic dreams"
+]
+
+equipment = ["Scrying focus (crystal ball, mirror, etc.)"]
+
+[foci.tier_1_ability]
+name = "See the Unseen"
+cost = "2 Intellect"
+type = "Action"
+description = "You can see invisible creatures and objects, perceive illusions as false, and see through up to 1 foot of solid material for one minute. This ability is a difficulty 2 Intellect task."
+
+[[foci]]
+name = "Shepherds the Community"
+source = "Destiny"
+theme = "You tend and protect a growing settlement"
+suitable_types = ["Arkus", "Wright"]
+
+connections = [
+    "One PC is from the community you serve",
+    "A PC helped you establish your community",
+    "One PC thinks your community is vulnerable",
+    "You recruited one PC to help defend your people"
+]
+
+equipment = ["Community resource (food stores, tools, etc.)"]
+
+[foci.tier_1_ability]
+name = "Community Knowledge"
+cost = "0"
+type = "Enabler"
+description = "You are trained in tasks related to understanding community needs, mediating disputes, and organizing group efforts. When working to improve your community, all tasks are eased."
+
+[[foci]]
+name = "Shreds the Walls of the World"
+source = "Destiny"
+theme = "Dimensional traveler and reality breaker"
+suitable_types = ["Nano", "Delve"]
+
+connections = [
+    "You once accidentally pulled a PC through dimensions",
+    "One PC is fascinated by the places you've seen",
+    "A PC fears you'll tear reality apart",
+    "You and one PC visited a strange dimension together"
+]
+
+equipment = ["Dimensional anchor device"]
+
+[foci.tier_1_ability]
+name = "Dimensional Slip"
+cost = "2 Intellect"
+type = "Action"
+description = "You teleport to any location within short range that you can see. This is instantaneous travel through a small dimensional rift."
+
+[[foci]]
+name = "Thunders"
+source = "Destiny"
+theme = "Embodiment of sound and shockwave"
+suitable_types = ["Glaive", "Nano"]
+
+connections = [
+    "Your voice once saved a PC from danger",
+    "One PC's ears ring around you",
+    "A PC helped you control your volume",
+    "You and one PC communicate in booming echoes"
+]
+
+equipment = ["Echo stone (amplifies sound)"]
+
+[foci.tier_1_ability]
+name = "Thunder Beam"
+cost = "1 Intellect"
+type = "Action"
+description = "You emit a focused beam of sonic energy at a target within short range, inflicting 2 points of damage. On a failed Might defense roll, the target is also dazed, hindering their next action."
+
+[[foci]]
+name = "Touches the Sky"
+source = "Destiny"
+theme = "Master of wind and flight"
+suitable_types = ["Nano", "Jack"]
+
+connections = [
+    "You caught a falling PC with wind",
+    "One PC is terrified of heights but trusts you",
+    "A PC loves to fly with you",
+    "You and one PC rode a storm together"
+]
+
+equipment = ["Feather token or wind charm"]
+
+[foci.tier_1_ability]
+name = "Wind Armor"
+cost = "1 Intellect"
+type = "Enabler"
+description = "You surround yourself with protective winds for 10 minutes. Ranged attacks against you are hindered, and you gain an asset to jumping tasks."
+
+[[foci]]
+name = "Wields Words Like Weapons"
+source = "Destiny"
+theme = "Your voice cuts sharper than any blade"
+suitable_types = ["Arkus", "Jack"]
+
+connections = [
+    "A PC was moved to tears by your speech",
+    "A PC fears you'll expose their secrets",
+    "You and a PC co-wrote a manifesto",
+    "A PC once used your words against you"
+]
+
+equipment = []
+
+[foci.tier_1_ability]
+name = "Silver Tongue"
+cost = "0"
+type = "Enabler"
+description = "You are trained in deception, persuasion, and intimidation. When you use words as your primary 'weapon' in a conflict, you inflict 2 points of Intellect damage instead of 1."
+
+[[foci]]
+name = "Would Rather Be Reading"
+source = "Destiny"
+theme = "Scholar who gains power from knowledge"
+suitable_types = ["Nano", "Arkus"]
+
+connections = [
+    "You lent a rare book to one PC",
+    "One PC constantly interrupts your reading",
+    "A PC shares your love of books",
+    "You once solved a PC's problem from something you read"
+]
+
+equipment = ["Library card or scholar's token", "3 books of your choice"]
+
+[foci.tier_1_ability]
+name = "Knowledge Is Power"
+cost = "0"
+type = "Enabler"
+description = "You are trained in four knowledge skills of your choice. When you spend at least 10 minutes studying a topic before attempting a related task, that task is eased by two steps instead of one."

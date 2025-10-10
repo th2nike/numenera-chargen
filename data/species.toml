@@ -1,0 +1,327 @@
+# Numenera Character Generator - Species Data
+# Species from Discovery Appendix A
+# Note: Species replaces Descriptor when creating a visitant character
+
+# ==========================================
+# VISITANTS
+# ==========================================
+
+[[species]]
+name = "Varjellen"
+category = "visitant"
+replaces_descriptor = true
+tagline = "Tall angular beings who reforge their bodies"
+
+[species.description]
+appearance = "Tall, angular beings with violet-red flesh, yellowish eyes, and a crest on the head. Chest opens like a cage (the crucible), allowing manipulation of internal organs."
+culture = "Sexless until choosing reproductive gender. Live approximately 250 years, give birth to twins. Herbivorous and immune to most toxins that harm humans. Exceptional eyesight, weak hearing, no sense of smell. Value equality and fairness. Prefer mystery and visual art to stories or poetry."
+lifespan = 250
+
+[species.stat_modifiers]
+initial_bonus_points = 3  # Instead of standard 6
+notes = "Diminished - Begin with only 3 points (not 6) to divide among stat Pools"
+
+[[species.abilities]]
+name = "Reforging"
+type = "Enabler"
+cost = "0"
+description = "Once per day (approximately 1 hour), you can rearrange your Pool points freely among Might/Speed/Intellect. Lowering a Pool to 0 moves you down the Damage Track."
+
+[[species.abilities]]
+name = "Slow to Recover"
+type = "Inability"
+cost = "0"
+description = "Each recovery roll suffers a -1 penalty."
+
+[species.skills]
+trained = ["Understanding numenera", "Visual perception"]
+specialized = []
+hindered = ["History", "Poetry and oratory", "Hearing-based tasks"]
+
+[species.equipment]
+starting_shins = 0
+items = []
+
+[[species]]
+name = "Lattimor"
+category = "visitant"
+replaces_descriptor = true
+tagline = "Symbiotic being of bursk and neem with three mental states"
+
+[species.description]
+appearance = "7 feet tall composite being with four to six eyes, broad shoulders, and a discolored patch on the back showing the neem's presence. Bursk (hairy bipedal brute) joined with neem (intelligent fungus)."
+culture = "Three mental states: fugue (default), bursk (aggressive), neem (contemplative). Breathe nitrogen, resist toxins, omnivorous. Some pairings are harmonious, others battle internally. Can be played by two players (one controlling bursk, one neem)."
+lifespan = 50
+
+[species.stat_modifiers]
+might = 4
+notes = "Strong - receive +4 to Might Pool"
+
+[[species.abilities]]
+name = "Change State"
+type = "Action"
+cost = "0"
+description = "Intellect task (difficulty 4) to shift between fugue/bursk/neem states. Can only retry after 1 hour if failed."
+
+[[species.abilities]]
+name = "Fugue State"
+type = "Enabler"
+cost = "0"
+description = "Default state. Trained in perceiving."
+
+[[species.abilities]]
+name = "Bursk State"
+type = "Enabler"
+cost = "0"
+description = "Aggressive state. Trained in one weapon type, breaking things, and perceiving. Hindered in all lore, pleasant interaction, and concentration/study tasks."
+
+[[species.abilities]]
+name = "Neem State"
+type = "Enabler"
+cost = "0"
+description = "Contemplative state. Trained in all interactions and in study/concentration/esoteries."
+
+[[species.abilities]]
+name = "Combat Inability"
+type = "Inability"
+cost = "0"
+description = "No taste for fighting - all combat tasks are hindered. Focused attention makes noticing unexpected events harder."
+
+[species.skills]
+trained = []  # State-dependent
+specialized = []
+hindered = []  # State-dependent
+
+[species.equipment]
+starting_shins = 0
+items = []
+
+# ==========================================
+# MUTANTS
+# ==========================================
+
+[[species]]
+name = "Mutant"
+category = "human_mutant"
+replaces_descriptor = true
+tagline = "Altered human with beneficial and harmful mutations"
+
+[species.description]
+appearance = "Varies wildly based on mutations"
+culture = "Altered humans shaped by ancient mutagens, genetic engineering, or evolutionary drift. Often form separate communities and are treated with fear or reverence."
+lifespan = 80
+
+[species.stat_modifiers]
+notes = "Mutations determine stat modifications"
+
+# Mutation system - player rolls on tables
+[species.mutations]
+beneficial_base = 2
+harmful_optional = 1
+distinctive_optional = 4
+
+[species.mutations.beneficial_options]
+description = "Roll d100 for each beneficial mutation"
+
+# Sample beneficial mutations (full table would be rolled)
+[[species.mutations.beneficial_list]]
+roll_range = "01-15"
+name = "Strong Body"
+effect = "+5 Might Pool"
+
+[[species.mutations.beneficial_list]]
+roll_range = "16-20"
+name = "Quick Reflexes"
+effect = "+5 Speed Pool"
+
+[[species.mutations.beneficial_list]]
+roll_range = "21-25"
+name = "Brilliant Mind"
+effect = "+5 Intellect Pool"
+
+[[species.mutations.beneficial_list]]
+roll_range = "26-30"
+name = "Thick Hide"
+effect = "+1 Armor"
+
+[[species.mutations.beneficial_list]]
+roll_range = "31-33"
+name = "Enhanced Lungs"
+effect = "Can hold breath for 5 minutes"
+
+[[species.mutations.beneficial_list]]
+roll_range = "34-39"
+name = "Adhesive Skin"
+effect = "Asset to climbing or escaping (choose one)"
+
+[[species.mutations.beneficial_list]]
+roll_range = "40-45"
+name = "Telekinetic Shield"
+effect = "Asset to Speed defense"
+
+[[species.mutations.beneficial_list]]
+roll_range = "46-50"
+name = "Suggestive Voice"
+effect = "Asset to interaction tasks"
+
+[[species.mutations.beneficial_list]]
+roll_range = "51-53"
+name = "Processor Dreams"
+effect = "Asset on next-day Intellect tasks"
+
+[[species.mutations.beneficial_list]]
+roll_range = "54-65"
+name = "Immune System"
+effect = "Immune to poison or disease"
+
+[[species.mutations.beneficial_list]]
+roll_range = "66-70"
+name = "Fire Resistance"
+effect = "+3 Armor vs fire"
+
+[[species.mutations.beneficial_list]]
+roll_range = "71-75"
+name = "Cold Resistance"
+effect = "+4 Armor vs cold"
+
+[[species.mutations.beneficial_list]]
+roll_range = "76-80"
+name = "Psychic Resistance"
+effect = "+3 Armor vs mental attacks"
+
+[[species.mutations.beneficial_list]]
+roll_range = "81-90"
+name = "Enhanced Scent"
+effect = "Asset to tracking by smell"
+
+[[species.mutations.beneficial_list]]
+roll_range = "91-99"
+name = "No Scent"
+effect = "Cannot be tracked by smell"
+
+[[species.mutations.beneficial_list]]
+roll_range = "00"
+name = "Sense Material"
+effect = "Sense one specific material type within short range"
+
+[species.mutations.harmful_options]
+description = "Optional - accept 1 harmful mutation to gain: 3 beneficial mutations OR 1 powerful mutation OR 1 beneficial + 1 distinctive"
+
+# Sample harmful mutations
+[[species.mutations.harmful_list]]
+roll_range = "01-10"
+name = "Deformed Limb"
+effect = "Movement or combat tasks hindered"
+
+[[species.mutations.harmful_list]]
+roll_range = "11-20"
+name = "Malformed Brain"
+effect = "Memory and cognition tasks hindered"
+
+[[species.mutations.harmful_list]]
+roll_range = "21-30"
+name = "Slow"
+effect = "Speed defense hindered"
+
+[[species.mutations.harmful_list]]
+roll_range = "31-40"
+name = "Sickly"
+effect = "Might defense hindered"
+
+[[species.mutations.harmful_list]]
+roll_range = "41-50"
+name = "Vulnerable to Fire"
+effect = "Take +3 damage from fire"
+
+[[species.mutations.harmful_list]]
+roll_range = "51-60"
+name = "Vulnerable to Cold"
+effect = "Take +3 damage from cold"
+
+[[species.mutations.harmful_list]]
+roll_range = "61-70"
+name = "Useless Limb"
+effect = "One limb does not function"
+
+[[species.mutations.harmful_list]]
+roll_range = "71-80"
+name = "Useless Eye"
+effect = "One eye does not function, perception hindered"
+
+[[species.mutations.harmful_list]]
+roll_range = "81-90"
+name = "Pool Weakness"
+effect = "Costs +1 when spending points from one Pool"
+
+[[species.mutations.harmful_list]]
+roll_range = "91-00"
+name = "Severe Allergy"
+effect = "Contact with common substance causes 3 damage"
+
+[species.mutations.distinctive_options]
+description = "Optional cosmetic mutations (0-4) that don't provide mechanical benefits but affect appearance"
+
+# Sample distinctive mutations
+[[species.mutations.distinctive_list]]
+name = "Unusual Skin Color"
+effect = "Blue, green, translucent, or other unusual skin"
+
+[[species.mutations.distinctive_list]]
+name = "Extra Eyes"
+effect = "Additional non-functional eyes"
+
+[[species.mutations.distinctive_list]]
+name = "Bioluminescence"
+effect = "Skin or hair glows faintly"
+
+[[species.mutations.distinctive_list]]
+name = "Vestigial Wings"
+effect = "Small non-functional wings"
+
+[[species.mutations.distinctive_list]]
+name = "Tail"
+effect = "Non-prehensile tail"
+
+[[species.mutations.distinctive_list]]
+name = "Horns"
+effect = "Small decorative horns"
+
+[[species.mutations.distinctive_list]]
+name = "Scales"
+effect = "Patches of scales on skin"
+
+[[species.mutations.distinctive_list]]
+name = "Feathers"
+effect = "Feathered hair or skin patches"
+
+[[species.mutations.distinctive_list]]
+name = "Pointed Ears"
+effect = "Elongated or pointed ears"
+
+[[species.mutations.distinctive_list]]
+name = "Unusual Hair"
+effect = "Tentacles, spines, or crystalline instead of hair"
+
+[species.skills]
+trained = []  # Mutation-dependent
+specialized = []
+hindered = []  # Mutation-dependent
+
+[species.equipment]
+starting_shins = 0
+items = []
+
+# ==========================================
+# NOTES ON SPECIES USAGE
+# ==========================================
+
+# Species Usage:
+# - When creating a Varjellen or Lattimor character, the species REPLACES the descriptor
+# - When creating a Mutant character, "Mutant" REPLACES the descriptor
+# - Regular human characters use standard descriptors (Charming, Clever, etc.)
+# 
+# Character sentence examples:
+# - "I am a Varjellen Jack who Talks to Machines" (species replaces descriptor)
+# - "I am a Lattimor Glaive who Masters Weaponry" (species replaces descriptor)
+# - "I am a Mutant Nano who Bears a Halo of Fire" (species replaces descriptor)
+# - "I am a Charming Arkus who Leads" (standard human with descriptor)

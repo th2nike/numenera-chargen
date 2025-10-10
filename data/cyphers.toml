@@ -1,0 +1,663 @@
+# Numenera Character Generator - Cyphers Data
+# All cyphers from Discovery Chapters 16-17
+# Single-use numenera items
+
+# ==========================================
+# UTILITY CYPHERS
+# ==========================================
+
+[[cyphers]]
+name = "Adhesion Clamps"
+level_formula = "1d6"
+type = "wearable"
+category = "utility"
+effect = "Allows climbing any surface for 10 minutes × level"
+form = "Gloves or boots with molecular adhesion pads"
+
+[[cyphers]]
+name = "Antivenom"
+level_formula = "1d6"
+type = "internal"
+category = "medical"
+effect = "Immunity to poisons ≤ level for 1 hour × level"
+form = "Injector or pill"
+
+[[cyphers]]
+name = "Attractor"
+level_formula = "1d6 + 1"
+type = "usable"
+category = "utility"
+effect = "Pulls one object (your size or smaller) from long range to your hand"
+form = "Handheld magnetic generator"
+
+[[cyphers]]
+name = "Catholicon"
+level_formula = "1d6 + 2"
+type = "internal"
+category = "medical"
+effect = "Cures any disease ≤ level"
+form = "Pill or injection with nanite healers"
+
+[[cyphers]]
+name = "Catseye"
+level_formula = "1d6"
+type = "wearable"
+category = "sensory"
+effect = "See in darkness for 5 hours × level"
+form = "Eye drops or contact lenses"
+
+[[cyphers]]
+name = "Chemical Factory"
+level_formula = "1d6 + 1"
+type = "usable"
+category = "utility"
+effect = "Produces 1d6 doses of useful chemicals (acid, antitoxin, plastique, etc.)"
+form = "Small fabricator box"
+
+[[cyphers]]
+name = "Comprehension Graft"
+level_formula = "1d6 + 1"
+type = "internal"
+category = "mental"
+effect = "Permanently understand one language (spoken and written)"
+form = "Brain implant or neural patch"
+
+[[cyphers]]
+name = "Datasphere Siphon"
+level_formula = "1d6 + 4"
+type = "usable"
+category = "information"
+effect = "Ask 1-3 questions of the Datasphere and receive answers"
+form = "Crystalline node that glows when activated"
+
+[[cyphers]]
+name = "Eagleseye"
+level_formula = "1d6"
+type = "wearable"
+category = "sensory"
+effect = "See 10× farther for 1 hour × level"
+form = "Goggles or eye drops"
+
+[[cyphers]]
+name = "Friction-Reducing Gel"
+level_formula = "1d6"
+type = "usable"
+category = "utility"
+effect = "Covers immediate area making it extremely slippery for 1 hour × level"
+form = "Spray canister"
+
+[[cyphers]]
+name = "Gravity Nullifier"
+level_formula = "1d6 + 3"
+type = "wearable"
+category = "movement"
+effect = "User can levitate and fly at short range per round for 1 hour × level"
+form = "Belt or harness"
+
+[[cyphers]]
+name = "Instant Servant"
+level_formula = "1d6"
+type = "usable"
+category = "utility"
+effect = "Creates a level 2 automaton servant that obeys simple commands for 1 hour × level"
+form = "Collapsed robot that unfolds when activated"
+
+[[cyphers]]
+name = "Instant Shelter"
+level_formula = "1d6 + 3"
+type = "usable"
+category = "utility"
+effect = "Expands into a simple dwelling (10' × 10') for 28 hours"
+form = "Collapsed structure in a small case"
+
+[[cyphers]]
+name = "Living Solvent"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "utility"
+effect = "Dissolves 1 cubic foot of material per round for 1d6 rounds"
+form = "Vial of gray liquid"
+
+[[cyphers]]
+name = "Machine Control Implant"
+level_formula = "1d6 + 2"
+type = "internal"
+category = "control"
+effect = "Mentally control one device ≤ level within short range for 1 hour × level"
+form = "Neural interface chip"
+
+[[cyphers]]
+name = "Monoblade"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "weapon"
+effect = "Light weapon that ignores Armor ≤ level for 10 minutes × level"
+form = "Handle with monomolecular edge"
+
+[[cyphers]]
+name = "Motion Sensor"
+level_formula = "1d6"
+type = "usable"
+category = "sensory"
+effect = "Detects all movement within short range (or long if level 4+) for 1 hour × level"
+form = "Small disc that beeps or vibrates"
+
+[[cyphers]]
+name = "Personal Environment Field"
+level_formula = "1d6 + 2"
+type = "wearable"
+category = "protection"
+effect = "Protects from temperature extremes and provides breathable air for 28 hours"
+form = "Belt projecting invisible field"
+
+[[cyphers]]
+name = "Reality Spike"
+level_formula = "1d6 + 4"
+type = "usable"
+category = "utility"
+effect = "Object becomes completely immovable fixed point in space for 28 hours"
+form = "Metal spike driven into object"
+
+[[cyphers]]
+name = "Repair Unit"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "utility"
+effect = "Autonomous drone repairs one device ≤ level over 1d6 rounds"
+form = "Small hovering robot"
+
+[[cyphers]]
+name = "Spatial Warp"
+level_formula = "1d6 + 4"
+type = "usable"
+category = "utility"
+effect = "Extends range of another device to 1 mile for 28 hours"
+form = "Resonance crystal attached to device"
+
+[[cyphers]]
+name = "Telepathy Implant"
+level_formula = "1d6 + 2"
+type = "internal"
+category = "mental"
+effect = "Communicate telepathically with any creature within short range for 28 hours"
+form = "Brain implant"
+
+[[cyphers]]
+name = "Teleporter (Traveler)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "movement"
+effect = "Instantly teleport to known location within 10 miles × level"
+form = "Handheld coordinate device"
+
+[[cyphers]]
+name = "Temporal Viewer"
+level_formula = "1d6 + 4"
+type = "usable"
+category = "information"
+effect = "View events that occurred in current location up to 1 year ago × level"
+form = "Crystalline screen"
+
+[[cyphers]]
+name = "Tracer"
+level_formula = "1d6"
+type = "usable"
+category = "tracking"
+effect = "Micro-locator tracks tagged target within 1 mile × level for 28 hours"
+form = "Tiny adhesive disk"
+
+[[cyphers]]
+name = "Visage Changer"
+level_formula = "1d6 + 1"
+type = "internal"
+category = "utility"
+effect = "Alters face, build, and voice to any similar form for 10 minutes × level"
+form = "Gel mask or injection"
+
+[[cyphers]]
+name = "Vocal Translator"
+level_formula = "1d6"
+type = "internal"
+category = "communication"
+effect = "Understand and speak any heard language ≤ level for 1 hour × level"
+form = "Throat collar or inhalant"
+
+[[cyphers]]
+name = "Visual Displacement Device"
+level_formula = "1d6 + 1"
+type = "wearable"
+category = "defense"
+effect = "Attackers hindered by 2 steps when targeting user for 10 minutes × level"
+form = "Brooch creating flickering duplicates"
+
+[[cyphers]]
+name = "Warmth Projector"
+level_formula = "1d6"
+type = "wearable"
+category = "environment"
+effect = "Maintains comfortable temperature in freezing conditions for 28 hours"
+form = "Round disk worn at chest"
+
+[[cyphers]]
+name = "Water Breather"
+level_formula = "1d6 + 1"
+type = "internal"
+category = "environment"
+effect = "Breathe underwater and gain +2 steps to swimming for 1 hour × level"
+form = "Capsule releasing micro-gills"
+
+[[cyphers]]
+name = "X-Ray Viewer"
+level_formula = "1d6 + 1"
+type = "wearable"
+category = "sensory"
+effect = "See through solid objects up to 1 foot × level thick for 10 minutes × level"
+form = "Visor or goggles"
+
+# ==========================================
+# COMBAT CYPHERS - DEFENSIVE
+# ==========================================
+
+[[cyphers]]
+name = "Banishing Nodule"
+level_formula = "1d6 + 1"
+type = "usable"
+category = "combat"
+effect = "Struck target teleports 1d100 × 100 feet in random direction"
+form = "Thrown nodule"
+
+[[cyphers]]
+name = "Blinking Nodule"
+level_formula = "1d6"
+type = "wearable"
+category = "defense"
+effect = "When struck, randomly teleport to short range location for 28 hours"
+form = "Armor attachment"
+
+[[cyphers]]
+name = "Controlled Blinking Nodule"
+level_formula = "1d6 + 2"
+type = "wearable"
+category = "defense"
+effect = "When damaged, choose to teleport to chosen spot within short range for 28 hours"
+form = "Belt-mounted device"
+
+[[cyphers]]
+name = "Fireproofing Spray"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "protection"
+effect = "Protects user or object from fire damage ≤ level for 28 hours"
+form = "Aerosol can"
+
+[[cyphers]]
+name = "Force Cube Projector"
+level_formula = "1d6 + 3"
+type = "usable"
+category = "defense"
+effect = "Creates 10' × 10' × 10' force cube around user for 1 hour × level, blocks all ≤ level"
+form = "Handheld projector"
+
+[[cyphers]]
+name = "Force Screen Projector"
+level_formula = "1d6 + 3"
+type = "usable"
+category = "defense"
+effect = "Creates 10' × 10' flat force barrier for 1 hour × level, blocks all ≤ level"
+form = "Disc that projects vertical screen"
+
+[[cyphers]]
+name = "Force Shield Projector"
+level_formula = "1d6 + 1"
+type = "wearable"
+category = "defense"
+effect = "Provides +1 Armor (or +2 if level 5+) for 28 hours"
+form = "Wrist-mounted projector"
+
+[[cyphers]]
+name = "Magnetic Shield"
+level_formula = "1d6 + 1"
+type = "wearable"
+category = "defense"
+effect = "Repels metal attacks (attackers using metal weapons hindered) for 10 minutes × level"
+form = "Belt creating magnetic field"
+
+[[cyphers]]
+name = "Retaliation Nodule"
+level_formula = "1d6"
+type = "wearable"
+category = "defense"
+effect = "Melee attackers take level damage when they strike user for 28 hours"
+form = "Armor attachment"
+
+[[cyphers]]
+name = "Sheen"
+level_formula = "1d6"
+type = "internal"
+category = "healing"
+effect = "Adds +1 to Armor for 28 hours"
+form = "Subdermal injection"
+
+[[cyphers]]
+name = "Subdual Field"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "control"
+effect = "All creatures ≤ level in short range become calm and docile for 1 minute × level"
+form = "Field generator"
+
+# ==========================================
+# COMBAT CYPHERS - OFFENSIVE
+# ==========================================
+
+[[cyphers]]
+name = "Density Nodule"
+level_formula = "1d6"
+type = "wearable"
+category = "combat"
+effect = "Melee attacks inflict +2 damage (or +3 if level 5+) for 28 hours"
+form = "Weapon attachment increasing mass"
+
+[[cyphers]]
+name = "Detonation (Explosive)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Explodes in immediate range for level damage"
+form = "Grenade or mine"
+
+[[cyphers]]
+name = "Detonation (Fire)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Fire explosion in immediate range for level damage, continues burning"
+form = "Incendiary grenade"
+
+[[cyphers]]
+name = "Detonation (Gravity)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Creates gravity well pulling all in short range, level damage and knocked prone"
+form = "Sphere creating gravitational anomaly"
+
+[[cyphers]]
+name = "Detonation (Singularity)"
+level_formula = "1d6 + 4"
+type = "usable"
+category = "explosive"
+effect = "Micro-singularity in immediate range for level + 5 damage, destroys all matter ≤ level"
+form = "Black sphere"
+
+[[cyphers]]
+name = "Detonation (Spawn)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Releases 1d6 level 2 creatures that serve user for 1 hour"
+form = "Capsule containing dormant entities"
+
+[[cyphers]]
+name = "Detonation (Web)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Entangles all in immediate range (Might/Speed task = level to break free)"
+form = "Grenade releasing sticky strands"
+
+[[cyphers]]
+name = "Disrupting Nodule"
+level_formula = "1d6"
+type = "wearable"
+category = "combat"
+effect = "Melee attacks vs living creatures inflict +1-3 extra damage and stun for 28 hours"
+form = "Weapon attachment with disruptive field"
+
+[[cyphers]]
+name = "Flame Wall Projector"
+level_formula = "1d6 + 3"
+type = "usable"
+category = "combat"
+effect = "Creates 20' long wall of flame (level damage) lasting 1 hour"
+form = "Projector creating fire barrier"
+
+[[cyphers]]
+name = "Frigid Wall Projector"
+level_formula = "1d6 + 3"
+type = "usable"
+category = "combat"
+effect = "Creates 20' long wall of ice (level damage) lasting 1 hour"
+form = "Projector creating ice barrier"
+
+[[cyphers]]
+name = "Gas Bomb (Poison)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Releases poison gas in immediate range (level damage, ignores Armor, lasts 1 minute)"
+form = "Canister releasing toxic cloud"
+
+[[cyphers]]
+name = "Gas Bomb (Sleep)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Releases sleep gas in immediate range (Intellect defense = level or sleep 1 minute)"
+form = "Canister releasing sedative mist"
+
+[[cyphers]]
+name = "Gas Bomb (Rage)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "explosive"
+effect = "Releases rage gas causing affected to attack nearest creature (1 minute)"
+form = "Canister releasing red vapor"
+
+[[cyphers]]
+name = "Heat Nodule"
+level_formula = "1d6"
+type = "wearable"
+category = "combat"
+effect = "Melee attacks inflict +2-4 fire damage for 28 hours"
+form = "Weapon attachment generating heat"
+
+[[cyphers]]
+name = "Hunter/Seeker"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "weapon"
+effect = "Self-guided missile attacks chosen target for level × 2 damage"
+form = "Small flying projectile"
+
+[[cyphers]]
+name = "Lightning Wall Projector"
+level_formula = "1d6 + 3"
+type = "usable"
+category = "combat"
+effect = "Creates 20' long electrical wall (level damage) lasting 1 hour"
+form = "Projector creating lightning barrier"
+
+[[cyphers]]
+name = "Magnetic Attack Drill"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "weapon"
+effect = "Launches at metal-wearing target for level × 2 damage ignoring Armor"
+form = "Spinning drill projectile"
+
+[[cyphers]]
+name = "Mental Scrambler"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "mental"
+effect = "All creatures ≤ level in short range suffer confusion (random actions) for 1 minute"
+form = "Device projecting psychic static"
+
+[[cyphers]]
+name = "Poison (Explosive)"
+level_formula = "1d6 + 2"
+type = "internal"
+category = "weapon"
+effect = "Taken internally, victim explodes in 1 round for level × 2 damage in immediate range"
+form = "Pill or injection"
+
+[[cyphers]]
+name = "Poison (Mind-Control)"
+level_formula = "1d6 + 2"
+type = "internal"
+category = "mental"
+effect = "Victim obeys one command ≤ 1 hour if ingested"
+form = "Powder or liquid"
+
+[[cyphers]]
+name = "Ray Emitter (Heat)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "weapon"
+effect = "Fires heat ray (long range) for level damage"
+form = "Handheld projector"
+
+[[cyphers]]
+name = "Ray Emitter (Paralysis)"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "weapon"
+effect = "Fires paralyzing ray (long range), target paralyzed 1 minute (Might defense = level)"
+form = "Pistol-like device"
+
+[[cyphers]]
+name = "Shock Nodule"
+level_formula = "1d6"
+type = "wearable"
+category = "combat"
+effect = "Melee attacks inflict +2-4 electricity damage for 28 hours"
+form = "Weapon attachment crackling with electricity"
+
+[[cyphers]]
+name = "Sonic Wall Projector"
+level_formula = "1d6 + 3"
+type = "usable"
+category = "combat"
+effect = "Creates 20' long sonic wall (level damage + deafening) lasting 1 hour"
+form = "Projector creating sound barrier"
+
+# ==========================================
+# ENHANCEMENT CYPHERS
+# ==========================================
+
+[[cyphers]]
+name = "Force Nodule"
+level_formula = "1d6"
+type = "wearable"
+category = "enhancement"
+effect = "Melee attacks knock target back immediate distance for 28 hours"
+form = "Weapon attachment"
+
+[[cyphers]]
+name = "Intellect Booster"
+level_formula = "1d6"
+type = "internal"
+category = "enhancement"
+effect = "Gain +1 Edge to Intellect (or +2 if level 5+) for 28 hours"
+form = "Pill or injection"
+
+[[cyphers]]
+name = "Knowledge Enhancement"
+level_formula = "1d6"
+type = "internal"
+category = "enhancement"
+effect = "Become trained in one knowledge skill for 28 hours"
+form = "Neural data injection"
+
+[[cyphers]]
+name = "Rejuvenator"
+level_formula = "1d6 + 2"
+type = "internal"
+category = "healing"
+effect = "Restore 1d6 + level points to all three Pools"
+form = "Pill or injection with nanites"
+
+[[cyphers]]
+name = "Skill Boost"
+level_formula = "1d6"
+type = "internal"
+category = "enhancement"
+effect = "One type of task eased for 28 hours"
+form = "Injection or pill"
+
+[[cyphers]]
+name = "Speed Booster"
+level_formula = "1d6"
+type = "internal"
+category = "enhancement"
+effect = "Gain +1 Edge to Speed (or +2 if level 5+) for 28 hours"
+form = "Pill or injection"
+
+[[cyphers]]
+name = "Stim"
+level_formula = "1d6"
+type = "internal"
+category = "healing"
+effect = "Restore 1d6 + level points to one Pool and ignore penalties from being impaired for 1 hour"
+form = "Injector or inhaler"
+
+[[cyphers]]
+name = "Strength Booster"
+level_formula = "1d6"
+type = "internal"
+category = "enhancement"
+effect = "Gain +1 Edge to Might (or +2 if level 5+) for 28 hours"
+form = "Pill or injection"
+
+[[cyphers]]
+name = "Time Dilation Nodule (Defensive)"
+level_formula = "1d6 + 2"
+type = "wearable"
+category = "enhancement"
+effect = "All Speed defense and initiative eased by 2 steps for 28 hours"
+form = "Wristband with spinning inner ring"
+
+[[cyphers]]
+name = "Time Dilation Nodule (Offensive)"
+level_formula = "1d6 + 2"
+type = "wearable"
+category = "enhancement"
+effect = "All Speed attacks eased by 2 steps for 28 hours"
+form = "Wristband affecting attack timing"
+
+# ==========================================
+# SPECIAL EFFECT CYPHERS
+# ==========================================
+
+[[cyphers]]
+name = "Image Projector"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "illusion"
+effect = "Creates realistic illusion (up to 10' × 10' × 10') lasting 1 hour"
+form = "Holographic projector"
+
+[[cyphers]]
+name = "Invisibility Projector"
+level_formula = "1d6 + 2"
+type = "wearable"
+category = "stealth"
+effect = "User becomes invisible for 10 minutes × level"
+form = "Belt projecting light-bending field"
+
+[[cyphers]]
+name = "Psychic Communique"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "communication"
+effect = "Send one telepathic message (up to 10 words × level) to any known creature anywhere"
+form = "Crystal that dissolves when message sent"
+
+[[cyphers]]
+name = "Sound Dampener"
+level_formula = "1d6 + 2"
+type = "usable"
+category = "stealth"
+effect = "Creates sphere of complete silence in immediate range for 1 hour"
+form = "Device projecting null-sound field"
