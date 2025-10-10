@@ -494,7 +494,7 @@ mod tests {
     use super::*;
     // Remove the unused imports
     use crate::data::models::{
-        Ability, CharacterType, Descriptor, DescriptorEquipment, DescriptorSkills,
+        CharacterType, Descriptor, DescriptorEquipment, DescriptorSkills,
         DescriptorStatModifiers, EdgeValues as DataEdge, Focus, PlayerIntrusions,
         StartingTier, StatPools as DataStatPools, TypeEquipment, TypeSkills, DescriptorInabilities
     };
