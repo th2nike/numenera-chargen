@@ -37,16 +37,16 @@ pub fn format_character_sheet(sheet: &CharacterSheet) -> String {
     output.push_str(&format!("- **Experience Points:** {}\n", sheet.xp));
     output.push_str("\n");
 
-    // Stat Pools
+    // Stat Pools - Fixed table formatting
     output.push_str("## Stat Pools\n\n");
-    output.push_str("| Stat | Current | Maximum |\n");
-    output.push_str("|------|---------|----------|\n");
+    output.push_str("| Stat       | Current | Maximum |\n");
+    output.push_str("|------------|---------|----------|\n");
     output.push_str(&format!(
-        "| **Might** | {} | {} |\n",
+        "| **Might**     | {} | {} |\n",
         sheet.pools.current.might, sheet.pools.maximum.might
     ));
     output.push_str(&format!(
-        "| **Speed** | {} | {} |\n",
+        "| **Speed**     | {} | {} |\n",
         sheet.pools.current.speed, sheet.pools.maximum.speed
     ));
     output.push_str(&format!(
@@ -122,34 +122,45 @@ pub fn format_character_sheet(sheet: &CharacterSheet) -> String {
     // Equipment
     output.push_str("## Equipment\n\n");
 
+    // Weapons
+    output.push_str("### Weapons\n\n");
     if !sheet.equipment.weapons.is_empty() {
-        output.push_str("### Weapons\n\n");
         for weapon in &sheet.equipment.weapons {
             output.push_str(&format!("- {}\n", weapon));
         }
-        output.push_str("\n");
+    } else {
+        output.push_str("*None*\n");
     }
+    output.push_str("\n");
 
+    // Armor
+    output.push_str("### Armor\n\n");
     if let Some(armor) = &sheet.equipment.armor {
-        output.push_str("### Armor\n\n");
-        output.push_str(&format!("- {}\n\n", armor));
+        output.push_str(&format!("{}\n\n", armor));
+    } else {
+        output.push_str("*None*\n\n");
     }
 
+    // Shield (only show if present)
     if let Some(shield) = &sheet.equipment.shield {
         output.push_str("### Shield\n\n");
-        output.push_str(&format!("- {}\n\n", shield));
+        output.push_str(&format!("{}\n\n", shield));
     }
 
+    // Gear
+    output.push_str("### Gear\n\n");
     if !sheet.equipment.gear.is_empty() {
-        output.push_str("### Gear\n\n");
         for item in &sheet.equipment.gear {
             output.push_str(&format!("- {}\n", item));
         }
-        output.push_str("\n");
+    } else {
+        output.push_str("*None*\n");
     }
+    output.push_str("\n");
 
+    // Currency
     output.push_str("### Currency\n\n");
-    output.push_str(&format!("- **Shins:** {}\n\n", sheet.equipment.shins));
+    output.push_str(&format!("**Shins:** {}\n\n", sheet.equipment.shins));
 
     // Cyphers
     output.push_str("## Cyphers\n\n");

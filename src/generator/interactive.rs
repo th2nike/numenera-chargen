@@ -42,8 +42,12 @@ pub fn run(game_data: &GameData) -> Result<CharacterSheet> {
     println!();
 
     // Step 4: Allocate Bonus Points
-    let bonus_points = allocate_bonus_points(&character_type, is_species, game_data)?;
-    println!();
+    let bonus_points = allocate_bonus_points(
+        &character_type, 
+        &descriptor_or_species,
+        is_species,
+        game_data
+    )?;
 
     // Step 5: Select Focus
     let focus = select_focus(game_data, &character_type)?;
@@ -184,6 +188,7 @@ fn select_descriptor_or_species(game_data: &GameData) -> Result<(String, bool)> 
 
 fn allocate_bonus_points(
     character_type: &str,
+    descriptor_or_species_name: &str,
     is_species: bool,
     game_data: &GameData,
 ) -> Result<(i32, i32, i32)> {
@@ -193,7 +198,7 @@ fn allocate_bonus_points(
         let species = game_data
             .species
             .iter()
-            .find(|s| s.name.eq_ignore_ascii_case(character_type))
+            .find(|s| s.name.eq_ignore_ascii_case(descriptor_or_species_name)) // Fixed: use the species name
             .context("Species not found")?;
 
         species
@@ -268,12 +273,13 @@ fn allocate_bonus_points(
 // STEP 5: SELECT FOCUS
 // ==========================================
 
-fn select_focus(game_data: &GameData, character_type: &str) -> Result<String> {
+fn select_focus(game_data: &GameData, _character_type: &str) -> Result<String> {
     println!("{}", "Step 5: Select Focus".yellow().bold());
     println!("Choose your focus (the verb in 'I am a [adjective] [noun] who [verbs]'):");
     println!();
 
-    let suitable_foci = get_suitable_foci(&game_data.foci, character_type);
+    // let suitable_foci = get_suitable_foci(&game_data.foci, character_type);
+    let suitable_foci = &game_data.foci; // Show all foci temporarily
 
     if suitable_foci.is_empty() {
         println!(
@@ -306,7 +312,7 @@ fn select_focus(game_data: &GameData, character_type: &str) -> Result<String> {
 
         println!();
         let choice = prompt_choice(suitable_foci.len())?;
-        let selected = suitable_foci[choice - 1];
+        let selected = &suitable_foci[choice - 1]; // Added & here
 
         println!("\n{} {}", "Selected:".green(), selected.name.bold());
 

@@ -16,11 +16,12 @@ intellect = 2
 [descriptors.skills]
 trained = ["Positive social interaction", "Mental-influence abilities"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Lore/knowledge tasks", "Resisting mental attacks"]
 
-[descriptors.special_abilities]
-contact = { description = "Important ally (noble, guard captain, Aeon Priest, gang leader)" }
+[[descriptors.special_abilities]]
+name = "Contact"
+description = "Important ally (noble, guard captain, Aeon Priest, gang leader)"
 
 [descriptors.equipment]
 shins = 10
@@ -50,7 +51,7 @@ intellect = 2
 [descriptors.skills]
 trained = ["Lies and trickery", "Resisting mental effects", "Assessing danger or value"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Lore or academic knowledge"]
 
 [descriptors.equipment]
@@ -81,6 +82,8 @@ speed = 2
 [descriptors.skills]
 trained = ["Balance and careful movement", "Performing arts", "Speed defense"]
 
+[descriptors.equipment]
+
 [[descriptors.initial_links]]
 text = "You joined to protect others"
 
@@ -105,6 +108,8 @@ intellect = 2
 
 [descriptors.skills]
 trained = ["One area of knowledge of choice", "Remembering or memorizing experiences"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You valued the mission's logic or discovery"
@@ -131,7 +136,7 @@ intellect = 2
 [descriptors.skills]
 trained = ["Three areas of knowledge (player choice)"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Charm or persuasion"]
 
 [descriptors.equipment]
@@ -162,9 +167,15 @@ intellect = 2
 [descriptors.skills]
 trained = ["Understanding numenera"]
 
-[descriptors.special_abilities]
-sense_magic = { cost = "—", description = "Spend 1 minute to detect nearby active numenera" }
-hedge_magic = { cost = "—", type = "Esotery", description = "Minor utility tricks (float, clean, mend, recolor; non-damaging)" }
+[[descriptors.special_abilities]]
+name = "Sense Magic"
+description = "Spend 1 minute to detect nearby active numenera"
+
+[[descriptors.special_abilities]]
+name = "Hedge Magic"
+description = "Minor utility tricks (float, clean, mend, recolor; non-damaging)"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "Dreams or omens led you here"
@@ -185,10 +196,12 @@ name = "Rugged"
 source = "Discovery"
 tagline = "Wilderness survivor, animal-wise"
 
+[descriptors.stat_modifiers]
+
 [descriptors.skills]
 trained = ["Climbing", "Running", "Swimming", "Training or riding animals", "Identifying plants"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Social tasks"]
 
 [descriptors.equipment]
@@ -219,8 +232,10 @@ speed = 2
 [descriptors.skills]
 trained = ["Stealth", "Trickery", "Illusion-based esoteries"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Pure movement (sprinting, leaping)"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You were spying on the group"
@@ -275,8 +290,10 @@ intellect = 4
 [descriptors.skills]
 trained = ["Resisting mental effects", "Maintaining focus"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Puzzles", "Memorization", "Lore"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You joined reluctantly"
@@ -303,8 +320,10 @@ speed = 4
 [descriptors.skills]
 trained = ["Initiative", "Running"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Balance tasks"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You joined to protect others"
@@ -325,12 +344,18 @@ name = "Tough"
 source = "Discovery"
 tagline = "Enduring and physically resilient"
 
-[descriptors.special_abilities]
-armor = { value = 1, description = "+1 Armor" }
-healthy = { description = "+1 point recovered on all recovery rolls" }
+[descriptors.stat_modifiers]
 
 [descriptors.skills]
 trained = ["Might defense"]
+
+[[descriptors.special_abilities]]
+name = "Armor"
+description = "+1 Armor"
+
+[[descriptors.special_abilities]]
+name = "Healthy"
+description = "+1 point recovered on all recovery rolls"
 
 [descriptors.equipment]
 weapons = ["Additional light weapon"]
@@ -357,11 +382,12 @@ source = "Destiny"
 tagline = "Change is strength"
 
 [descriptors.stat_modifiers]
-flexible = 2
-note = "+2 to any one Pool; reassign after each ten-hour recovery"
+# Note: Flexible +2 to any Pool (reassign after each ten-hour recovery)
 
 [descriptors.skills]
 trained = ["Pleasant social interactions", "Overcoming deprivation/sorrow/pain effects"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "PCs saw how quickly you adapted to a bad situation"
@@ -388,6 +414,8 @@ intellect = 2
 [descriptors.skills]
 trained = ["Persuasion", "Planning and explaining", "Convincing others to accept your plans"]
 
+[descriptors.equipment]
+
 [[descriptors.initial_links]]
 text = "You impressed another PC with your clarity"
 
@@ -410,11 +438,14 @@ tagline = "Helping others is its own reward"
 [descriptors.stat_modifiers]
 intellect = 2
 
-[descriptors.special_abilities]
-devoted = { description = "Allies who've spent the last day with you (and you) gain +1 to recovery rolls" }
-
 [descriptors.skills]
 trained = ["Pleasant social interaction", "Putting others at ease", "Gaining trust"]
+
+[[descriptors.special_abilities]]
+name = "Devoted"
+description = "Allies who've spent the last day with you (and you) gain +1 to recovery rolls"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You invited yourself to help the group"
@@ -441,8 +472,10 @@ intellect = 4
 [descriptors.skills]
 trained = ["One artistic or hobby task (player choice)", "Making friends", "Ending conflicts", "Good first impressions"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Detecting falsehoods or disguises"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "Another PC wanted your positivity to bond the team"
@@ -466,11 +499,12 @@ tagline = "Community is strength"
 [descriptors.stat_modifiers]
 intellect = 2
 
-[descriptors.special_abilities]
-civic_minded = { description = "Add +1 to the Health of any community you currently live in" }
-
 [descriptors.skills]
 trained = ["Uncovering local news and secrets", "All tasks aiding a community (repairing, defending, mediating)"]
+
+[[descriptors.special_abilities]]
+name = "Civic Minded"
+description = "Add +1 to the Health of any community you currently live in"
 
 [descriptors.equipment]
 other = ["Numenera plan for an installation"]
@@ -500,11 +534,14 @@ might = 4
 [descriptors.skills]
 trained = ["Enduring physical or mental trials"]
 
-[descriptors.special_abilities]
-dedication = { description = "Once between each 10-hour recovery, gain an asset on repeated actions of the same task" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Persuasion (single-mindedness)"]
+
+[[descriptors.special_abilities]]
+name = "Dedication"
+description = "Once between each 10-hour recovery, gain an asset on repeated actions of the same task"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "Your cause overlaps the group's goal"
@@ -533,9 +570,15 @@ intellect = 1
 [descriptors.skills]
 trained = ["Three non-combat, non-physical skills of your choice"]
 
-[descriptors.special_abilities]
-confident_outlook = { description = "Once per rest, become trained in one task for ten minutes (non-attack/defense)" }
-failure_consequence = { description = "GM intrusions occur on rolls of 1-2 instead of just 1" }
+[[descriptors.special_abilities]]
+name = "Confident Outlook"
+description = "Once per rest, become trained in one task for ten minutes (non-attack/defense)"
+
+[[descriptors.special_abilities]]
+name = "Failure Consequence"
+description = "GM intrusions occur on rolls of 1-2 instead of just 1"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You dragged a PC into adventure out of confidence"
@@ -556,14 +599,17 @@ name = "Cultured"
 source = "Destiny"
 tagline = "Refinement is its own weapon"
 
+[descriptors.stat_modifiers]
+
 [descriptors.skills]
 trained = ["Current events and history", "Discerning fine differences", "Detecting flaws or strengths in art/craft/behavior"]
 
-[descriptors.special_abilities]
-learned = { description = "Once per recovery, attempt one untrained task as if trained" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Tasks requiring others to trust you (seen as snobbish)"]
+
+[[descriptors.special_abilities]]
+name = "Learned"
+description = "Once per recovery, attempt one untrained task as if trained"
 
 [descriptors.equipment]
 other = ["Fine clothing", "One scholarly book"]
@@ -621,7 +667,7 @@ intellect = 2
 [descriptors.skills]
 trained = ["Persuasion", "One chosen lore field", "Resisting disease and poison", "Consoling or emotionally supporting others"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Detecting lies or trickery"]
 
 [descriptors.equipment]
@@ -652,9 +698,15 @@ intellect = 4
 [descriptors.skills]
 trained = ["Experimentation and truth-testing tasks"]
 
-[descriptors.special_abilities]
-quick_study = { description = "After spending 1 round to observe, gain an asset on next non-combat action" }
-non_resilient = { description = "If acting without time to study, any action following a GM intrusion is hindered" }
+[[descriptors.special_abilities]]
+name = "Quick Study"
+description = "After spending 1 round to observe, gain an asset on next non-combat action"
+
+[[descriptors.special_abilities]]
+name = "Non-Resilient"
+description = "If acting without time to study, any action following a GM intrusion is hindered"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You believe another PC has knowledge vital to your research"
@@ -681,8 +733,10 @@ might = 4
 [descriptors.skills]
 trained = ["Persuasion and intimidation", "Sensing lies"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Pleasant social interactions", "Intellect defense (mental strain)"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "The PCs met your high standards, so you joined"
@@ -711,7 +765,7 @@ trained = ["Initiative tasks", "Tasks of chance or risk assessment"]
 
 [descriptors.equipment]
 shins = 30
-note = "Hidden for emergencies"
+# Note: Hidden for emergencies
 
 [[descriptors.initial_links]]
 text = "You anticipated the new danger and were ready"
@@ -735,9 +789,17 @@ tagline = "I thrive among people"
 [descriptors.stat_modifiers]
 intellect = 2
 
-[descriptors.special_abilities]
-people_person = { description = "When near ≥ 2 allies, ease one non-combat task each rest" }
-getting_the_word = { description = "Spend 1 hour in a crowd to gather rumors and gossip" }
+[descriptors.skills]
+
+[[descriptors.special_abilities]]
+name = "People Person"
+description = "When near ≥ 2 allies, ease one non-combat task each rest"
+
+[[descriptors.special_abilities]]
+name = "Getting the Word"
+description = "Spend 1 hour in a crowd to gather rumors and gossip"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You heard the group's plan and offered to join"
@@ -764,11 +826,14 @@ might = 2
 [descriptors.skills]
 trained = ["All social interactions", "Perception and finding hidden things"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Detecting falsehoods (you trust easily)"]
 
-[descriptors.special_abilities]
-hero_complication = { description = "GM may introduce intrusions as if you rolled a 1 (no XP reward). Every other time, your heroism also creates a beneficial twist" }
+[[descriptors.special_abilities]]
+name = "Hero Complication"
+description = "GM may introduce intrusions as if you rolled a 1 (no XP reward). Every other time, your heroism also creates a beneficial twist"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "Only you could save the day"
@@ -792,12 +857,20 @@ tagline = "Work is worship"
 [descriptors.stat_modifiers]
 speed = 4
 
-[descriptors.special_abilities]
-ready_for_whats_next = { description = "+1 to recovery rolls" }
-imaginative_solution = { description = "First Effort on an Intellect task grants one free level of Effort (once per 10-hour recovery)" }
+[descriptors.skills]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Movement-related tasks (energetic but not fast)"]
+
+[[descriptors.special_abilities]]
+name = "Ready for What's Next"
+description = "+1 to recovery rolls"
+
+[[descriptors.special_abilities]]
+name = "Imaginative Solution"
+description = "First Effort on an Intellect task grants one free level of Effort (once per 10-hour recovery)"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "Following your plan led here"
@@ -819,17 +892,23 @@ source = "Destiny"
 tagline = "Fear is a tool"
 
 [descriptors.stat_modifiers]
-note = "+2 Might or +2 Intellect (or +1 each - player choice)"
+# Note: +2 Might or +2 Intellect (or +1 each - player choice)
 
 [descriptors.skills]
 trained = ["Intimidation"]
 
-[descriptors.special_abilities]
-threaten = { description = "Foes within immediate range hesitate; their next action hindered (once per recovery)" }
-menace = { description = "One foe within immediate range must spend its next action to retreat (once per recovery)" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Lore and knowledge tasks"]
+
+[[descriptors.special_abilities]]
+name = "Threaten"
+description = "Foes within immediate range hesitate; their next action hindered (once per recovery)"
+
+[[descriptors.special_abilities]]
+name = "Menace"
+description = "One foe within immediate range must spend its next action to retreat (once per recovery)"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You stepped in when they were in danger"
@@ -856,8 +935,11 @@ intellect = 2
 [descriptors.skills]
 trained = ["Perception"]
 
-[descriptors.special_abilities]
-know_what_to_do = { description = "Act immediately (out of turn); your next regular turn is hindered (once per recovery)" }
+[[descriptors.special_abilities]]
+name = "Know What to Do"
+description = "Act immediately (out of turn); your next regular turn is hindered (once per recovery)"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You knew you must come"
@@ -881,14 +963,17 @@ tagline = "Nothing keeps me down"
 [descriptors.stat_modifiers]
 might = 4
 
-[descriptors.special_abilities]
-bounces_back = { description = "+1 to recovery rolls" }
-
 [descriptors.skills]
 trained = ["Positive social interactions"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Intellect defense vs cons or confidence games"]
+
+[[descriptors.special_abilities]]
+name = "Bounces Back"
+description = "+1 to recovery rolls"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "They needed your optimism to stay on track"
@@ -916,8 +1001,10 @@ speed = 2
 [descriptors.skills]
 trained = ["Law and codes of conduct"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["When breaking any law, Intellect tasks are hindered"]
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You offered legal expertise to the group"
@@ -941,12 +1028,20 @@ tagline = "I stand by my own"
 [descriptors.stat_modifiers]
 intellect = 2
 
-[descriptors.special_abilities]
-devoted = { description = "When an ally within immediate range drops a step on the damage track, you may act immediately to move or heal them" }
-faithful = { description = "When you help another's attack or defense, regain 1 point to any Pool (once per recovery)" }
+[descriptors.skills]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Detecting falsehoods or disguises"]
+
+[[descriptors.special_abilities]]
+name = "Devoted"
+description = "When an ally within immediate range drops a step on the damage track, you may act immediately to move or heal them"
+
+[[descriptors.special_abilities]]
+name = "Faithful"
+description = "When you help another's attack or defense, regain 1 point to any Pool (once per recovery)"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You instantly helped a PC in need"
@@ -973,6 +1068,8 @@ intellect = 2
 [descriptors.skills]
 trained = ["Perception and detecting falsehoods", "Stealth", "Recalling details you once heard or read"]
 
+[descriptors.equipment]
+
 [[descriptors.initial_links]]
 text = "The group needed someone nosy—you volunteered"
 
@@ -998,8 +1095,11 @@ might = 2
 [descriptors.skills]
 trained = ["Healing"]
 
-[descriptors.special_abilities]
-nurturing = { description = "Allies (and you) gain +1 to recovery rolls after a day together" }
+[[descriptors.special_abilities]]
+name = "Nurturing"
+description = "Allies (and you) gain +1 to recovery rolls after a day together"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You offered aid to an injured PC"
@@ -1020,8 +1120,15 @@ name = "Obsessive"
 source = "Destiny"
 tagline = "Focus is everything"
 
-[descriptors.special_abilities]
-your_obsession = { description = "Each day choose one concept; all related tasks gain an asset, unrelated tasks are hindered" }
+[descriptors.stat_modifiers]
+
+[descriptors.skills]
+
+[[descriptors.special_abilities]]
+name = "Your Obsession"
+description = "Each day choose one concept; all related tasks gain an asset, unrelated tasks are hindered"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You insisted on joining; they couldn't refuse"
@@ -1048,11 +1155,12 @@ intellect = 4
 [descriptors.skills]
 trained = ["Perception, planning, and organization"]
 
-[descriptors.special_abilities]
-benefits_of_organization = { description = "Once per ten-hour recovery, take one extra free action in a well-organized area or plan" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Intellect defense in messy or chaotic settings"]
+
+[[descriptors.special_abilities]]
+name = "Benefits of Organization"
+description = "Once per ten-hour recovery, take one extra free action in a well-organized area or plan"
 
 [descriptors.equipment]
 other = ["Explorer's pack with extra compartments"]
@@ -1082,11 +1190,14 @@ intellect = 4
 [descriptors.skills]
 trained = ["Intellect defense"]
 
-[descriptors.special_abilities]
-shrugs_off_disappointment = { description = "Retry a failed non-combat task next round with one free level of Effort" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Might defense"]
+
+[[descriptors.special_abilities]]
+name = "Shrugs Off Disappointment"
+description = "Retry a failed non-combat task next round with one free level of Effort"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "Persistence led you to the other PCs"
@@ -1107,15 +1218,23 @@ name = "Passionate"
 source = "Destiny"
 tagline = "My heart leads my hand"
 
+[descriptors.stat_modifiers]
+
 [descriptors.skills]
 trained = ["Running, climbing, and swimming"]
 
-[descriptors.special_abilities]
-fever = { description = "+1 damage on attacks while angry" }
-fire_inside = { description = "Once per recovery, gain +1 asset on a task motivated by passion" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Tasks of subtlety or restraint"]
+
+[[descriptors.special_abilities]]
+name = "Fever"
+description = "+1 damage on attacks while angry"
+
+[[descriptors.special_abilities]]
+name = "Fire Inside"
+description = "Once per recovery, gain +1 asset on a task motivated by passion"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You're in love with a PC"
@@ -1137,16 +1256,19 @@ source = "Destiny"
 tagline = "Never yield"
 
 [descriptors.stat_modifiers]
-note = "+2 Intellect or +2 Might Pool (player choice)"
+# Note: +2 Intellect or +2 Might Pool (player choice)
 
 [descriptors.skills]
 trained = ["Endurance and sustained effort"]
 
-[descriptors.special_abilities]
-irrepressible_reaction = { description = "After any GM intrusion, your next action within 1 minute gains an asset" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Interaction tasks"]
+
+[[descriptors.special_abilities]]
+name = "Irrepressible Reaction"
+description = "After any GM intrusion, your next action within 1 minute gains an asset"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You found the group in trouble and helped"
@@ -1173,11 +1295,12 @@ speed = 4
 [descriptors.skills]
 trained = ["Initiative tasks"]
 
-[descriptors.special_abilities]
-tool_aficionado = { description = "Gain an asset when using a tool for non-combat tasks; if it already gives one, gain another" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["First action after being surprised"]
+
+[[descriptors.special_abilities]]
+name = "Tool Aficionado"
+description = "Gain an asset when using a tool for non-combat tasks; if it already gives one, gain another"
 
 [descriptors.equipment]
 other = ["Bag of light tools"]
@@ -1208,8 +1331,11 @@ intellect = 2
 [descriptors.skills]
 trained = ["Perception and initiative when protecting others"]
 
-[descriptors.special_abilities]
-safeguard = { description = "When an ally within immediate range is attacked, redirect attack to yourself (once per recovery)" }
+[[descriptors.special_abilities]]
+name = "Safeguard"
+description = "When an ally within immediate range is attacked, redirect attack to yourself (once per recovery)"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You swore to protect a PC"
@@ -1234,11 +1360,16 @@ tagline = "I don't know when to quit"
 might = 2
 speed = 2
 
-[descriptors.special_abilities]
-push_on = { description = "Once per recovery, ignore being debilitated for one action" }
+[descriptors.skills]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Social niceties and patience"]
+
+[[descriptors.special_abilities]]
+name = "Push On"
+description = "Once per recovery, ignore being debilitated for one action"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You pursued a goal that led you to the group"
@@ -1262,11 +1393,14 @@ tagline = "I endure what would break others"
 [descriptors.stat_modifiers]
 might = 4
 
-[descriptors.special_abilities]
-recover_quickly = { description = "+2 to recovery rolls" }
-
 [descriptors.skills]
 trained = ["Might defense"]
+
+[[descriptors.special_abilities]]
+name = "Recover Quickly"
+description = "+2 to recovery rolls"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You survived something that killed others—a PC knows"
@@ -1290,11 +1424,16 @@ tagline = "Fortune favors the bold"
 [descriptors.stat_modifiers]
 speed = 4
 
-[descriptors.special_abilities]
-apply_effort = { description = "When taking an action with a risk of failure, apply one free level of Effort (once per recovery)" }
+[descriptors.skills]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Caution, patience, and careful planning"]
+
+[[descriptors.special_abilities]]
+name = "Apply Effort"
+description = "When taking an action with a risk of failure, apply one free level of Effort (once per recovery)"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You took a crazy chance that led to meeting the PCs"
@@ -1321,11 +1460,14 @@ intellect = 4
 [descriptors.skills]
 trained = ["Identifying lies and trickery"]
 
-[descriptors.special_abilities]
-doubt_protects = { description = "+1 to Intellect defense against mental effects" }
-
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Trusting others, making friends quickly"]
+
+[[descriptors.special_abilities]]
+name = "Doubt Protects"
+description = "+1 to Intellect defense against mental effects"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "You're investigating the PCs to verify their intentions"
@@ -1353,7 +1495,7 @@ speed = 2
 [descriptors.skills]
 trained = ["Non-verbal communication and reading body language"]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["All verbal interaction tasks"]
 
 [descriptors.equipment]
@@ -1382,11 +1524,16 @@ tagline = "Debts must be paid"
 might = 2
 speed = 2
 
-[descriptors.special_abilities]
-vendetta = { description = "When attacking someone who wronged you or an ally, deal +2 damage" }
+[descriptors.skills]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Forgiveness, moving on, letting go"]
+
+[[descriptors.special_abilities]]
+name = "Vendetta"
+description = "When attacking someone who wronged you or an ally, deal +2 damage"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "Someone in the group wronged your enemy"
@@ -1411,11 +1558,16 @@ tagline = "Mercy is weakness"
 might = 2
 speed = 2
 
-[descriptors.special_abilities]
-killer_instinct = { description = "Treat foes two steps lower on damage track as if dead for purposes of attacks" }
+[descriptors.skills]
 
-[descriptors.inabilities]
+[descriptors.skills.inabilities]
 hindered = ["Healing, showing mercy, positive social interactions"]
+
+[[descriptors.special_abilities]]
+name = "Killer Instinct"
+description = "Treat foes two steps lower on damage track as if dead for purposes of attacks"
+
+[descriptors.equipment]
 
 [[descriptors.initial_links]]
 text = "A PC knows you get results, however brutal"

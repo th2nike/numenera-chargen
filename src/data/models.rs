@@ -107,6 +107,7 @@ pub struct Descriptor {
     pub tagline: String,
     pub stat_modifiers: DescriptorStatModifiers,
     pub skills: DescriptorSkills,
+    #[serde(default)]
     pub special_abilities: Vec<SpecialAbility>,
     pub equipment: DescriptorEquipment,
     pub initial_links: Vec<InitialLink>,
