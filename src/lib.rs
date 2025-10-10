@@ -40,6 +40,7 @@ pub mod character;
 pub mod data;
 pub mod generator;
 pub mod output;
+pub mod tui; 
 
 // Prelude for convenient imports
 pub mod prelude {
@@ -52,6 +53,8 @@ pub mod prelude {
     pub use crate::generator::{generate_random, generate_random_with_type, run_interactive};
 
     pub use crate::output::{format_character_sheet, format_compact, save_character_sheet};
+
+    pub use crate::tui;
 }
 
 // Re-export commonly used types at library root

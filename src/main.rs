@@ -29,6 +29,7 @@ struct Cli {
 enum Commands {
     /// Interactive character creation (step-by-step)
     Interactive,
+    Tui,
 
     /// Generate a random character
     Random {
@@ -94,6 +95,9 @@ fn main() -> Result<()> {
     match cli.command {
         Commands::Interactive => {
             interactive_mode(&game_data, &cli.output)?;
+        }
+        Commands::Tui =>{
+            numenera_chargen::tui::run(&game_data)?;
         }
         Commands::Random {
             r#type,
