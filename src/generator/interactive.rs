@@ -6,7 +6,7 @@ use colored::Colorize;
 use std::io::{self, Write};
 
 use crate::character::{build_character, CharacterSheet};
-use crate::data::{get_suitable_foci, GameData};
+use crate::data::GameData;
 
 // ==========================================
 // MAIN INTERACTIVE FLOW

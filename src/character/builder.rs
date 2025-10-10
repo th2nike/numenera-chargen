@@ -492,10 +492,11 @@ pub fn build_character(
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::data::{
-        DescriptorEquipment, DescriptorInabilities, DescriptorSkills, DescriptorStatModifiers,
-        EdgeValues as DataEdge, PlayerIntrusions, SpecialAbility, StartingTier,
-        StatPools as DataStatPools, TierAbilities, TierProgression, TypeEquipment, TypeSkills,
+    // Remove the unused imports
+    use crate::data::models::{
+        Ability, CharacterType, Descriptor, DescriptorEquipment, DescriptorSkills,
+        DescriptorStatModifiers, EdgeValues as DataEdge, Focus, PlayerIntrusions,
+        StartingTier, StatPools as DataStatPools, TypeEquipment, TypeSkills,
     };
 
     fn create_test_type() -> CharacterType {
