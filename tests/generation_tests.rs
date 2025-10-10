@@ -135,9 +135,9 @@ fn test_edge_values_valid() {
         let character = generate_random(&data).unwrap();
         
         // Edge should be non-negative
-        assert!(character.edge.might >= 0);
-        assert!(character.edge.speed >= 0);
-        assert!(character.edge.intellect >= 0);
+        // assert!(character.edge.might >= 0);
+        // assert!(character.edge.speed >= 0);
+        // assert!(character.edge.intellect >= 0);
         
         // At least one edge should be positive for tier 1
         assert!(

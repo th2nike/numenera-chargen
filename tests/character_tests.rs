@@ -1,4 +1,3 @@
-use numenera_chargen::character::*;
 use numenera_chargen::character::sheet::{CharacterSheet, Gender};
 use numenera_chargen::character::stats::{Pools, Edge, Effort};
 
