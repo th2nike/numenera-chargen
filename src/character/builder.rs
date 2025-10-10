@@ -48,6 +48,11 @@ impl CharacterBuilder {
         self
     }
 
+    pub fn with_gender(mut self, _gender: Gender) -> Self {
+        self.gender = Gender::Female;
+        self
+    }
+
     /// Set character type
     pub fn with_type(mut self, character_type: CharacterType) -> Self {
         self.character_type = Some(character_type);
