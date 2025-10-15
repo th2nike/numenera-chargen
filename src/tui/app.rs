@@ -36,9 +36,9 @@ pub enum Screen {
     FocusSelect,
     StatAllocation,
     AbilitySelect,
-    CypherSelect,      // NEW
-    ArtifactSelect,    // NEW (optional)
-    OdditySelect,      // NEW (optional)
+    CypherSelect,
+    ArtifactSelect,
+    OdditySelect,
     CharacterPreview,
 }
 
@@ -57,7 +57,7 @@ pub struct CharacterBuilder {
     pub bonus_intellect: i32,
     pub selected_abilities: Vec<String>,
     
-    // ========== NUMENERA SELECTION (NEW) ==========
+    // ========== NUMENERA SELECTION ==========
     pub selected_cyphers: Vec<usize>,        // Indices of selected cyphers
     pub selected_artifacts: Vec<usize>,      // Indices of selected artifacts
     pub selected_oddities: Vec<usize>,       // Indices of selected oddities
@@ -76,9 +76,9 @@ impl App {
             game_data,
             character_builder: CharacterBuilder::new(),
             generated_character: None,
-            preview_panel_focus: PreviewPanel::Left,  // NEW
-            preview_left_scroll: 0,                   // NEW
-            preview_right_scroll: 0,                  // NEW
+            preview_panel_focus: PreviewPanel::Left,
+            preview_left_scroll: 0,
+            preview_right_scroll: 0,
         }
     }
 
@@ -110,9 +110,9 @@ impl App {
             Screen::FocusSelect => self.handle_focus_select_keys(key),
             Screen::StatAllocation => self.handle_stat_allocation_keys(key),
             Screen::AbilitySelect => self.handle_ability_select_keys(key),
-            Screen::CypherSelect => self.handle_cypher_select_keys(key),      // NEW
-            Screen::ArtifactSelect => self.handle_artifact_select_keys(key),  // NEW
-            Screen::OdditySelect => self.handle_oddity_select_keys(key),      // NEW
+            Screen::CypherSelect => self.handle_cypher_select_keys(key),
+            Screen::ArtifactSelect => self.handle_artifact_select_keys(key),
+            Screen::OdditySelect => self.handle_oddity_select_keys(key),
             Screen::CharacterPreview => self.handle_preview_keys(key),
         }
     }
@@ -680,8 +680,8 @@ impl App {
                 self.character_builder.selected_oddities.clear();
             }
             KeyCode::Enter => {
-                self.preview_left_scroll = 0;    // ADD THIS
-                self.preview_right_scroll = 0;   // ADD THIS
+                self.preview_left_scroll = 0;
+                self.preview_right_scroll = 0;
                 self.current_screen = Screen::CharacterPreview;
             }
             KeyCode::Esc => {
@@ -782,9 +782,9 @@ impl CharacterBuilder {
             bonus_speed: 0,
             bonus_intellect: 0,
             selected_abilities: Vec::new(),
-            selected_cyphers: Vec::new(),      // NEW
-            selected_artifacts: Vec::new(),    // NEW
-            selected_oddities: Vec::new(),     // NEW
+            selected_cyphers: Vec::new(),
+            selected_artifacts: Vec::new(),
+            selected_oddities: Vec::new(),
             list_state: 0,
             scroll_offset: 0,
         }

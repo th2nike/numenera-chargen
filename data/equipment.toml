@@ -1,9 +1,4 @@
 # Numenera Character Generator - Equipment Data
-# All equipment from Discovery Chapter 7
-
-# ==========================================
-# WEAPONS
-# ==========================================
 
 # Light Weapons (2 damage, trained for all types, ease attack +1 step)
 [[weapons]]

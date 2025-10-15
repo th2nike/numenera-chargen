@@ -60,17 +60,15 @@ pub struct CharacterSheet {
     // Equipment
     pub equipment: Equipment,
 
-    // ========== NUMENERA ITEMS (NEW) ==========
     // Cyphers
     pub cypher_limit: u32,
-    pub cyphers: Vec<CypherInstance>,  // CHANGED: was Vec<String>
+    pub cyphers: Vec<CypherInstance>,
     
-    // Artifacts (NEW)
+    // Artifacts
     pub artifacts: Vec<ArtifactInstance>,
     
-    // Oddities (NEW)
+    // Oddities
     pub oddities: Vec<Oddity>,
-    // =========================================
 
     // Background
     pub background: Background,
@@ -271,9 +269,9 @@ impl CharacterSheet {
             focus_ability: String::new(),
             equipment: Equipment::new(),
             cypher_limit: 2,
-            cyphers: Vec::new(),     // Now Vec<CypherInstance>
-            artifacts: Vec::new(),   // NEW
-            oddities: Vec::new(),    // NEW
+            cyphers: Vec::new(),
+            artifacts: Vec::new(),
+            oddities: Vec::new(),
             background: Background::new(),
             xp: 0,
             advances: Vec::new(),

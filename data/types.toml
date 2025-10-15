@@ -1,9 +1,4 @@
 # Numenera Character Types
-# Data extracted from Discovery and Destiny rulebooks
-
-# =============================================================================
-# DISCOVERY TYPES
-# =============================================================================
 
 [[types]]
 name = "Glaive"

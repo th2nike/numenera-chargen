@@ -10,7 +10,6 @@ use crate::data::{
     Focus, 
     GameData, 
     Species,
-    // ADD THESE:
     ArtifactInstance, 
     CypherInstance, 
     Oddity,
@@ -23,8 +22,7 @@ use super::stats::{Edge, Effort, Pools};
 // CHARACTER BUILDER
 // ==========================================
 
-/// Builder for creating characters step by step
-/// Builder for creating characters step by step
+/// Builder for creating characters step by stepp
 pub struct CharacterBuilder {
     name: Option<String>,
     gender: Gender,
@@ -35,12 +33,9 @@ pub struct CharacterBuilder {
     bonus_points: Pools,
     selected_abilities: Vec<String>,
     selected_connection: Option<String>,
-    
-    // ========== NUMENERA ITEMS (NEW) ==========
     selected_cyphers: Vec<CypherInstance>,
     selected_artifacts: Vec<ArtifactInstance>,
     selected_oddities: Vec<Oddity>,
-    // =========================================
 }
 
 impl CharacterBuilder {
@@ -56,9 +51,9 @@ impl CharacterBuilder {
             bonus_points: Pools::zero(),
             selected_abilities: Vec::new(),
             selected_connection: None,
-            selected_cyphers: Vec::new(),      // NEW
-            selected_artifacts: Vec::new(),    // NEW
-            selected_oddities: Vec::new(),     // NEW
+            selected_cyphers: Vec::new(),
+            selected_artifacts: Vec::new(),
+            selected_oddities: Vec::new(),
         }
     }
 
@@ -68,6 +63,7 @@ impl CharacterBuilder {
         self
     }
 
+    ///Set character gender
     pub fn with_gender(mut self, _gender: Gender) -> Self {
         self.gender = Gender::Female;
         self
@@ -116,6 +112,7 @@ impl CharacterBuilder {
         self
     }
 
+    /// Add single cypher
     pub fn add_cypher(mut self, cypher: CypherInstance) -> Self {
         self.selected_cyphers.push(cypher);
         self
@@ -240,7 +237,6 @@ impl CharacterBuilder {
             sheet.background.focus_link = Some(focus.connections[0].clone());
         }
 
-        // ========== ADD NUMENERA ITEMS (NEW) ==========
         // Add cyphers
         for cypher in self.selected_cyphers {
             if let Err(e) = sheet.add_cypher(cypher) {
@@ -257,8 +253,6 @@ impl CharacterBuilder {
         for oddity in self.selected_oddities {
             sheet.add_oddity(oddity);
         }
-        // ===========================================
-
 
         Ok(sheet)
     }

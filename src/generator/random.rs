@@ -298,7 +298,7 @@ pub fn generate_random_with_type_and_descriptor(
     // Set gender after building
     character.gender = gender;
     
-    // ========== ADD RANDOM NUMENERA ITEMS (NEW) ==========
+    // ========== ADD RANDOM NUMENERA ITEMS
     let cypher_limit = character.cypher_limit as usize;
     
     // Add random cyphers (fill to limit)

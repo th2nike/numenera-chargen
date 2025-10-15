@@ -1,40 +1,6 @@
 // src/lib.rs
 // Numenera Character Generator Library
 
-//! # Numenera Character Generator
-//!
-//! A Rust library and CLI tool for generating Numenera characters
-//! from the Discovery and Destiny core books.
-//!
-//! ## Features
-//!
-//! - Interactive character creation with step-by-step guidance
-//! - Random character generation (full random or constrained)
-//! - Support for all 6 character types (Glaive, Nano, Jack, Arkus, Wright, Delve)
-//! - 42 descriptors from Discovery and Destiny
-//! - 51 foci from both core books
-//! - Species options (Varjellen, Lattimor, Mutant)
-//! - Complete equipment, cyphers, and abilities
-//! - Export to markdown format
-//!
-//! ## Quick Start
-//!
-//! ```no_run
-//! use numenera_chargen::prelude::*;
-//!
-//! # fn main() -> anyhow::Result<()> {
-//! // Load game data
-//! let game_data = load_all_data()?;
-//!
-//! // Generate a random character
-//! let character = generate_random(&game_data)?;
-//!
-//! // Save to markdown
-//! save_character_sheet(&character, "output")?;
-//! # Ok(())
-//! # }
-//! ```
-
 // Module declarations
 pub mod character;
 pub mod data;

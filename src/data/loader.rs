@@ -22,9 +22,9 @@ pub fn load_all_data() -> Result<GameData> {
     data.foci = load_foci()?;
     data.equipment = load_equipment()?;
     data.cyphers = load_cyphers()?;
-    data.artifacts = load_artifacts()?;      // NEW
-    data.oddities = load_oddities()?;        // NEW
-    data.discoveries = load_discoveries()?;  // NEW
+    data.artifacts = load_artifacts()?;
+    data.oddities = load_oddities()?;
+    data.discoveries = load_discoveries()?;
     data.species = load_species()?;
 
     Ok(data)
@@ -226,9 +226,9 @@ pub fn validate_data_files() -> Result<()> {
         "foci.toml",
         "equipment.toml",
         "cyphers.toml",
-        "artifacts.toml",    // NEW
-        "oddities.toml",     // NEW
-        "discoveries.toml",  // NEW
+        "artifacts.toml",
+        "oddities.toml",
+        "discoveries.toml",
         "species.toml",
     ];
 

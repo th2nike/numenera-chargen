@@ -36,9 +36,9 @@ pub fn render(f: &mut Frame, app: &App) {
         Screen::FocusSelect => screens::focus_select::render(f, chunks[1], app),
         Screen::StatAllocation => screens::stat_allocations::render(f, chunks[1], app),
         Screen::AbilitySelect => screens::ability_select::render(f, chunks[1], app),
-        Screen::CypherSelect => screens::cypher_select::render(f, chunks[1], app),      // NEW
-        Screen::ArtifactSelect => screens::artifact_select::render(f, chunks[1], app),  // NEW
-        Screen::OdditySelect => screens::oddity_select::render(f, chunks[1], app),      // NEW
+        Screen::CypherSelect => screens::cypher_select::render(f, chunks[1], app),
+        Screen::ArtifactSelect => screens::artifact_select::render(f, chunks[1], app),
+        Screen::OdditySelect => screens::oddity_select::render(f, chunks[1], app),
         Screen::CharacterPreview => screens::character_preview::render(f, chunks[1], app),
     }
 
@@ -134,7 +134,6 @@ pub fn highlighted_item<'a>(text: &'a str, is_selected: bool) -> Line<'a> {
     }
 }
 
-/// Helper to create a dimmed description line
 /// Helper to create a dimmed description line
 pub fn description_line(text: &str) -> Line<'static> {
     Line::from(Span::styled(

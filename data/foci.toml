@@ -1,10 +1,5 @@
 # Numenera Character Generator - Foci Data
-# All foci from Discovery + Destiny core books
 # Structure: Tier 1 abilities only (simplified for initial implementation)
-
-# ==========================================
-# DISCOVERY FOCI
-# ==========================================
 
 [[foci]]
 name = "Bears a Halo of Fire"

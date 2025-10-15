@@ -2,10 +2,6 @@
 # Species from Discovery Appendix A
 # Note: Species replaces Descriptor when creating a visitant character
 
-# ==========================================
-# VISITANTS
-# ==========================================
-
 [[species]]
 name = "Varjellen"
 category = "visitant"

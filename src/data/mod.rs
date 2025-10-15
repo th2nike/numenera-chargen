@@ -1,11 +1,10 @@
-// src/data/mod.rs
 pub mod loader;
 pub mod models;
 
 // Re-export commonly used types for convenience
 pub use loader::{
-    create_artifact_instance,    // ADD
-    create_cypher_instance,       // ADD
+    create_artifact_instance,
+    create_cypher_instance,
     data_summary, 
     find_descriptor, 
     find_focus, 
@@ -16,16 +15,16 @@ pub use loader::{
     get_suitable_foci, 
     get_weapons_by_category, 
     load_all_data,
-    load_artifacts,               // ADD
+    load_artifacts,
     load_cyphers, 
     load_descriptors, 
-    load_discoveries,             // ADD
+    load_discoveries,
     load_equipment, 
     load_foci, 
-    load_oddities,                // ADD
+    load_oddities,
     load_species, 
     load_types,
-    roll_level_formula,           // ADD
+    roll_level_formula,
     validate_data_files, 
     validate_game_data,
 };
@@ -34,15 +33,15 @@ pub use models::{
     Ability, 
     Ammunition, 
     Armor, 
-    Artifact,                     // ADD
-    ArtifactCrafting,             // ADD
-    ArtifactInstance,             // ADD
-    ArtifactsData,                // ADD
+    Artifact,
+    ArtifactCrafting,
+    ArtifactInstance,
+    ArtifactsData,
     CharacterType, 
     Clothing, 
     Consumable, 
     Cypher, 
-    CypherInstance,               // ADD
+    CypherInstance,
     CyphersData,
     Descriptor, 
     DescriptorEquipment, 
@@ -50,8 +49,8 @@ pub use models::{
     DescriptorSkills,
     DescriptorStatModifiers, 
     DescriptorsData, 
-    Discovery,                    // ADD
-    DiscoveriesData,              // ADD
+    Discovery,
+    DiscoveriesData,
     DistinctiveMutation, 
     EdgeValues, 
     EquipmentData,
@@ -60,12 +59,12 @@ pub use models::{
     GameData, 
     Gear, 
     InitialLink, 
-    IotumRequirement,             // ADD
+    IotumRequirement,
     MutationEntry, 
     MutationOptions, 
     MutationSystem,
-    Oddity,                       // ADD
-    OdditiesData,                 // ADD
+    Oddity,
+    OdditiesData,
     PlayerIntrusions, 
     Shield, 
     SpecialAbility, 
