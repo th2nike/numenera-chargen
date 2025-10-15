@@ -34,11 +34,11 @@ examples = [
 ]
 
 [types.equipment]
-weapons = ["Two weapons of choice (or one weapon + shield)"]
-armor = "Light or medium armor"
+weapons = ["Sword", "Dagger"]  # Or ["Battleaxe", "Handaxe"] for variety
+armor = "Leather Jerkin"
 explorer_pack = true
 shins = 5
-other = ["Two cyphers", "One oddity"]
+other = []
 
 [types.skills]
 trained = ["One physical skill (balancing, climbing, jumping, or swimming)"]
@@ -117,11 +117,11 @@ examples = [
 ]
 
 [types.equipment]
-weapons = ["One light weapon"]
+weapons = ["Knife"]
 armor = ""
 explorer_pack = false
 shins = 4
-other = ["Numenera book or equipment", "Three cyphers", "One oddity"]
+other = ["Numenera book"]
 
 [types.skills]
 trained = ["Understanding numenera"]
@@ -199,11 +199,11 @@ examples = [
 ]
 
 [types.equipment]
-weapons = ["Light and medium weapons"]
-armor = "Light armor (optional)"
+weapons = ["Sword", "Dagger"]
+armor = "Leather Jerkin"
 explorer_pack = false
 shins = 8
-other = ["Two or three cyphers", "One oddity"]
+other = []
 
 [types.skills]
 trained = ["One non-combat task of choice", "Flex Skill (choose different skill each day)"]
@@ -286,11 +286,11 @@ examples = [
 ]
 
 [types.equipment]
-weapons = ["One light weapon"]
+weapons = ["Knife"]
 armor = ""
 explorer_pack = false
 shins = 9
-other = ["Stylish clothes", "Two cyphers", "One oddity"]
+other = ["Stylish clothes"]
 
 [types.skills]
 trained = ["Persuasion", "One of: Negotiation, Deceiving, Public Speaking, Intimidation, or Seeing Through Deception"]
@@ -377,11 +377,11 @@ examples = [
 ]
 
 [types.equipment]
-weapons = ["One light weapon"]
+weapons = ["Knife"]
 armor = ""
 explorer_pack = false
 shins = 15
-other = ["Tool kit", "Two cyphers", "One oddity"]
+other = ["Bag of Light Tools"]
 
 [types.skills]
 trained = ["Crafting numenera", "Salvaging numenera", "One additional crafting field (architecture, chemistry, metallurgy, etc.)"]
@@ -463,11 +463,11 @@ examples = [
 ]
 
 [types.equipment]
-weapons = ["One light weapon", "One medium weapon"]
-armor = "Light armor"
+weapons = ["Dagger", "Sword"]
+armor = "Leather Jerkin"
 explorer_pack = true
 shins = 10
-other = ["Two cyphers", "One oddity"]
+other = []
 
 [types.skills]
 trained = ["Navigation", "Perception", "Finding hidden objects"]

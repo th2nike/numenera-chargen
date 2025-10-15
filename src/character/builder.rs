@@ -15,7 +15,7 @@ use super::stats::{Edge, Effort, Pools};
 // CHARACTER BUILDER
 // ==========================================
 
-/// Builder for creating characters step by stepp
+/// Builder for creating characters step by step
 pub struct CharacterBuilder {
     name: Option<String>,
     gender: Gender,
@@ -56,9 +56,9 @@ impl CharacterBuilder {
         self
     }
 
-    ///Set character gender
-    pub fn with_gender(mut self, _gender: Gender) -> Self {
-        self.gender = Gender::Female;
+    /// Set character gender
+    pub fn with_gender(mut self, gender: Gender) -> Self {
+        self.gender = gender;
         self
     }
 
@@ -142,7 +142,7 @@ impl CharacterBuilder {
     }
 
     /// Build the final character sheet
-    pub fn build(self) -> Result<CharacterSheet> {
+    pub fn build(self, game_data: &GameData) -> Result<CharacterSheet> {
         // Validate required fields
         let name = self.name.context("Character name is required")?;
 
@@ -191,11 +191,17 @@ impl CharacterBuilder {
         // Build skills
         sheet.skills = build_skills_helper(&character_type, &descriptor, &species, &focus);
 
-        // Build equipment
-        sheet.equipment = build_equipment_helper(&character_type, &descriptor, &species, &focus);
+        // Build equipment (WITH GAME_DATA)
+        sheet.equipment = build_equipment_helper(
+            &character_type,
+            &descriptor,
+            &species,
+            &focus,
+            game_data,
+        );
 
-        // Calculate armor
-        sheet.armor = calculate_armor_helper(&character_type, &descriptor);
+        // Calculate armor (WITH GAME_DATA)
+        sheet.armor = calculate_armor_helper(&character_type, &descriptor, game_data);
 
         // Add special abilities
         sheet.special_abilities =
@@ -379,47 +385,114 @@ fn build_skills_helper(
     skills
 }
 
-/// Build equipment list (standalone helper)
+/// Build equipment list with full item resolution (enhanced)
 fn build_equipment_helper(
     character_type: &CharacterType,
     descriptor: &Option<Descriptor>,
     species: &Option<Species>,
     focus: &Focus,
+    game_data: &GameData,
 ) -> Equipment {
     let mut equipment = Equipment::new();
 
-    // Add type equipment
-    for weapon in &character_type.equipment.weapons {
-        equipment.add_weapon(weapon.clone());
+    // ========== TYPE EQUIPMENT ==========
+    // Add type weapons (resolve from equipment.toml)
+    for weapon_name in &character_type.equipment.weapons {
+        // Try to find the actual weapon
+        if let Some(weapon) = game_data
+            .equipment
+            .weapons
+            .iter()
+            .find(|w| w.name.eq_ignore_ascii_case(weapon_name))
+        {
+            equipment.add_weapon(format!("{} ({} damage)", weapon.name, weapon.damage));
+        } else {
+            // Fallback: just add the name
+            equipment.add_weapon(weapon_name.clone());
+        }
     }
-    if let Some(armor) = &character_type.equipment.armor {
-        equipment.armor = Some(armor.clone());
+
+    // Add type armor (resolve from equipment.toml)
+    if let Some(armor_name) = &character_type.equipment.armor {
+        if let Some(armor_item) = game_data
+            .equipment
+            .armor
+            .iter()
+            .find(|a| a.name.eq_ignore_ascii_case(armor_name))
+        {
+            equipment.armor = Some(format!(
+                "{} (+{} Armor, Speed Effort +{})",
+                armor_item.name, armor_item.armor_bonus, armor_item.speed_effort_cost
+            ));
+        } else {
+            equipment.armor = Some(armor_name.clone());
+        }
     }
+
+    // Add explorer's pack contents
     if character_type.equipment.explorer_pack {
         equipment.add_gear("Explorer's Pack".to_string());
+        equipment.add_gear("Rope (15m)".to_string());
+        equipment.add_gear("Rations x3".to_string());
+        equipment.add_gear("Spikes (10)".to_string());
+        equipment.add_gear("Hammer".to_string());
+        equipment.add_gear("Boots".to_string());
+        equipment.add_gear("Torches x3".to_string());
+        equipment.add_gear("Glowglobes x2".to_string());
     }
+
+    // Add type shins
     equipment.add_shins(character_type.equipment.shins);
+
+    // Add other type equipment
     for item in &character_type.equipment.other {
         equipment.add_gear(item.clone());
     }
 
-    // Add descriptor equipment
+    // ========== DESCRIPTOR EQUIPMENT ==========
     if let Some(desc) = descriptor {
         equipment.add_shins(desc.equipment.shins);
-        for weapon in &desc.equipment.weapons {
-            equipment.add_weapon(weapon.clone());
-        }
-        for armor_item in &desc.equipment.armor {
-            if equipment.armor.is_none() {
-                equipment.armor = Some(armor_item.clone());
+
+        // Add descriptor weapons
+        for weapon_name in &desc.equipment.weapons {
+            if let Some(weapon) = game_data
+                .equipment
+                .weapons
+                .iter()
+                .find(|w| w.name.eq_ignore_ascii_case(weapon_name))
+            {
+                equipment.add_weapon(format!("{} ({} damage)", weapon.name, weapon.damage));
+            } else {
+                equipment.add_weapon(weapon_name.clone());
             }
         }
+
+        // Add descriptor armor (if character doesn't already have armor)
+        for armor_name in &desc.equipment.armor {
+            if equipment.armor.is_none() {
+                if let Some(armor_item) = game_data
+                    .equipment
+                    .armor
+                    .iter()
+                    .find(|a| a.name.eq_ignore_ascii_case(armor_name))
+                {
+                    equipment.armor = Some(format!(
+                        "{} (+{} Armor, Speed Effort +{})",
+                        armor_item.name, armor_item.armor_bonus, armor_item.speed_effort_cost
+                    ));
+                } else {
+                    equipment.armor = Some(armor_name.clone());
+                }
+            }
+        }
+
+        // Add descriptor other items
         for item in &desc.equipment.other {
             equipment.add_gear(item.clone());
         }
     }
 
-    // Add species equipment
+    // ========== SPECIES EQUIPMENT ==========
     if let Some(spec) = species {
         equipment.add_shins(spec.equipment.starting_shins);
         for item in &spec.equipment.items {
@@ -427,7 +500,7 @@ fn build_equipment_helper(
         }
     }
 
-    // Add focus equipment
+    // ========== FOCUS EQUIPMENT ==========
     for item in &focus.equipment {
         equipment.add_gear(item.clone());
     }
@@ -435,23 +508,40 @@ fn build_equipment_helper(
     equipment
 }
 
-/// Calculate armor value (standalone helper)
-fn calculate_armor_helper(character_type: &CharacterType, _descriptor: &Option<Descriptor>) -> u32 {
-    // This is a simplified calculation
-    // In reality, we'd need to look up armor values from equipment.toml
-    // For now, we'll use a basic heuristic
-
-    let mut armor = 0;
-
-    // Glaives typically start with light or medium armor
-    if character_type.name == "Glaive" {
-        armor = 1; // Assume light armor
+/// Calculate armor value based on equipped armor (enhanced)
+fn calculate_armor_helper(
+    character_type: &CharacterType,
+    descriptor: &Option<Descriptor>,
+    game_data: &GameData,
+) -> u32 {
+    // Check type armor first
+    if let Some(armor_name) = &character_type.equipment.armor {
+        if let Some(armor_item) = game_data
+            .equipment
+            .armor
+            .iter()
+            .find(|a| a.name.eq_ignore_ascii_case(armor_name))
+        {
+            return armor_item.armor_bonus;
+        }
     }
 
-    // Some descriptors might provide armor bonuses
-    // This would be handled by special abilities
+    // Check descriptor armor
+    if let Some(desc) = descriptor {
+        for armor_name in &desc.equipment.armor {
+            if let Some(armor_item) = game_data
+                .equipment
+                .armor
+                .iter()
+                .find(|a| a.name.eq_ignore_ascii_case(armor_name))
+            {
+                return armor_item.armor_bonus;
+            }
+        }
+    }
 
-    armor
+    // Default: no armor
+    0
 }
 
 /// Build special abilities list (standalone helper)
@@ -550,7 +640,7 @@ pub fn build_character(
         builder = builder.add_ability(ability);
     }
 
-    builder.build()
+    builder.build(game_data)
 }
 
 // ==========================================
@@ -560,12 +650,37 @@ pub fn build_character(
 #[cfg(test)]
 mod tests {
     use super::*;
-    // Remove the unused imports
     use crate::data::models::{
         CharacterType, Descriptor, DescriptorEquipment, DescriptorInabilities, DescriptorSkills,
         DescriptorStatModifiers, EdgeValues as DataEdge, Focus, PlayerIntrusions, StartingTier,
         StatPools as DataStatPools, TypeEquipment, TypeSkills,
     };
+
+    fn create_test_game_data() -> GameData {
+        let mut game_data = GameData::new();
+
+        // Add a test weapon
+        game_data.equipment.weapons.push(crate::data::Weapon {
+            name: "Sword".to_string(),
+            category: "medium".to_string(),
+            damage: 4,
+            cost: 5,
+            range: "immediate".to_string(),
+            notes: "Standard blade".to_string(),
+        });
+
+        // Add a test armor
+        game_data.equipment.armor.push(crate::data::Armor {
+            name: "Light armor".to_string(),
+            category: "light".to_string(),
+            armor_bonus: 1,
+            speed_effort_cost: 1,
+            cost: 2,
+            notes: "Basic protection".to_string(),
+        });
+
+        game_data
+    }
 
     fn create_test_type() -> CharacterType {
         CharacterType {
@@ -654,6 +769,8 @@ mod tests {
 
     #[test]
     fn test_character_builder() {
+        let game_data = create_test_game_data();
+
         let builder = CharacterBuilder::new()
             .with_name("Test Hero".to_string())
             .with_type(create_test_type())
@@ -661,7 +778,7 @@ mod tests {
             .with_focus(create_test_focus())
             .with_bonus_points(4, 2, 0);
 
-        let result = builder.build();
+        let result = builder.build(&game_data);
         assert!(result.is_ok());
 
         let sheet = result.unwrap();
@@ -678,6 +795,8 @@ mod tests {
 
     #[test]
     fn test_character_sentence() {
+        let game_data = create_test_game_data();
+
         let builder = CharacterBuilder::new()
             .with_name("Test Hero".to_string())
             .with_type(create_test_type())
@@ -685,7 +804,7 @@ mod tests {
             .with_focus(create_test_focus())
             .with_bonus_points(4, 2, 0);
 
-        let sheet = builder.build().unwrap();
+        let sheet = builder.build(&game_data).unwrap();
         assert_eq!(
             sheet.character_sentence(),
             "I am a Charming Glaive who Masters Weaponry"
@@ -694,6 +813,8 @@ mod tests {
 
     #[test]
     fn test_invalid_bonus_points() {
+        let game_data = create_test_game_data();
+
         let builder = CharacterBuilder::new()
             .with_name("Test Hero".to_string())
             .with_type(create_test_type())
@@ -701,7 +822,7 @@ mod tests {
             .with_focus(create_test_focus())
             .with_bonus_points(10, 0, 0); // Total 10, but should be 6
 
-        let result = builder.build();
+        let result = builder.build(&game_data);
         assert!(result.is_err());
     }
 }
