@@ -19,7 +19,7 @@ impl EventHandler {
     }
 
     /// Get the next event (keyboard, mouse, resize)
-    pub fn next(&mut self) -> Result<Option<Event>> {
+    pub fn poll_event(&mut self) -> Result<Option<Event>> {
         // Poll for events with timeout
         if event::poll(self.tick_rate)? {
             Ok(Some(event::read()?))

@@ -17,9 +17,9 @@ pub fn render(f: &mut Frame, area: Rect, _app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Spacer
-            Constraint::Length(8),  // Menu options
-            Constraint::Min(0),     // Info
+            Constraint::Length(3), // Spacer
+            Constraint::Length(8), // Menu options
+            Constraint::Min(0),    // Info
         ])
         .split(block.inner(area));
 
@@ -42,14 +42,10 @@ pub fn render(f: &mut Frame, area: Rect, _app: &App) {
         )),
         Line::from("    Generate a complete random character"),
         Line::from(""),
-        Line::from(Span::styled(
-            "[Q] Quit",
-            Style::default().fg(Color::Red),
-        )),
+        Line::from(Span::styled("[Q] Quit", Style::default().fg(Color::Red))),
     ];
 
-    let menu = Paragraph::new(menu_text)
-        .alignment(Alignment::Center);
+    let menu = Paragraph::new(menu_text).alignment(Alignment::Center);
 
     // Info text
     let info_text = vec![
@@ -69,8 +65,7 @@ pub fn render(f: &mut Frame, area: Rect, _app: &App) {
         )),
     ];
 
-    let info = Paragraph::new(info_text)
-        .alignment(Alignment::Center);
+    let info = Paragraph::new(info_text).alignment(Alignment::Center);
 
     f.render_widget(block, area);
     f.render_widget(menu, chunks[1]);

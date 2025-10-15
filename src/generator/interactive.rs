@@ -43,10 +43,10 @@ pub fn run(game_data: &GameData) -> Result<CharacterSheet> {
 
     // Step 4: Allocate Bonus Points
     let bonus_points = allocate_bonus_points(
-        &character_type, 
+        &character_type,
         &descriptor_or_species,
         is_species,
-        game_data
+        game_data,
     )?;
 
     // Step 5: Select Focus
@@ -230,35 +230,26 @@ fn allocate_bonus_points(
     println!();
 
     let mut remaining = bonus_total as i32;
-    let might: i32;
-    let speed: i32;
-    let intellect: i32;
 
     // Allocate Might
-    println!("Allocate points to {} (0-{}): ", "Might".bold(), remaining);
-    print!("> ");
-    io::stdout().flush()?;
-    might = read_number(0, remaining)?;
-    remaining -= might;
+    println!("Allocate {} bonus points to stat pools:", remaining);
 
-    // Allocate Speed
-    if remaining > 0 {
-        println!(
-            "\nAllocate points to {} (0-{}, {} remaining): ",
-            "Speed".bold(),
-            remaining,
-            remaining
-        );
-        print!("> ");
-        io::stdout().flush()?;
-        speed = read_number(0, remaining)?;
-        remaining -= speed;
-    } else {
-        speed = 0;
-    }
+    print!("Might: ");
+    io::stdout().flush()?;
+    let might: i32 = read_number(0, remaining)?;
+
+    remaining -= might;
+    println!("Remaining: {}", remaining);
+
+    print!("Speed: ");
+    io::stdout().flush()?;
+    let speed: i32 = read_number(0, remaining)?;
+
+    remaining -= speed;
+    println!("Remaining: {}", remaining);
 
     // Rest goes to Intellect
-    intellect = remaining;
+    let intellect: i32 = remaining;
 
     println!();
     println!("{}", "Bonus Point Allocation:".green());

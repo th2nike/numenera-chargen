@@ -20,8 +20,8 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(2),  // Instructions
-            Constraint::Min(0),     // List
+            Constraint::Length(2), // Instructions
+            Constraint::Min(0),    // List
         ])
         .split(block.inner(area));
 
@@ -49,9 +49,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         if i >= scroll_offset + visible_items {
             break;
         }
-        
+
         let is_selected = i == selected;
-        
+
         lines.push(highlighted_item(&char_type.name, is_selected));
         lines.push(Line::from(Span::styled(
             format!("    {}", char_type.tagline),
@@ -66,10 +66,13 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
 
     // Scroll indicators
     if scroll_offset > 0 {
-        lines.insert(1, Line::from(Span::styled(
-            "↑ More above ↑",
-            Style::default().fg(Color::DarkGray),
-        )));
+        lines.insert(
+            1,
+            Line::from(Span::styled(
+                "↑ More above ↑",
+                Style::default().fg(Color::DarkGray),
+            )),
+        );
     }
     if scroll_offset + visible_items < total_count {
         lines.push(Line::from(Span::styled(
@@ -79,7 +82,6 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     }
 
     let list = Paragraph::new(lines);
-
 
     f.render_widget(block, area);
     f.render_widget(instructions, chunks[0]);

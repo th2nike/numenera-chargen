@@ -5,14 +5,7 @@ use anyhow::{Context, Result};
 
 use crate::character::sheet::Gender;
 use crate::data::{
-    CharacterType, 
-    Descriptor, 
-    Focus, 
-    GameData, 
-    Species,
-    ArtifactInstance, 
-    CypherInstance, 
-    Oddity,
+    ArtifactInstance, CharacterType, CypherInstance, Descriptor, Focus, GameData, Oddity, Species,
 };
 
 use super::sheet::{CharacterPools, CharacterSheet, Equipment, Skills};
@@ -148,21 +141,20 @@ impl CharacterBuilder {
         self
     }
 
-
     /// Build the final character sheet
     pub fn build(self) -> Result<CharacterSheet> {
         // Validate required fields
         let name = self.name.context("Character name is required")?;
-        
+
         // Extract values from self before any method calls
         let character_type = self
             .character_type
             .as_ref()
             .context("Character type is required")?
             .clone();
-        
+
         let focus = self.focus.as_ref().context("Focus is required")?.clone();
-        
+
         let descriptor = self.descriptor.clone();
         let species = self.species.clone();
         let bonus_points = self.bonus_points;
@@ -206,7 +198,8 @@ impl CharacterBuilder {
         sheet.armor = calculate_armor_helper(&character_type, &descriptor);
 
         // Add special abilities
-        sheet.special_abilities = build_special_abilities_helper(&character_type, &descriptor, &species);
+        sheet.special_abilities =
+            build_special_abilities_helper(&character_type, &descriptor, &species);
 
         // Add selected type abilities
         sheet.type_abilities = selected_abilities;
@@ -310,7 +303,9 @@ fn calculate_pools_helper(
 
     // Check bonus points total
     let bonus_total = if let Some(spec) = species {
-        spec.stat_modifiers.initial_bonus_points.unwrap_or(character_type.stat_pools.bonus_points)
+        spec.stat_modifiers
+            .initial_bonus_points
+            .unwrap_or(character_type.stat_pools.bonus_points)
     } else {
         character_type.stat_pools.bonus_points
     };
@@ -327,10 +322,7 @@ fn calculate_pools_helper(
 }
 
 /// Calculate edge values (standalone helper)
-fn calculate_edge_helper(
-    character_type: &CharacterType,
-    _descriptor: &Option<Descriptor>,
-) -> Edge {
+fn calculate_edge_helper(character_type: &CharacterType, _descriptor: &Option<Descriptor>) -> Edge {
     Edge::new(
         character_type.edge.might,
         character_type.edge.speed,
@@ -444,10 +436,7 @@ fn build_equipment_helper(
 }
 
 /// Calculate armor value (standalone helper)
-fn calculate_armor_helper(
-    character_type: &CharacterType,
-    _descriptor: &Option<Descriptor>,
-) -> u32 {
+fn calculate_armor_helper(character_type: &CharacterType, _descriptor: &Option<Descriptor>) -> u32 {
     // This is a simplified calculation
     // In reality, we'd need to look up armor values from equipment.toml
     // For now, we'll use a basic heuristic
@@ -503,6 +492,7 @@ fn build_special_abilities_helper(
 // ==========================================
 
 /// Quick build a character from selections
+#[allow(clippy::too_many_arguments)]
 pub fn build_character(
     game_data: &GameData,
     name: String,
@@ -572,9 +562,9 @@ mod tests {
     use super::*;
     // Remove the unused imports
     use crate::data::models::{
-        CharacterType, Descriptor, DescriptorEquipment, DescriptorSkills,
-        DescriptorStatModifiers, EdgeValues as DataEdge, Focus, PlayerIntrusions,
-        StartingTier, StatPools as DataStatPools, TypeEquipment, TypeSkills, DescriptorInabilities
+        CharacterType, Descriptor, DescriptorEquipment, DescriptorInabilities, DescriptorSkills,
+        DescriptorStatModifiers, EdgeValues as DataEdge, Focus, PlayerIntrusions, StartingTier,
+        StatPools as DataStatPools, TypeEquipment, TypeSkills,
     };
 
     fn create_test_type() -> CharacterType {
@@ -679,7 +669,7 @@ mod tests {
         assert_eq!(sheet.character_type, "Glaive");
         assert_eq!(sheet.descriptor, Some("Charming".to_string()));
         assert_eq!(sheet.focus, "Masters Weaponry");
-        
+
         // Pools: base (10,10,8) + descriptor (0,0,2) + bonus (4,2,0) = (14,12,10)
         assert_eq!(sheet.pools.maximum.might, 14);
         assert_eq!(sheet.pools.maximum.speed, 12);

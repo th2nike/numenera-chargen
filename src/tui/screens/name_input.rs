@@ -17,9 +17,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Instructions
-            Constraint::Length(3),  // Input box
-            Constraint::Min(0),     // Spacer
+            Constraint::Length(3), // Instructions
+            Constraint::Length(3), // Input box
+            Constraint::Min(0),    // Spacer
         ])
         .split(block.inner(area));
 
@@ -39,7 +39,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         ))]
     } else {
         let mut spans = Vec::new();
-        
+
         for (i, c) in name.chars().enumerate() {
             if i == cursor_pos {
                 spans.push(Span::styled(
@@ -51,7 +51,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             }
             spans.push(Span::raw(c.to_string()));
         }
-        
+
         // Cursor at end
         if cursor_pos >= name.len() {
             spans.push(Span::styled(
@@ -61,7 +61,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
                     .add_modifier(Modifier::SLOW_BLINK),
             ));
         }
-        
+
         vec![Line::from(spans)]
     };
 

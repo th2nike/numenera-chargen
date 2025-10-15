@@ -19,9 +19,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let main_chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(6),  // Header (name + sentence)
-            Constraint::Min(0),     // Body (three panels)
-            Constraint::Length(3),  // Footer (actions)
+            Constraint::Length(6), // Header (name + sentence)
+            Constraint::Min(0),    // Body (three panels)
+            Constraint::Length(3), // Footer (actions)
         ])
         .split(block.inner(area));
 
@@ -55,16 +55,13 @@ fn get_character(app: &App) -> Option<crate::CharacterSheet> {
         app.character_builder.name.clone(),
         app.character_builder
             .character_type
-            .as_ref()
-            .unwrap_or(&"Unknown".to_string()),
+            .as_deref()
+            .unwrap_or("Unknown"),
         app.character_builder
             .descriptor_or_species
-            .as_ref()
-            .unwrap_or(&"Unknown".to_string()),
-        app.character_builder
-            .focus
-            .as_ref()
-            .unwrap_or(&"Unknown".to_string()),
+            .as_deref()
+            .unwrap_or("Unknown"),
+        app.character_builder.focus.as_deref().unwrap_or("Unknown"),
         app.character_builder.bonus_might,
         app.character_builder.bonus_speed,
         app.character_builder.bonus_intellect,
@@ -102,13 +99,12 @@ fn render_header(f: &mut Frame, area: Rect, character: &crate::CharacterSheet) {
             Span::styled("Tier: ", Style::default().fg(Color::Gray)),
             Span::styled(
                 character.tier.to_string(),
-                Style::default().fg(Color::White).add_modifier(Modifier::BOLD),
+                Style::default()
+                    .fg(Color::White)
+                    .add_modifier(Modifier::BOLD),
             ),
             Span::styled("  •  XP: ", Style::default().fg(Color::Gray)),
-            Span::styled(
-                character.xp.to_string(),
-                Style::default().fg(Color::White),
-            ),
+            Span::styled(character.xp.to_string(), Style::default().fg(Color::White)),
             Span::styled("  •  Armor: ", Style::default().fg(Color::Gray)),
             Span::styled(
                 character.armor.to_string(),
@@ -131,8 +127,8 @@ fn render_body(f: &mut Frame, area: Rect, character: &crate::CharacterSheet, app
     let body_chunks = Layout::default()
         .direction(Direction::Horizontal)
         .constraints([
-            Constraint::Percentage(40),  // Left panel
-            Constraint::Percentage(60),  // Right panel
+            Constraint::Percentage(40), // Left panel
+            Constraint::Percentage(60), // Right panel
         ])
         .split(area);
 
@@ -151,13 +147,15 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
     lines.push(Line::from(""));
     lines.push(Line::from(Span::styled(
         "═══ STATS ═══",
-        Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD),
+        Style::default()
+            .fg(Color::Cyan)
+            .add_modifier(Modifier::BOLD),
     )));
     lines.push(Line::from(Span::styled(
         "Pools (Current / Max):",
         Style::default().fg(Color::Gray),
     )));
-    
+
     // Might
     lines.push(Line::from(vec![
         Span::raw("  Might:     "),
@@ -193,8 +191,11 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
         Span::raw("  Intellect: "),
         Span::styled(
             format!("{:2}", character.pools.current.intellect),
-            get_pool_color(character.pools.current.intellect, character.pools.maximum.intellect)
-                .add_modifier(Modifier::BOLD),
+            get_pool_color(
+                character.pools.current.intellect,
+                character.pools.maximum.intellect,
+            )
+            .add_modifier(Modifier::BOLD),
         ),
         Span::styled(" / ", Style::default().fg(Color::DarkGray)),
         Span::styled(
@@ -232,7 +233,9 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
         Span::raw("  Effort: "),
         Span::styled(
             character.effort.max_effort.to_string(),
-            Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::Yellow)
+                .add_modifier(Modifier::BOLD),
         ),
     ]));
 
@@ -240,7 +243,9 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
     lines.push(Line::from(""));
     lines.push(Line::from(Span::styled(
         "═══ SKILLS ═══",
-        Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD),
+        Style::default()
+            .fg(Color::Cyan)
+            .add_modifier(Modifier::BOLD),
     )));
 
     if !character.skills.trained.is_empty() {
@@ -273,7 +278,9 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
     lines.push(Line::from(""));
     lines.push(Line::from(Span::styled(
         "═══ ABILITIES ═══",
-        Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD),
+        Style::default()
+            .fg(Color::Cyan)
+            .add_modifier(Modifier::BOLD),
     )));
 
     if !character.type_abilities.is_empty() {
@@ -293,23 +300,25 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
     lines.push(Line::from(""));
     lines.push(Line::from(Span::styled(
         "═══ EQUIPMENT ═══",
-        Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD),
+        Style::default()
+            .fg(Color::Cyan)
+            .add_modifier(Modifier::BOLD),
     )));
-    
+
     if !character.equipment.weapons.is_empty() {
         lines.push(Line::from(Span::styled(
             format!("Weapons: {}", character.equipment.weapons.join(", ")),
             Style::default().fg(Color::White),
         )));
     }
-    
+
     if let Some(armor) = &character.equipment.armor {
         lines.push(Line::from(Span::styled(
             format!("Armor: {}", armor),
             Style::default().fg(Color::White),
         )));
     }
-    
+
     lines.push(Line::from(Span::styled(
         format!("Shins: {}", character.equipment.shins),
         Style::default().fg(Color::Yellow),
@@ -319,12 +328,12 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
     let is_focused = app.preview_panel_focus == PreviewPanel::Left;
     let scroll_offset = app.preview_left_scroll;
     let visible_height = area.height.saturating_sub(2) as usize; // Subtract border
-    
+
     // Calculate visible range
     let total_lines = lines.len();
     let max_scroll = total_lines.saturating_sub(visible_height);
     let clamped_scroll = scroll_offset.min(max_scroll);
-    
+
     // Show scroll indicators
     let mut display_lines = Vec::new();
     if clamped_scroll > 0 {
@@ -333,11 +342,11 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
             Style::default().fg(Color::DarkGray),
         )));
     }
-    
+
     // Add visible lines
     let end_idx = (clamped_scroll + visible_height).min(total_lines);
     display_lines.extend_from_slice(&lines[clamped_scroll..end_idx]);
-    
+
     if end_idx < total_lines {
         display_lines.push(Line::from(Span::styled(
             "↓ More below ↓",
@@ -345,9 +354,15 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
         )));
     }
 
-    let border_color = if is_focused { Color::Cyan } else { Color::DarkGray };
+    let border_color = if is_focused {
+        Color::Cyan
+    } else {
+        Color::DarkGray
+    };
     let title_style = if is_focused {
-        Style::default().fg(Color::Cyan).add_modifier(Modifier::BOLD)
+        Style::default()
+            .fg(Color::Cyan)
+            .add_modifier(Modifier::BOLD)
     } else {
         Style::default().fg(Color::Gray)
     };
@@ -374,8 +389,14 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     // ═══ CYPHERS ═══
     lines.push(Line::from(""));
     lines.push(Line::from(Span::styled(
-        format!("═══ CYPHERS ({}/{}) ═══", character.cyphers.len(), character.cypher_limit),
-        Style::default().fg(Color::Green).add_modifier(Modifier::BOLD),
+        format!(
+            "═══ CYPHERS ({}/{}) ═══",
+            character.cyphers.len(),
+            character.cypher_limit
+        ),
+        Style::default()
+            .fg(Color::Green)
+            .add_modifier(Modifier::BOLD),
     )));
 
     if character.cyphers.is_empty() {
@@ -386,13 +407,16 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     } else {
         for (i, cypher) in character.cyphers.iter().enumerate() {
             lines.push(Line::from(Span::styled(
-                format!("{}. {} (Lvl {}, {})", 
-                    i + 1, 
-                    cypher.name, 
-                    cypher.level, 
+                format!(
+                    "{}. {} (Lvl {}, {})",
+                    i + 1,
+                    cypher.name,
+                    cypher.level,
                     cypher.cypher_type
                 ),
-                Style::default().fg(Color::Green).add_modifier(Modifier::BOLD),
+                Style::default()
+                    .fg(Color::Green)
+                    .add_modifier(Modifier::BOLD),
             )));
             lines.push(Line::from(Span::styled(
                 format!("   Form: {}", truncate(&cypher.form, 45)),
@@ -410,22 +434,28 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     if !character.artifacts.is_empty() {
         lines.push(Line::from(Span::styled(
             format!("═══ ARTIFACTS ({}) ═══", character.artifacts.len()),
-            Style::default().fg(Color::Magenta).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::Magenta)
+                .add_modifier(Modifier::BOLD),
         )));
 
         for (i, artifact) in character.artifacts.iter().enumerate() {
             lines.push(Line::from(Span::styled(
-                format!("{}. {} (Lvl {}, {})", 
-                    i + 1, 
-                    artifact.name, 
-                    artifact.level, 
+                format!(
+                    "{}. {} (Lvl {}, {})",
+                    i + 1,
+                    artifact.name,
+                    artifact.level,
                     artifact.form_type
                 ),
-                Style::default().fg(Color::Magenta).add_modifier(Modifier::BOLD),
+                Style::default()
+                    .fg(Color::Magenta)
+                    .add_modifier(Modifier::BOLD),
             )));
             lines.push(Line::from(Span::styled(
-                format!("   Depletion: {} | Form: {}", 
-                    artifact.depletion, 
+                format!(
+                    "   Depletion: {} | Form: {}",
+                    artifact.depletion,
                     truncate(&artifact.form, 25)
                 ),
                 Style::default().fg(Color::Gray),
@@ -442,17 +472,17 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     if !character.oddities.is_empty() {
         lines.push(Line::from(Span::styled(
             format!("═══ ODDITIES ({}) ═══", character.oddities.len()),
-            Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::Yellow)
+                .add_modifier(Modifier::BOLD),
         )));
 
         for (i, oddity) in character.oddities.iter().enumerate() {
             lines.push(Line::from(Span::styled(
-                format!("{}. {} ({} shins)", 
-                    i + 1, 
-                    oddity.name, 
-                    oddity.value_shins
-                ),
-                Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD),
+                format!("{}. {} ({} shins)", i + 1, oddity.name, oddity.value_shins),
+                Style::default()
+                    .fg(Color::Yellow)
+                    .add_modifier(Modifier::BOLD),
             )));
             lines.push(Line::from(Span::styled(
                 format!("   {}", truncate(&oddity.description, 47)),
@@ -463,11 +493,16 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     }
 
     // If no numenera at all
-    if character.cyphers.is_empty() && character.artifacts.is_empty() && character.oddities.is_empty() {
+    if character.cyphers.is_empty()
+        && character.artifacts.is_empty()
+        && character.oddities.is_empty()
+    {
         lines.push(Line::from(""));
         lines.push(Line::from(Span::styled(
             "No numenera items carried",
-            Style::default().fg(Color::DarkGray).add_modifier(Modifier::ITALIC),
+            Style::default()
+                .fg(Color::DarkGray)
+                .add_modifier(Modifier::ITALIC),
         )));
     }
 
@@ -475,12 +510,12 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     let is_focused = app.preview_panel_focus == PreviewPanel::Right;
     let scroll_offset = app.preview_right_scroll;
     let visible_height = area.height.saturating_sub(2) as usize; // Subtract border
-    
+
     // Calculate visible range
     let total_lines = lines.len();
     let max_scroll = total_lines.saturating_sub(visible_height);
     let clamped_scroll = scroll_offset.min(max_scroll);
-    
+
     // Show scroll indicators
     let mut display_lines = Vec::new();
     if clamped_scroll > 0 {
@@ -489,11 +524,11 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
             Style::default().fg(Color::DarkGray),
         )));
     }
-    
+
     // Add visible lines
     let end_idx = (clamped_scroll + visible_height).min(total_lines);
     display_lines.extend_from_slice(&lines[clamped_scroll..end_idx]);
-    
+
     if end_idx < total_lines {
         display_lines.push(Line::from(Span::styled(
             "↓ More below ↓",
@@ -501,9 +536,15 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
         )));
     }
 
-    let border_color = if is_focused { Color::Green } else { Color::DarkGray };
+    let border_color = if is_focused {
+        Color::Green
+    } else {
+        Color::DarkGray
+    };
     let title_style = if is_focused {
-        Style::default().fg(Color::Green).add_modifier(Modifier::BOLD)
+        Style::default()
+            .fg(Color::Green)
+            .add_modifier(Modifier::BOLD)
     } else {
         Style::default().fg(Color::Gray)
     };
@@ -530,7 +571,9 @@ fn render_footer(f: &mut Frame, area: Rect) {
         Line::from(vec![
             Span::styled(
                 "[S] Save",
-                Style::default().fg(Color::Green).add_modifier(Modifier::BOLD),
+                Style::default()
+                    .fg(Color::Green)
+                    .add_modifier(Modifier::BOLD),
             ),
             Span::raw("  |  "),
             Span::styled("[N] New", Style::default().fg(Color::Cyan)),

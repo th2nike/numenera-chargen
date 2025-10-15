@@ -172,11 +172,11 @@ pub fn get_cyphers_by_category<'a>(cyphers: &'a [Cypher], category: &str) -> Vec
 pub fn roll_level_formula(formula: &str) -> u32 {
     use rand::Rng;
     let mut rng = rand::thread_rng();
-    
+
     if let Some(plus_pos) = formula.find('+') {
         // Handle "1d6+2" format
         let base = roll_level_formula(&formula[..plus_pos]);
-        let bonus: u32 = formula[plus_pos+1..].trim().parse().unwrap_or(0);
+        let bonus: u32 = formula[plus_pos + 1..].trim().parse().unwrap_or(0);
         base + bonus
     } else if formula.contains("d6") {
         // Roll 1d6
@@ -190,7 +190,7 @@ pub fn roll_level_formula(formula: &str) -> u32 {
 /// Create a cypher instance with rolled level
 pub fn create_cypher_instance(cypher: &Cypher) -> CypherInstance {
     let level = roll_level_formula(&cypher.level_formula);
-    
+
     CypherInstance {
         name: cypher.name.clone(),
         level,
@@ -203,7 +203,7 @@ pub fn create_cypher_instance(cypher: &Cypher) -> CypherInstance {
 /// Create an artifact instance with rolled level
 pub fn create_artifact_instance(artifact: &Artifact) -> ArtifactInstance {
     let level = roll_level_formula(&artifact.level_formula);
-    
+
     ArtifactInstance {
         name: artifact.name.clone(),
         level,
@@ -297,6 +297,42 @@ pub fn data_summary(data: &GameData) -> String {
         data.discoveries.len(),
         data.species.len()
     )
+}
+
+/// Load artifacts from artifacts.toml
+pub fn load_artifacts() -> Result<Vec<Artifact>> {
+    let path = Path::new(DATA_DIR).join("artifacts.toml");
+    let content =
+        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
+
+    let data: ArtifactsData =
+        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
+
+    Ok(data.artifact)
+}
+
+/// Load oddities from oddities.toml
+pub fn load_oddities() -> Result<Vec<Oddity>> {
+    let path = Path::new(DATA_DIR).join("oddities.toml");
+    let content =
+        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
+
+    let data: OdditiesData =
+        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
+
+    Ok(data.oddity)
+}
+
+/// Load discoveries from discoveries.toml
+pub fn load_discoveries() -> Result<Vec<Discovery>> {
+    let path = Path::new(DATA_DIR).join("discoveries.toml");
+    let content =
+        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
+
+    let data: DiscoveriesData =
+        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
+
+    Ok(data.discovery)
 }
 
 // ==========================================
@@ -409,40 +445,4 @@ mod tests {
         assert_eq!(arkus_foci.len(), 1);
         assert_eq!(arkus_foci[0].name, "Leads");
     }
-}
-
-/// Load artifacts from artifacts.toml
-pub fn load_artifacts() -> Result<Vec<Artifact>> {
-    let path = Path::new(DATA_DIR).join("artifacts.toml");
-    let content =
-        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
-
-    let data: ArtifactsData =
-        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
-
-    Ok(data.artifact)
-}
-
-/// Load oddities from oddities.toml
-pub fn load_oddities() -> Result<Vec<Oddity>> {
-    let path = Path::new(DATA_DIR).join("oddities.toml");
-    let content =
-        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
-
-    let data: OdditiesData =
-        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
-
-    Ok(data.oddity)
-}
-
-/// Load discoveries from discoveries.toml
-pub fn load_discoveries() -> Result<Vec<Discovery>> {
-    let path = Path::new(DATA_DIR).join("discoveries.toml");
-    let content =
-        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
-
-    let data: DiscoveriesData =
-        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
-
-    Ok(data.discovery)
 }

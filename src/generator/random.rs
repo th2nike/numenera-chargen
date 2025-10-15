@@ -2,12 +2,12 @@
 // Random character generation
 
 use anyhow::{Context, Result};
-use rand::Rng;
-use rand::seq::SliceRandom; // For .choose()
+use rand::seq::SliceRandom;
+use rand::Rng; // For .choose()
 
 use crate::character::sheet::Gender;
 use crate::character::{build_character, CharacterSheet};
-use crate::data::{get_suitable_foci, GameData, create_cypher_instance, create_artifact_instance};
+use crate::data::{create_artifact_instance, create_cypher_instance, get_suitable_foci, GameData};
 
 // ==========================================
 // RANDOM GENERATION
@@ -82,13 +82,13 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
         intellect,
         selected_abilities,
     )?;
-    
+
     // Set gender after building
     character.gender = gender;
-    
+
     // ========== ADD RANDOM NUMENERA ITEMS (NEW) ==========
     let cypher_limit = character.cypher_limit as usize;
-    
+
     // Add random cyphers (fill to limit)
     let cypher_count = rng.gen_range(cypher_limit.saturating_sub(1)..=cypher_limit);
     for _ in 0..cypher_count {
@@ -97,7 +97,7 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
             let _ = character.add_cypher(instance);
         }
     }
-    
+
     // Add 0-2 random artifacts
     let artifact_count = rng.gen_range(0..=2);
     for _ in 0..artifact_count {
@@ -106,7 +106,7 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
             character.add_artifact(instance);
         }
     }
-    
+
     // Add 0-2 random oddities
     let oddity_count = rng.gen_range(0..=2);
     for _ in 0..oddity_count {
@@ -115,7 +115,7 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
         }
     }
     // ===========================================
-    
+
     Ok(character)
 }
 
@@ -177,10 +177,10 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
     // Random abilities
     let selected_abilities = select_random_abilities(&mut rng, character_type)?;
 
-        let mut character = build_character(
+    let mut character = build_character(
         game_data,
         name,
-        &type_name,
+        type_name,
         &descriptor_or_species,
         &focus,
         might,
@@ -188,13 +188,13 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
         intellect,
         selected_abilities,
     )?;
-    
+
     // Set gender after building
     character.gender = gender;
-    
+
     // ========== ADD RANDOM NUMENERA ITEMS (NEW) ==========
     let cypher_limit = character.cypher_limit as usize;
-    
+
     // Add random cyphers (fill to limit)
     let cypher_count = rng.gen_range(cypher_limit.saturating_sub(1)..=cypher_limit);
     for _ in 0..cypher_count {
@@ -203,7 +203,7 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
             let _ = character.add_cypher(instance);
         }
     }
-    
+
     // Add 0-2 random artifacts
     let artifact_count = rng.gen_range(0..=2);
     for _ in 0..artifact_count {
@@ -212,7 +212,7 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
             character.add_artifact(instance);
         }
     }
-    
+
     // Add 0-2 random oddities
     let oddity_count = rng.gen_range(0..=2);
     for _ in 0..oddity_count {
@@ -221,7 +221,7 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
         }
     }
     // ===========================================
-    
+
     Ok(character)
 }
 
@@ -283,24 +283,24 @@ pub fn generate_random_with_type_and_descriptor(
     // Random abilities
     let selected_abilities = select_random_abilities(&mut rng, character_type)?;
 
-        let mut character = build_character(
+    let mut character = build_character(
         game_data,
         name,
-        &type_name,
-        &descriptor_or_species,
+        type_name,
+        descriptor_or_species,
         &focus,
         might,
         speed,
         intellect,
         selected_abilities,
     )?;
-    
+
     // Set gender after building
     character.gender = gender;
-    
+
     // ========== ADD RANDOM NUMENERA ITEMS
     let cypher_limit = character.cypher_limit as usize;
-    
+
     // Add random cyphers (fill to limit)
     let cypher_count = rng.gen_range(cypher_limit.saturating_sub(1)..=cypher_limit);
     for _ in 0..cypher_count {
@@ -309,7 +309,7 @@ pub fn generate_random_with_type_and_descriptor(
             let _ = character.add_cypher(instance);
         }
     }
-    
+
     // Add 0-2 random artifacts
     let artifact_count = rng.gen_range(0..=2);
     for _ in 0..artifact_count {
@@ -318,7 +318,7 @@ pub fn generate_random_with_type_and_descriptor(
             character.add_artifact(instance);
         }
     }
-    
+
     // Add 0-2 random oddities
     let oddity_count = rng.gen_range(0..=2);
     for _ in 0..oddity_count {
@@ -327,7 +327,7 @@ pub fn generate_random_with_type_and_descriptor(
         }
     }
     // ===========================================
-    
+
     Ok(character)
 }
 // ==========================================

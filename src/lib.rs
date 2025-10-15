@@ -6,7 +6,7 @@ pub mod character;
 pub mod data;
 pub mod generator;
 pub mod output;
-pub mod tui; 
+pub mod tui;
 
 // Prelude for convenient imports
 pub mod prelude {

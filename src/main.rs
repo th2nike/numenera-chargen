@@ -96,7 +96,7 @@ fn main() -> Result<()> {
         Commands::Interactive => {
             interactive_mode(&game_data, &cli.output)?;
         }
-        Commands::Tui =>{
+        Commands::Tui => {
             numenera_chargen::tui::run(&game_data)?;
         }
         Commands::Random {

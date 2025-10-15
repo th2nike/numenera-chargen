@@ -20,8 +20,8 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(2),  // Instructions
-            Constraint::Min(0),     // Scrollable list
+            Constraint::Length(2), // Instructions
+            Constraint::Min(0),    // Scrollable list
         ])
         .split(block.inner(area));
 
@@ -61,7 +61,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         if i < scroll_offset || i >= scroll_end {
             continue;
         }
-        
+
         let is_selected = i == selected;
         lines.push(highlighted_item(&descriptor.name, is_selected));
         lines.push(Line::from(Span::styled(
@@ -86,15 +86,20 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     // Render species
     for (i, species) in app.game_data.species.iter().enumerate() {
         let idx = descriptor_count + i;
-        
+
         if idx < scroll_offset || idx >= scroll_end {
             continue;
         }
-        
+
         let is_selected = idx == selected;
         let name_line = if is_selected {
             Line::from(vec![
-                Span::styled("> ", Style::default().fg(Color::Yellow).add_modifier(Modifier::BOLD)),
+                Span::styled(
+                    "> ",
+                    Style::default()
+                        .fg(Color::Yellow)
+                        .add_modifier(Modifier::BOLD),
+                ),
                 Span::styled(
                     format!("[Species] {}", species.name),
                     Style::default()
@@ -107,11 +112,11 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
                 Span::raw("  "),
                 Span::styled(
                     format!("[Species] {}", species.name),
-                    Style::default().fg(Color::White)
+                    Style::default().fg(Color::White),
                 ),
             ])
         };
-        
+
         lines.push(name_line);
         lines.push(Line::from(Span::styled(
             format!("    {}", species.tagline),
@@ -122,10 +127,13 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
 
     // Scroll indicators
     if scroll_offset > 0 {
-        lines.insert(1, Line::from(Span::styled(
-            "↑ More above ↑",
-            Style::default().fg(Color::DarkGray),
-        )));
+        lines.insert(
+            1,
+            Line::from(Span::styled(
+                "↑ More above ↑",
+                Style::default().fg(Color::DarkGray),
+            )),
+        );
     }
     if scroll_end < total_count {
         lines.push(Line::from(Span::styled(

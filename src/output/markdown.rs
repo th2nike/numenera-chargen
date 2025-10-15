@@ -1,10 +1,10 @@
 // src/output/markdown.rs
 // Format character sheets as markdown
 
+use crate::character::CharacterSheet;
 use anyhow::Result;
 use std::fs;
 use std::path::Path;
-use crate::character::CharacterSheet;
 
 // ==========================================
 // MARKDOWN FORMATTING
@@ -17,14 +17,29 @@ pub fn format_character_sheet(character: &CharacterSheet) -> String {
     // Header
     markdown.push_str(&format!("# {}\n\n", character.name));
     markdown.push_str(&format!("*{}*\n\n", character.character_sentence()));
-    markdown.push_str(&format!("**Tier:** {} | **XP:** {}\n\n", character.tier, character.xp));
+    markdown.push_str(&format!(
+        "**Tier:** {} | **XP:** {}\n\n",
+        character.tier, character.xp
+    ));
 
     // Stat Pools
     markdown.push_str("## Stat Pools\n\n");
-    markdown.push_str(&format!("- **Might:** {} (Edge: {})\n", character.pools.maximum.might, character.edge.might));
-    markdown.push_str(&format!("- **Speed:** {} (Edge: {})\n", character.pools.maximum.speed, character.edge.speed));
-    markdown.push_str(&format!("- **Intellect:** {} (Edge: {})\n", character.pools.maximum.intellect, character.edge.intellect));
-    markdown.push_str(&format!("\n**Effort:** {} | **Armor:** {}\n\n", character.effort.max_effort, character.armor));
+    markdown.push_str(&format!(
+        "- **Might:** {} (Edge: {})\n",
+        character.pools.maximum.might, character.edge.might
+    ));
+    markdown.push_str(&format!(
+        "- **Speed:** {} (Edge: {})\n",
+        character.pools.maximum.speed, character.edge.speed
+    ));
+    markdown.push_str(&format!(
+        "- **Intellect:** {} (Edge: {})\n",
+        character.pools.maximum.intellect, character.edge.intellect
+    ));
+    markdown.push_str(&format!(
+        "\n**Effort:** {} | **Armor:** {}\n\n",
+        character.effort.max_effort, character.armor
+    ));
 
     // Skills (abbreviated for brevity)
     markdown.push_str("## Skills\n\n");
@@ -46,7 +61,7 @@ pub fn format_character_sheet(character: &CharacterSheet) -> String {
     // ========== CYPHERS ==========
     markdown.push_str("## Cyphers\n\n");
     markdown.push_str(&format!("**Cypher Limit:** {}\n\n", character.cypher_limit));
-    
+
     if character.cyphers.is_empty() {
         markdown.push_str("*No cyphers carried*\n\n");
     } else {
@@ -60,7 +75,7 @@ pub fn format_character_sheet(character: &CharacterSheet) -> String {
             ));
             markdown.push_str(&format!("   - *Form:* {}\n", cypher.form));
             markdown.push_str(&format!("   - *Effect:* {}\n", cypher.effect));
-            markdown.push_str("\n");
+            markdown.push('\n');
         }
     }
 
@@ -78,7 +93,7 @@ pub fn format_character_sheet(character: &CharacterSheet) -> String {
             markdown.push_str(&format!("   - *Depletion:* {}\n", artifact.depletion));
             markdown.push_str(&format!("   - *Form:* {}\n", artifact.form));
             markdown.push_str(&format!("   - *Effect:* {}\n", artifact.effect));
-            markdown.push_str("\n");
+            markdown.push('\n');
         }
     }
 
@@ -93,7 +108,7 @@ pub fn format_character_sheet(character: &CharacterSheet) -> String {
                 oddity.value_shins
             ));
             markdown.push_str(&format!("   - {}\n", oddity.description));
-            markdown.push_str("\n");
+            markdown.push('\n');
         }
     }
 
@@ -105,7 +120,6 @@ pub fn format_character_sheet(character: &CharacterSheet) -> String {
 
     markdown
 }
-
 
 /// Save a character sheet to a markdown file
 pub fn save_character_sheet(sheet: &CharacterSheet, output_dir: &str) -> Result<String> {

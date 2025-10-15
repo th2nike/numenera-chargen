@@ -17,8 +17,8 @@ pub fn render(f: &mut Frame, area: Rect, _app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Instructions
-            Constraint::Min(0),     // Options
+            Constraint::Length(3), // Instructions
+            Constraint::Min(0),    // Options
         ])
         .split(block.inner(area));
 
@@ -63,7 +63,10 @@ pub fn render(f: &mut Frame, area: Rect, _app: &App) {
                     .fg(Color::Yellow)
                     .add_modifier(Modifier::BOLD),
             ),
-            Span::styled("Other / Prefer not to say", Style::default().fg(Color::White)),
+            Span::styled(
+                "Other / Prefer not to say",
+                Style::default().fg(Color::White),
+            ),
         ]),
     ];
 

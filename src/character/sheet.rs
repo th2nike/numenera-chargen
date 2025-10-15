@@ -1,9 +1,9 @@
 // src/character/sheet.rs
 // Character sheet - the final compiled character
 
-use serde::{Deserialize, Serialize};
 use super::stats::{DamageTrack, Edge, Effort, Pools};
 use crate::data::{ArtifactInstance, CypherInstance, Oddity};
+use serde::{Deserialize, Serialize};
 
 // ==========================================
 // CHARACTER SHEET
@@ -63,10 +63,10 @@ pub struct CharacterSheet {
     // Cyphers
     pub cypher_limit: u32,
     pub cyphers: Vec<CypherInstance>,
-    
+
     // Artifacts
     pub artifacts: Vec<ArtifactInstance>,
-    
+
     // Oddities
     pub oddities: Vec<Oddity>,
 
@@ -319,7 +319,7 @@ impl CharacterSheet {
         }
     }
 
-        /// Add a cypher instance
+    /// Add a cypher instance
     pub fn add_cypher(&mut self, cypher: CypherInstance) -> Result<(), String> {
         if self.cyphers.len() >= self.cypher_limit as usize {
             return Err(format!(
@@ -432,7 +432,6 @@ impl CharacterSheet {
             self.equipment.shins
         )
     }
-
 }
 
 // ==========================================

@@ -59,7 +59,7 @@ fn run_app<B: ratatui::backend::Backend>(
         terminal.draw(|f| render(f, app))?;
 
         // Handle events
-        if let Some(event) = event_handler.next()? {
+        if let Some(event) = event_handler.poll_event()? {
             app.handle_event(event)?;
         }
 

@@ -17,8 +17,8 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Instructions
-            Constraint::Min(0),     // Ability list
+            Constraint::Length(3), // Instructions
+            Constraint::Min(0),    // Ability list
         ])
         .split(block.inner(area));
 
@@ -40,13 +40,18 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         // Instructions
         let instructions = vec![
             Line::from(Span::styled(
-                format!("Select {} abilities from your type's Tier 1 options", required),
+                format!(
+                    "Select {} abilities from your type's Tier 1 options",
+                    required
+                ),
                 Style::default().fg(Color::Gray),
             )),
             Line::from(Span::styled(
                 format!("Selected: {}/{}", selected_count, required),
                 if selected_count == required {
-                    Style::default().fg(Color::Green).add_modifier(Modifier::BOLD)
+                    Style::default()
+                        .fg(Color::Green)
+                        .add_modifier(Modifier::BOLD)
                 } else {
                     Style::default().fg(Color::Yellow)
                 },
@@ -77,7 +82,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             if i >= scroll_offset + visible_items {
                 break;
             }
-            
+
             let is_selected = i == current_index;
             let is_checked = app
                 .character_builder
@@ -133,10 +138,13 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
 
         // Scroll indicators
         if scroll_offset > 0 {
-            lines.insert(1, Line::from(Span::styled(
-                "↑ More above ↑",
-                Style::default().fg(Color::DarkGray),
-            )));
+            lines.insert(
+                1,
+                Line::from(Span::styled(
+                    "↑ More above ↑",
+                    Style::default().fg(Color::DarkGray),
+                )),
+            );
         }
         if scroll_offset + visible_items < total_abilities {
             lines.push(Line::from(Span::styled(
@@ -146,7 +154,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         }
 
         let list = Paragraph::new(lines);
-        
+
         f.render_widget(block, area);
         f.render_widget(instruction_text, chunks[0]);
         f.render_widget(list, chunks[1]);

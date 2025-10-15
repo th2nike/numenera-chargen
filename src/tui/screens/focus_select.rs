@@ -20,14 +20,15 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Instructions
-            Constraint::Min(0),     // Scrollable list
+            Constraint::Length(3), // Instructions
+            Constraint::Min(0),    // Scrollable list
         ])
         .split(block.inner(area));
 
     // Get suitable foci for selected type
     let character_type = app.character_builder.character_type.as_ref();
-    let suitable_foci: Vec<&crate::data::models::Focus> = if let Some(char_type) = character_type {        app.game_data
+    let suitable_foci: Vec<&crate::data::models::Focus> = if let Some(char_type) = character_type {
+        app.game_data
             .foci
             .iter()
             .filter(|f| {
@@ -51,13 +52,16 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             Style::default().fg(Color::Gray),
         )),
         Line::from(Span::styled(
-            format!("Showing {} foci suitable for {}", suitable_foci.len(), type_name),
+            format!(
+                "Showing {} foci suitable for {}",
+                suitable_foci.len(),
+                type_name
+            ),
             Style::default().fg(Color::DarkGray),
         )),
     ];
 
-    let instruction_text = Paragraph::new(instructions)
-        .alignment(Alignment::Center);
+    let instruction_text = Paragraph::new(instructions).alignment(Alignment::Center);
 
     // Build list with scrolling
     let mut lines = vec![Line::from("")];
@@ -80,7 +84,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         if i >= scroll_offset + visible_items {
             break;
         }
-        
+
         let is_selected = i == selected;
         lines.push(highlighted_item(&focus.name, is_selected));
         lines.push(Line::from(Span::styled(
@@ -96,10 +100,13 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
 
     // Scroll indicators
     if scroll_offset > 0 {
-        lines.insert(1, Line::from(Span::styled(
-            "↑ More above ↑",
-            Style::default().fg(Color::DarkGray),
-        )));
+        lines.insert(
+            1,
+            Line::from(Span::styled(
+                "↑ More above ↑",
+                Style::default().fg(Color::DarkGray),
+            )),
+        );
     }
     if scroll_offset + visible_items < total_count {
         lines.push(Line::from(Span::styled(

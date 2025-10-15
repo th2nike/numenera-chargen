@@ -17,14 +17,14 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Instructions
-            Constraint::Length(1),  // Spacer
-            Constraint::Length(3),  // Remaining points
-            Constraint::Length(1),  // Spacer
-            Constraint::Length(4),  // Might
-            Constraint::Length(4),  // Speed
-            Constraint::Length(4),  // Intellect
-            Constraint::Min(0),     // Spacer
+            Constraint::Length(3), // Instructions
+            Constraint::Length(1), // Spacer
+            Constraint::Length(3), // Remaining points
+            Constraint::Length(1), // Spacer
+            Constraint::Length(4), // Might
+            Constraint::Length(4), // Speed
+            Constraint::Length(4), // Intellect
+            Constraint::Min(0),    // Spacer
         ])
         .split(block.inner(area));
 
@@ -61,9 +61,33 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     // Stat bars
     let selected_stat = app.character_builder.list_state;
 
-    render_stat_bar(f, chunks[4], "Might", might, bonus_total, Color::Red, selected_stat == 0);
-    render_stat_bar(f, chunks[5], "Speed", speed, bonus_total, Color::Green, selected_stat == 1);
-    render_stat_bar(f, chunks[6], "Intellect", intellect, bonus_total, Color::Blue, selected_stat == 2);
+    render_stat_bar(
+        f,
+        chunks[4],
+        "Might",
+        might,
+        bonus_total,
+        Color::Red,
+        selected_stat == 0,
+    );
+    render_stat_bar(
+        f,
+        chunks[5],
+        "Speed",
+        speed,
+        bonus_total,
+        Color::Green,
+        selected_stat == 1,
+    );
+    render_stat_bar(
+        f,
+        chunks[6],
+        "Intellect",
+        intellect,
+        bonus_total,
+        Color::Blue,
+        selected_stat == 2,
+    );
 
     f.render_widget(block, area);
     f.render_widget(instructions, chunks[0]);
@@ -71,20 +95,20 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
 }
 
 fn render_stat_bar(
-    f: &mut Frame, 
-    area: Rect, 
-    label: &str, 
-    value: i32, 
-    max: i32, 
+    f: &mut Frame,
+    area: Rect,
+    label: &str,
+    value: i32,
+    max: i32,
     color: Color,
     is_selected: bool,
 ) {
     let chunks = Layout::default()
         .direction(Direction::Horizontal)
         .constraints([
-            Constraint::Length(12),  // Label
-            Constraint::Min(0),      // Bar
-            Constraint::Length(10),  // Value + controls
+            Constraint::Length(12), // Label
+            Constraint::Min(0),     // Bar
+            Constraint::Length(10), // Value + controls
         ])
         .split(area);
 
@@ -100,7 +124,7 @@ fn render_stat_bar(
     };
 
     let label_prefix = if is_selected { "> " } else { "  " };
-    
+
     let label_text = Paragraph::new(Span::styled(
         format!("{}{}", label_prefix, label),
         label_style,
@@ -120,13 +144,11 @@ fn render_stat_bar(
         .ratio(ratio);
 
     // Value and controls
-    let controls = Paragraph::new(vec![
-        Line::from(vec![
-            Span::styled("[-] ", Style::default().fg(Color::DarkGray)),
-            Span::styled(format!("{:2}", value), Style::default().fg(color)),
-            Span::styled(" [+]", Style::default().fg(Color::DarkGray)),
-        ]),
-    ])
+    let controls = Paragraph::new(vec![Line::from(vec![
+        Span::styled("[-] ", Style::default().fg(Color::DarkGray)),
+        Span::styled(format!("{:2}", value), Style::default().fg(color)),
+        Span::styled(" [+]", Style::default().fg(Color::DarkGray)),
+    ])])
     .alignment(Alignment::Center);
 
     f.render_widget(label_text, chunks[0]);

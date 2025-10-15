@@ -17,9 +17,9 @@ pub fn render(f: &mut Frame, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(3),  // Title bar
-            Constraint::Min(0),     // Main content
-            Constraint::Length(3),  // Help bar
+            Constraint::Length(3), // Title bar
+            Constraint::Min(0),    // Main content
+            Constraint::Length(3), // Help bar
         ])
         .split(f.area());
 
@@ -114,7 +114,7 @@ pub fn highlighted_item<'a>(text: &'a str, is_selected: bool) -> Line<'a> {
                 "> ",
                 Style::default()
                     .fg(Color::Yellow)
-                    .add_modifier(Modifier::BOLD)
+                    .add_modifier(Modifier::BOLD),
             ),
             Span::styled(
                 text,
@@ -126,10 +126,7 @@ pub fn highlighted_item<'a>(text: &'a str, is_selected: bool) -> Line<'a> {
     } else {
         Line::from(vec![
             Span::raw("  "),
-            Span::styled(
-                text,
-                Style::default().fg(Color::White)
-            ),
+            Span::styled(text, Style::default().fg(Color::White)),
         ])
     }
 }

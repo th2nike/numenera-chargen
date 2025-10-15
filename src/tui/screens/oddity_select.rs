@@ -9,10 +9,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::tui::{
-    app::App,
-    ui::centered_block,
-};
+use crate::tui::{app::App, ui::centered_block};
 
 pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let block = centered_block("Step 10: Select Oddities (Optional)");
@@ -20,9 +17,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let chunks = Layout::default()
         .direction(Direction::Vertical)
         .constraints([
-            Constraint::Length(4),  // Instructions
-            Constraint::Min(0),     // List
-            Constraint::Length(3),  // Selection summary
+            Constraint::Length(4), // Instructions
+            Constraint::Min(0),    // List
+            Constraint::Length(3), // Selection summary
         ])
         .split(block.inner(area));
 
@@ -31,7 +28,10 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     // Instructions
     let instructions = vec![
         Line::from(Span::styled(
-            format!("Select up to {} oddities (Space to toggle, R for random, C to clear)", max_oddities),
+            format!(
+                "Select up to {} oddities (Space to toggle, R for random, C to clear)",
+                max_oddities
+            ),
             Style::default().fg(Color::Gray),
         )),
         Line::from(Span::styled(
@@ -83,7 +83,11 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             Span::styled(format!("{}{}", prefix, oddity.name), style),
         ]));
         lines.push(Line::from(Span::styled(
-            format!("    {} shins | {}", oddity.value_shins, truncate(&oddity.description, 60)),
+            format!(
+                "    {} shins | {}",
+                oddity.value_shins,
+                truncate(&oddity.description, 60)
+            ),
             Style::default().fg(Color::DarkGray),
         )));
         lines.push(Line::from(""));
@@ -93,7 +97,10 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     if scroll_offset > 0 {
         lines.insert(
             1,
-            Line::from(Span::styled("↑ More above ↑", Style::default().fg(Color::DarkGray))),
+            Line::from(Span::styled(
+                "↑ More above ↑",
+                Style::default().fg(Color::DarkGray),
+            )),
         );
     }
     if scroll_offset + visible_items < total_count {

@@ -14,9 +14,9 @@ pub struct App {
     pub game_data: GameData,
     pub character_builder: CharacterBuilder,
     pub generated_character: Option<CharacterSheet>,
-    pub preview_panel_focus: PreviewPanel,  // Which panel is focused
-    pub preview_left_scroll: usize,         // Scroll offset for left panel
-    pub preview_right_scroll: usize,        // Scroll offset for right panel
+    pub preview_panel_focus: PreviewPanel, // Which panel is focused
+    pub preview_left_scroll: usize,        // Scroll offset for left panel
+    pub preview_right_scroll: usize,       // Scroll offset for right panel
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -56,13 +56,13 @@ pub struct CharacterBuilder {
     pub bonus_speed: i32,
     pub bonus_intellect: i32,
     pub selected_abilities: Vec<String>,
-    
+
     // ========== NUMENERA SELECTION ==========
-    pub selected_cyphers: Vec<usize>,        // Indices of selected cyphers
-    pub selected_artifacts: Vec<usize>,      // Indices of selected artifacts
-    pub selected_oddities: Vec<usize>,       // Indices of selected oddities
+    pub selected_cyphers: Vec<usize>, // Indices of selected cyphers
+    pub selected_artifacts: Vec<usize>, // Indices of selected artifacts
+    pub selected_oddities: Vec<usize>, // Indices of selected oddities
     // ===========================================
-    
+
     // UI state
     pub list_state: usize,
     pub scroll_offset: usize,
@@ -94,7 +94,7 @@ impl App {
         if key.kind != crossterm::event::KeyEventKind::Press {
             return Ok(());
         }
-        
+
         // Global quit
         if key.code == KeyCode::Char('c') && key.modifiers.contains(KeyModifiers::CONTROL) {
             self.should_quit = true;
@@ -153,21 +153,21 @@ impl App {
             }
             KeyCode::Char(c) => {
                 // Only insert if not a modifier key
-                if !key.modifiers.contains(KeyModifiers::CONTROL) 
-                    && !key.modifiers.contains(KeyModifiers::ALT) {
-                    self.character_builder.name.insert(
-                        self.character_builder.name_input_cursor,
-                        c,
-                    );
+                if !key.modifiers.contains(KeyModifiers::CONTROL)
+                    && !key.modifiers.contains(KeyModifiers::ALT)
+                {
+                    self.character_builder
+                        .name
+                        .insert(self.character_builder.name_input_cursor, c);
                     self.character_builder.name_input_cursor += 1;
                 }
             }
             KeyCode::Backspace => {
                 if self.character_builder.name_input_cursor > 0 {
                     self.character_builder.name_input_cursor -= 1;
-                    self.character_builder.name.remove(
-                        self.character_builder.name_input_cursor,
-                    );
+                    self.character_builder
+                        .name
+                        .remove(self.character_builder.name_input_cursor);
                 }
             }
             KeyCode::Left => {
@@ -212,7 +212,7 @@ impl App {
 
     fn handle_type_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_items = self.game_data.types.len();
-        
+
         match key.code {
             KeyCode::Up | KeyCode::Char('k') => {
                 self.character_builder.move_up();
@@ -236,7 +236,7 @@ impl App {
 
     fn handle_descriptor_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_items = self.game_data.descriptors.len() + self.game_data.species.len();
-        
+
         match key.code {
             KeyCode::Up | KeyCode::Char('k') => {
                 self.character_builder.move_up();
@@ -268,7 +268,7 @@ impl App {
     }
 
     fn handle_focus_select_keys(&mut self, key: KeyEvent) -> Result<()> {
-    // Get suitable foci (same filter as in render)
+        // Get suitable foci (same filter as in render)
         let character_type = self.character_builder.character_type.as_ref();
         let suitable_foci: Vec<_> = if let Some(char_type) = character_type {
             self.game_data
@@ -283,9 +283,9 @@ impl App {
         } else {
             self.game_data.foci.iter().collect()
         };
-        
+
         let total_items = suitable_foci.len();
-        
+
         match key.code {
             KeyCode::Up | KeyCode::Char('k') => {
                 self.character_builder.move_up();
@@ -400,7 +400,8 @@ impl App {
                 KeyCode::Char(' ') => {
                     // Toggle selection
                     if self.character_builder.list_state < total_abilities {
-                        let ability_name = tier_abilities.abilities[self.character_builder.list_state]
+                        let ability_name = tier_abilities.abilities
+                            [self.character_builder.list_state]
                             .name
                             .clone();
 
@@ -417,16 +418,15 @@ impl App {
                     }
                 }
                 KeyCode::Enter => {
-                if self.character_builder.selected_abilities.len() == required {
-                    self.current_screen = Screen::CypherSelect;  // CHANGED: was CharacterPreview
-                    self.character_builder.reset_list_state();
+                    if self.character_builder.selected_abilities.len() == required {
+                        self.current_screen = Screen::CypherSelect; // CHANGED: was CharacterPreview
+                        self.character_builder.reset_list_state();
+                    }
                 }
-            }
-            KeyCode::Esc => {
-                self.current_screen = Screen::StatAllocation;
-            }
-            _ => {}
-
+                KeyCode::Esc => {
+                    self.current_screen = Screen::StatAllocation;
+                }
+                _ => {}
             }
         }
         Ok(())
@@ -441,72 +441,62 @@ impl App {
                     PreviewPanel::Right => PreviewPanel::Left,
                 };
             }
-            
+
             // Scroll current panel
-            KeyCode::Up | KeyCode::Char('k') => {
-                match self.preview_panel_focus {
-                    PreviewPanel::Left => {
-                        self.preview_left_scroll = self.preview_left_scroll.saturating_sub(1);
-                    }
-                    PreviewPanel::Right => {
-                        self.preview_right_scroll = self.preview_right_scroll.saturating_sub(1);
-                    }
+            KeyCode::Up | KeyCode::Char('k') => match self.preview_panel_focus {
+                PreviewPanel::Left => {
+                    self.preview_left_scroll = self.preview_left_scroll.saturating_sub(1);
                 }
-            }
-            KeyCode::Down | KeyCode::Char('j') => {
-                match self.preview_panel_focus {
-                    PreviewPanel::Left => {
-                        self.preview_left_scroll = self.preview_left_scroll.saturating_add(1);
-                    }
-                    PreviewPanel::Right => {
-                        self.preview_right_scroll = self.preview_right_scroll.saturating_add(1);
-                    }
+                PreviewPanel::Right => {
+                    self.preview_right_scroll = self.preview_right_scroll.saturating_sub(1);
                 }
-            }
-            
+            },
+            KeyCode::Down | KeyCode::Char('j') => match self.preview_panel_focus {
+                PreviewPanel::Left => {
+                    self.preview_left_scroll = self.preview_left_scroll.saturating_add(1);
+                }
+                PreviewPanel::Right => {
+                    self.preview_right_scroll = self.preview_right_scroll.saturating_add(1);
+                }
+            },
+
             // Page up/down for faster scrolling
-            KeyCode::PageUp => {
-                match self.preview_panel_focus {
-                    PreviewPanel::Left => {
-                        self.preview_left_scroll = self.preview_left_scroll.saturating_sub(5);
-                    }
-                    PreviewPanel::Right => {
-                        self.preview_right_scroll = self.preview_right_scroll.saturating_sub(5);
-                    }
+            KeyCode::PageUp => match self.preview_panel_focus {
+                PreviewPanel::Left => {
+                    self.preview_left_scroll = self.preview_left_scroll.saturating_sub(5);
                 }
-            }
-            KeyCode::PageDown => {
-                match self.preview_panel_focus {
-                    PreviewPanel::Left => {
-                        self.preview_left_scroll = self.preview_left_scroll.saturating_add(5);
-                    }
-                    PreviewPanel::Right => {
-                        self.preview_right_scroll = self.preview_right_scroll.saturating_add(5);
-                    }
+                PreviewPanel::Right => {
+                    self.preview_right_scroll = self.preview_right_scroll.saturating_sub(5);
                 }
-            }
-            
+            },
+            KeyCode::PageDown => match self.preview_panel_focus {
+                PreviewPanel::Left => {
+                    self.preview_left_scroll = self.preview_left_scroll.saturating_add(5);
+                }
+                PreviewPanel::Right => {
+                    self.preview_right_scroll = self.preview_right_scroll.saturating_add(5);
+                }
+            },
+
             // Home/End to jump to top/bottom
-            KeyCode::Home => {
-                match self.preview_panel_focus {
-                    PreviewPanel::Left => self.preview_left_scroll = 0,
-                    PreviewPanel::Right => self.preview_right_scroll = 0,
-                }
-            }
+            KeyCode::Home => match self.preview_panel_focus {
+                PreviewPanel::Left => self.preview_left_scroll = 0,
+                PreviewPanel::Right => self.preview_right_scroll = 0,
+            },
             KeyCode::End => {
                 match self.preview_panel_focus {
                     PreviewPanel::Left => self.preview_left_scroll = 9999, // Will be clamped
                     PreviewPanel::Right => self.preview_right_scroll = 9999,
                 }
             }
-            
+
             KeyCode::Char('s') | KeyCode::Char('S') => {
                 self.save_character()?;
             }
             KeyCode::Char('n') | KeyCode::Char('N') => {
                 self.character_builder = CharacterBuilder::new();
                 self.generated_character = None;
-                self.preview_left_scroll = 0;   // Reset scrolls
+                self.preview_left_scroll = 0; // Reset scrolls
                 self.preview_right_scroll = 0;
                 self.current_screen = Screen::MainMenu;
             }
@@ -520,7 +510,7 @@ impl App {
 
     fn handle_cypher_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_cyphers = self.game_data.cyphers.len();
-        
+
         // Determine cypher limit based on character type
         let cypher_limit = if let Some(type_name) = &self.character_builder.character_type {
             self.game_data
@@ -559,11 +549,13 @@ impl App {
                 use rand::Rng;
                 let mut rng = rand::thread_rng();
                 self.character_builder.selected_cyphers.clear();
-                
+
                 let mut available: Vec<usize> = (0..total_cyphers).collect();
                 for _ in 0..cypher_limit.min(total_cyphers) {
                     let idx = rng.gen_range(0..available.len());
-                    self.character_builder.selected_cyphers.push(available.remove(idx));
+                    self.character_builder
+                        .selected_cyphers
+                        .push(available.remove(idx));
                 }
             }
             KeyCode::Char('c') | KeyCode::Char('C') => {
@@ -613,12 +605,14 @@ impl App {
                 use rand::Rng;
                 let mut rng = rand::thread_rng();
                 self.character_builder.selected_artifacts.clear();
-                
+
                 let count = rng.gen_range(1..=2).min(total_artifacts);
                 let mut available: Vec<usize> = (0..total_artifacts).collect();
                 for _ in 0..count {
                     let idx = rng.gen_range(0..available.len());
-                    self.character_builder.selected_artifacts.push(available.remove(idx));
+                    self.character_builder
+                        .selected_artifacts
+                        .push(available.remove(idx));
                 }
             }
             KeyCode::Char('c') | KeyCode::Char('C') => {
@@ -667,12 +661,14 @@ impl App {
                 use rand::Rng;
                 let mut rng = rand::thread_rng();
                 self.character_builder.selected_oddities.clear();
-                
+
                 let count = rng.gen_range(0..=2).min(total_oddities);
                 let mut available: Vec<usize> = (0..total_oddities).collect();
                 for _ in 0..count {
                     let idx = rng.gen_range(0..available.len());
-                    self.character_builder.selected_oddities.push(available.remove(idx));
+                    self.character_builder
+                        .selected_oddities
+                        .push(available.remove(idx));
                 }
             }
             KeyCode::Char('c') | KeyCode::Char('C') => {
@@ -694,7 +690,7 @@ impl App {
 
     fn save_character(&self) -> Result<()> {
         use crate::character::build_character;
-        use crate::data::{create_cypher_instance, create_artifact_instance};
+        use crate::data::{create_artifact_instance, create_cypher_instance};
         use chrono::Local;
 
         // Check if we have a pre-generated character or need to build one
@@ -705,21 +701,27 @@ impl App {
             let mut char_sheet = build_character(
                 &self.game_data,
                 self.character_builder.name.clone(),
-                self.character_builder.character_type.as_ref()
+                self.character_builder
+                    .character_type
+                    .as_ref()
                     .ok_or_else(|| anyhow::anyhow!("No character type selected"))?,
-                self.character_builder.descriptor_or_species.as_ref()
+                self.character_builder
+                    .descriptor_or_species
+                    .as_ref()
                     .ok_or_else(|| anyhow::anyhow!("No descriptor/species selected"))?,
-                self.character_builder.focus.as_ref()
+                self.character_builder
+                    .focus
+                    .as_ref()
                     .ok_or_else(|| anyhow::anyhow!("No focus selected"))?,
                 self.character_builder.bonus_might,
                 self.character_builder.bonus_speed,
                 self.character_builder.bonus_intellect,
                 self.character_builder.selected_abilities.clone(),
             )?;
-            
+
             // Set gender from builder
             char_sheet.gender = self.character_builder.gender.clone();
-            
+
             // Add selected cyphers
             for &idx in &self.character_builder.selected_cyphers {
                 if let Some(cypher) = self.game_data.cyphers.get(idx) {
@@ -727,7 +729,7 @@ impl App {
                     let _ = char_sheet.add_cypher(instance);
                 }
             }
-            
+
             // Add selected artifacts
             for &idx in &self.character_builder.selected_artifacts {
                 if let Some(artifact) = self.game_data.artifacts.get(idx) {
@@ -735,20 +737,21 @@ impl App {
                     char_sheet.add_artifact(instance);
                 }
             }
-            
+
             // Add selected oddities
             for &idx in &self.character_builder.selected_oddities {
                 if let Some(oddity) = self.game_data.oddities.get(idx) {
                     char_sheet.add_oddity(oddity.clone());
                 }
             }
-            
+
             char_sheet
         };
 
         // Generate filename with timestamp
         let timestamp = Local::now().format("%Y-%m-%d_%H-%M-%S");
-        let sanitized_name = character.name
+        let sanitized_name = character
+            .name
             .chars()
             .map(|c| match c {
                 'a'..='z' | 'A'..='Z' | '0'..='9' | '-' | '_' => c,
@@ -756,14 +759,14 @@ impl App {
                 _ => '-',
             })
             .collect::<String>();
-        
+
         let filename = format!("{}_{}.md", sanitized_name, timestamp);
         let output_path = format!("output/{}", filename);
-        
+
         std::fs::create_dir_all("output")?;
         let markdown = crate::output::format_character_sheet(&character);
         std::fs::write(&output_path, markdown)?;
-        
+
         Ok(())
     }
 }
