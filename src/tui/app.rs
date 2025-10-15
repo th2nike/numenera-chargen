@@ -27,6 +27,9 @@ pub enum Screen {
     FocusSelect,
     StatAllocation,
     AbilitySelect,
+    CypherSelect,      // NEW
+    ArtifactSelect,    // NEW (optional)
+    OdditySelect,      // NEW (optional)
     CharacterPreview,
 }
 
@@ -44,6 +47,12 @@ pub struct CharacterBuilder {
     pub bonus_speed: i32,
     pub bonus_intellect: i32,
     pub selected_abilities: Vec<String>,
+    
+    // ========== NUMENERA SELECTION (NEW) ==========
+    pub selected_cyphers: Vec<usize>,        // Indices of selected cyphers
+    pub selected_artifacts: Vec<usize>,      // Indices of selected artifacts
+    pub selected_oddities: Vec<usize>,       // Indices of selected oddities
+    // ===========================================
     
     // UI state
     pub list_state: usize,
@@ -70,10 +79,10 @@ impl App {
     }
 
     fn handle_key_event(&mut self, key: KeyEvent) -> Result<()> {
-
-        if key.kind != crossterm::event::KeyEventKind::Press{
+        if key.kind != crossterm::event::KeyEventKind::Press {
             return Ok(());
         }
+        
         // Global quit
         if key.code == KeyCode::Char('c') && key.modifiers.contains(KeyModifiers::CONTROL) {
             self.should_quit = true;
@@ -89,35 +98,38 @@ impl App {
             Screen::FocusSelect => self.handle_focus_select_keys(key),
             Screen::StatAllocation => self.handle_stat_allocation_keys(key),
             Screen::AbilitySelect => self.handle_ability_select_keys(key),
+            Screen::CypherSelect => self.handle_cypher_select_keys(key),      // NEW
+            Screen::ArtifactSelect => self.handle_artifact_select_keys(key),  // NEW
+            Screen::OdditySelect => self.handle_oddity_select_keys(key),      // NEW
             Screen::CharacterPreview => self.handle_preview_keys(key),
         }
     }
 
-        fn handle_main_menu_keys(&mut self, key: KeyEvent) -> Result<()> {
-            match key.code {
-                KeyCode::Char('1') | KeyCode::Enter => {
-                    self.current_screen = Screen::NameInput;
-                }
-                KeyCode::Char('2') => {
-                    // Random character generation
-                    match crate::generator::generate_random(&self.game_data) {
-                        Ok(character) => {
-                            // Store the generated character for preview
-                            self.generated_character = Some(character);
-                            self.current_screen = Screen::CharacterPreview;
-                        }
-                        Err(e) => {
-                            eprintln!("Failed to generate random character: {}", e);
-                        }
+    fn handle_main_menu_keys(&mut self, key: KeyEvent) -> Result<()> {
+        match key.code {
+            KeyCode::Char('1') | KeyCode::Enter => {
+                self.current_screen = Screen::NameInput;
+            }
+            KeyCode::Char('2') => {
+                // Random character generation
+                match crate::generator::generate_random(&self.game_data) {
+                    Ok(character) => {
+                        // Store the generated character for preview
+                        self.generated_character = Some(character);
+                        self.current_screen = Screen::CharacterPreview;
+                    }
+                    Err(e) => {
+                        eprintln!("Failed to generate random character: {}", e);
                     }
                 }
-                KeyCode::Char('q') | KeyCode::Esc => {
-                    self.should_quit = true;
-                }
-                _ => {}
             }
-            Ok(())
+            KeyCode::Char('q') | KeyCode::Esc => {
+                self.should_quit = true;
+            }
+            _ => {}
         }
+        Ok(())
+    }
 
     fn handle_name_input_keys(&mut self, key: KeyEvent) -> Result<()> {
         match key.code {
@@ -393,14 +405,16 @@ impl App {
                     }
                 }
                 KeyCode::Enter => {
-                    if self.character_builder.selected_abilities.len() == required {
-                        self.current_screen = Screen::CharacterPreview;
-                    }
+                if self.character_builder.selected_abilities.len() == required {
+                    self.current_screen = Screen::CypherSelect;  // CHANGED: was CharacterPreview
+                    self.character_builder.reset_list_state();
                 }
-                KeyCode::Esc => {
-                    self.current_screen = Screen::StatAllocation;
-                }
-                _ => {}
+            }
+            KeyCode::Esc => {
+                self.current_screen = Screen::StatAllocation;
+            }
+            _ => {}
+
             }
         }
         Ok(())
@@ -435,13 +449,185 @@ impl App {
         Ok(())
     }
 
+    fn handle_cypher_select_keys(&mut self, key: KeyEvent) -> Result<()> {
+        let total_cyphers = self.game_data.cyphers.len();
+        
+        // Determine cypher limit based on character type
+        let cypher_limit = if let Some(type_name) = &self.character_builder.character_type {
+            self.game_data
+                .types
+                .iter()
+                .find(|t| t.name.eq_ignore_ascii_case(type_name))
+                .map(|t| t.starting_tier.cypher_limit as usize)
+                .unwrap_or(2)
+        } else {
+            2
+        };
+
+        match key.code {
+            KeyCode::Up | KeyCode::Char('k') => {
+                self.character_builder.move_up();
+            }
+            KeyCode::Down | KeyCode::Char('j') => {
+                self.character_builder.move_down(total_cyphers);
+            }
+            KeyCode::Char(' ') => {
+                // Toggle selection
+                let idx = self.character_builder.list_state;
+                if let Some(pos) = self
+                    .character_builder
+                    .selected_cyphers
+                    .iter()
+                    .position(|&i| i == idx)
+                {
+                    self.character_builder.selected_cyphers.remove(pos);
+                } else if self.character_builder.selected_cyphers.len() < cypher_limit {
+                    self.character_builder.selected_cyphers.push(idx);
+                }
+            }
+            KeyCode::Char('r') | KeyCode::Char('R') => {
+                // Random selection to fill limit
+                use rand::Rng;
+                let mut rng = rand::thread_rng();
+                self.character_builder.selected_cyphers.clear();
+                
+                let mut available: Vec<usize> = (0..total_cyphers).collect();
+                for _ in 0..cypher_limit.min(total_cyphers) {
+                    let idx = rng.gen_range(0..available.len());
+                    self.character_builder.selected_cyphers.push(available.remove(idx));
+                }
+            }
+            KeyCode::Char('c') | KeyCode::Char('C') => {
+                // Clear all selections
+                self.character_builder.selected_cyphers.clear();
+            }
+            KeyCode::Enter => {
+                // Can proceed even with 0 cyphers selected
+                self.current_screen = Screen::ArtifactSelect;
+                self.character_builder.reset_list_state();
+            }
+            KeyCode::Esc => {
+                self.current_screen = Screen::AbilitySelect;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_artifact_select_keys(&mut self, key: KeyEvent) -> Result<()> {
+        let total_artifacts = self.game_data.artifacts.len();
+        let max_artifacts = 3; // Reasonable limit for starting characters
+
+        match key.code {
+            KeyCode::Up | KeyCode::Char('k') => {
+                self.character_builder.move_up();
+            }
+            KeyCode::Down | KeyCode::Char('j') => {
+                self.character_builder.move_down(total_artifacts);
+            }
+            KeyCode::Char(' ') => {
+                // Toggle selection
+                let idx = self.character_builder.list_state;
+                if let Some(pos) = self
+                    .character_builder
+                    .selected_artifacts
+                    .iter()
+                    .position(|&i| i == idx)
+                {
+                    self.character_builder.selected_artifacts.remove(pos);
+                } else if self.character_builder.selected_artifacts.len() < max_artifacts {
+                    self.character_builder.selected_artifacts.push(idx);
+                }
+            }
+            KeyCode::Char('r') | KeyCode::Char('R') => {
+                // Random selection (1-2 artifacts)
+                use rand::Rng;
+                let mut rng = rand::thread_rng();
+                self.character_builder.selected_artifacts.clear();
+                
+                let count = rng.gen_range(1..=2).min(total_artifacts);
+                let mut available: Vec<usize> = (0..total_artifacts).collect();
+                for _ in 0..count {
+                    let idx = rng.gen_range(0..available.len());
+                    self.character_builder.selected_artifacts.push(available.remove(idx));
+                }
+            }
+            KeyCode::Char('c') | KeyCode::Char('C') => {
+                // Clear all selections
+                self.character_builder.selected_artifacts.clear();
+            }
+            KeyCode::Enter => {
+                self.current_screen = Screen::OdditySelect;
+                self.character_builder.reset_list_state();
+            }
+            KeyCode::Esc => {
+                self.current_screen = Screen::CypherSelect;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_oddity_select_keys(&mut self, key: KeyEvent) -> Result<()> {
+        let total_oddities = self.game_data.oddities.len();
+        let max_oddities = 2; // Starting characters typically have 0-2 oddities
+
+        match key.code {
+            KeyCode::Up | KeyCode::Char('k') => {
+                self.character_builder.move_up();
+            }
+            KeyCode::Down | KeyCode::Char('j') => {
+                self.character_builder.move_down(total_oddities);
+            }
+            KeyCode::Char(' ') => {
+                // Toggle selection
+                let idx = self.character_builder.list_state;
+                if let Some(pos) = self
+                    .character_builder
+                    .selected_oddities
+                    .iter()
+                    .position(|&i| i == idx)
+                {
+                    self.character_builder.selected_oddities.remove(pos);
+                } else if self.character_builder.selected_oddities.len() < max_oddities {
+                    self.character_builder.selected_oddities.push(idx);
+                }
+            }
+            KeyCode::Char('r') | KeyCode::Char('R') => {
+                // Random selection (0-2 oddities)
+                use rand::Rng;
+                let mut rng = rand::thread_rng();
+                self.character_builder.selected_oddities.clear();
+                
+                let count = rng.gen_range(0..=2).min(total_oddities);
+                let mut available: Vec<usize> = (0..total_oddities).collect();
+                for _ in 0..count {
+                    let idx = rng.gen_range(0..available.len());
+                    self.character_builder.selected_oddities.push(available.remove(idx));
+                }
+            }
+            KeyCode::Char('c') | KeyCode::Char('C') => {
+                // Clear all selections
+                self.character_builder.selected_oddities.clear();
+            }
+            KeyCode::Enter => {
+                self.current_screen = Screen::CharacterPreview;
+            }
+            KeyCode::Esc => {
+                self.current_screen = Screen::ArtifactSelect;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
     fn save_character(&self) -> Result<()> {
         use crate::character::build_character;
+        use crate::data::{create_cypher_instance, create_artifact_instance};
         use chrono::Local;
 
         // Check if we have a pre-generated character or need to build one
         let character = if let Some(ref generated) = self.generated_character {
-            // Use the already-generated character
             generated.clone()
         } else {
             // Build character from builder
@@ -462,10 +648,34 @@ impl App {
             
             // Set gender from builder
             char_sheet.gender = self.character_builder.gender.clone();
+            
+            // Add selected cyphers
+            for &idx in &self.character_builder.selected_cyphers {
+                if let Some(cypher) = self.game_data.cyphers.get(idx) {
+                    let instance = create_cypher_instance(cypher);
+                    let _ = char_sheet.add_cypher(instance);
+                }
+            }
+            
+            // Add selected artifacts
+            for &idx in &self.character_builder.selected_artifacts {
+                if let Some(artifact) = self.game_data.artifacts.get(idx) {
+                    let instance = create_artifact_instance(artifact);
+                    char_sheet.add_artifact(instance);
+                }
+            }
+            
+            // Add selected oddities
+            for &idx in &self.character_builder.selected_oddities {
+                if let Some(oddity) = self.game_data.oddities.get(idx) {
+                    char_sheet.add_oddity(oddity.clone());
+                }
+            }
+            
             char_sheet
         };
 
-        // Generate filename with timestamp: CharName_YYYY-MM-DD_HH-MM-SS.md
+        // Generate filename with timestamp
         let timestamp = Local::now().format("%Y-%m-%d_%H-%M-%S");
         let sanitized_name = character.name
             .chars()
@@ -485,7 +695,6 @@ impl App {
         
         Ok(())
     }
-
 }
 
 impl CharacterBuilder {
@@ -502,6 +711,9 @@ impl CharacterBuilder {
             bonus_speed: 0,
             bonus_intellect: 0,
             selected_abilities: Vec::new(),
+            selected_cyphers: Vec::new(),      // NEW
+            selected_artifacts: Vec::new(),    // NEW
+            selected_oddities: Vec::new(),     // NEW
             list_state: 0,
             scroll_offset: 0,
         }

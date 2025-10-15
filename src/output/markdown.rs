@@ -4,7 +4,6 @@
 use anyhow::Result;
 use std::fs;
 use std::path::Path;
-
 use crate::character::CharacterSheet;
 
 // ==========================================
@@ -12,215 +11,101 @@ use crate::character::CharacterSheet;
 // ==========================================
 
 /// Format a character sheet as markdown
-pub fn format_character_sheet(sheet: &CharacterSheet) -> String {
-    let mut output = String::new();
+pub fn format_character_sheet(character: &CharacterSheet) -> String {
+    let mut markdown = String::new();
 
     // Header
-    output.push_str(&format!("# {}\n\n", sheet.name));
-    output.push_str(&format!("**{}**\n\n", sheet.character_sentence()));
-    output.push_str("---\n\n");
-
-    // Basic Info
-    output.push_str("## Basic Information\n\n");
-    output.push_str(&format!("- **Tier:** {}\n", sheet.tier));
-    output.push_str(&format!("- **Type:** {}\n", sheet.character_type));
-
-    if let Some(descriptor) = &sheet.descriptor {
-        output.push_str(&format!("- **Descriptor:** {}\n", descriptor));
-    }
-
-    if let Some(species) = &sheet.species {
-        output.push_str(&format!("- **Species:** {}\n", species));
-    }
-
-    output.push_str(&format!("- **Focus:** {}\n", sheet.focus));
-    output.push_str(&format!("- **Experience Points:** {}\n", sheet.xp));
-    output.push_str("\n");
+    markdown.push_str(&format!("# {}\n\n", character.name));
+    markdown.push_str(&format!("*{}*\n\n", character.character_sentence()));
+    markdown.push_str(&format!("**Tier:** {} | **XP:** {}\n\n", character.tier, character.xp));
 
     // Stat Pools
-    output.push_str("## Stat Pools\n\n");
-    output.push_str("| Stat          | Current | Maximum |\n");
-    output.push_str("|---------------|---------|---------|");
-    output.push_str("\n");
-    output.push_str(&format!(
-        "| **Might**     | {} | {} |\n",
-        sheet.pools.current.might, sheet.pools.maximum.might
-    ));
-    output.push_str(&format!(
-        "| **Speed**     | {} | {} |\n",
-        sheet.pools.current.speed, sheet.pools.maximum.speed
-    ));
-    output.push_str(&format!(
-        "| **Intellect** | {} | {} |\n",
-        sheet.pools.current.intellect, sheet.pools.maximum.intellect
-    ));
-    output.push_str("\n");
+    markdown.push_str("## Stat Pools\n\n");
+    markdown.push_str(&format!("- **Might:** {} (Edge: {})\n", character.pools.maximum.might, character.edge.might));
+    markdown.push_str(&format!("- **Speed:** {} (Edge: {})\n", character.pools.maximum.speed, character.edge.speed));
+    markdown.push_str(&format!("- **Intellect:** {} (Edge: {})\n", character.pools.maximum.intellect, character.edge.intellect));
+    markdown.push_str(&format!("\n**Effort:** {} | **Armor:** {}\n\n", character.effort.max_effort, character.armor));
 
-    // Edge
-    output.push_str("## Edge\n\n");
-    output.push_str(&format!("- **Might Edge:** {}\n", sheet.edge.might));
-    output.push_str(&format!("- **Speed Edge:** {}\n", sheet.edge.speed));
-    output.push_str(&format!("- **Intellect Edge:** {}\n", sheet.edge.intellect));
-    output.push_str("\n");
-
-    // Effort & Combat Stats
-    output.push_str("## Combat Statistics\n\n");
-    output.push_str(&format!("- **Effort:** {}\n", sheet.effort.max_effort));
-    output.push_str(&format!("- **Armor:** {}\n", sheet.armor));
-    output.push_str(&format!("- **Damage Track:** {}\n", sheet.damage_track));
-    output.push_str(&format!("- **Cypher Limit:** {}\n", sheet.cypher_limit));
-    output.push_str("\n");
-
-    // Skills
-    output.push_str("## Skills\n\n");
-
-    if !sheet.skills.specialized.is_empty() {
-        output.push_str("### Specialized\n\n");
-        for skill in &sheet.skills.specialized {
-            output.push_str(&format!("- {}\n", skill));
-        }
-        output.push_str("\n");
+    // Skills (abbreviated for brevity)
+    markdown.push_str("## Skills\n\n");
+    if !character.skills.trained.is_empty() {
+        markdown.push_str("**Trained:** ");
+        markdown.push_str(&character.skills.trained.join(", "));
+        markdown.push_str("\n\n");
     }
 
-    if !sheet.skills.trained.is_empty() {
-        output.push_str("### Trained\n\n");
-        for skill in &sheet.skills.trained {
-            output.push_str(&format!("- {}\n", skill));
-        }
-        output.push_str("\n");
+    // Equipment (abbreviated)
+    markdown.push_str("## Equipment\n\n");
+    markdown.push_str(&format!("**Shins:** {}\n\n", character.equipment.shins));
+    if !character.equipment.weapons.is_empty() {
+        markdown.push_str("**Weapons:** ");
+        markdown.push_str(&character.equipment.weapons.join(", "));
+        markdown.push_str("\n\n");
     }
 
-    if !sheet.skills.inabilities.is_empty() {
-        output.push_str("### Inabilities\n\n");
-        for inability in &sheet.skills.inabilities {
-            output.push_str(&format!("- {}\n", inability));
-        }
-        output.push_str("\n");
-    }
-
-    // Abilities
-    output.push_str("## Abilities\n\n");
-
-    if !sheet.special_abilities.is_empty() {
-        output.push_str("### Special Abilities\n\n");
-        for ability in &sheet.special_abilities {
-            output.push_str(&format!("- {}\n", ability));
-        }
-        output.push_str("\n");
-    }
-
-    if !sheet.type_abilities.is_empty() {
-        output.push_str("### Type Abilities\n\n");
-        for ability in &sheet.type_abilities {
-            output.push_str(&format!("- {}\n", ability));
-        }
-        output.push_str("\n");
-    }
-
-    output.push_str("### Focus Ability\n\n");
-    output.push_str(&format!("- {}\n\n", sheet.focus_ability));
-
-    // Equipment
-    output.push_str("## Equipment\n\n");
-
-    // Weapons
-    output.push_str("### Weapons\n\n");
-    if !sheet.equipment.weapons.is_empty() {
-        for weapon in &sheet.equipment.weapons {
-            output.push_str(&format!("- {}\n", weapon));
-        }
+    // ========== CYPHERS ==========
+    markdown.push_str("## Cyphers\n\n");
+    markdown.push_str(&format!("**Cypher Limit:** {}\n\n", character.cypher_limit));
+    
+    if character.cyphers.is_empty() {
+        markdown.push_str("*No cyphers carried*\n\n");
     } else {
-        output.push_str("*None*\n");
-    }
-    output.push_str("\n");
-
-    // Armor
-    output.push_str("### Armor\n\n");
-    if let Some(armor) = &sheet.equipment.armor {
-        output.push_str(&format!("{}\n\n", armor));
-    } else {
-        output.push_str("*None*\n\n");
-    }
-
-    // Shield (only show if present)
-    if let Some(shield) = &sheet.equipment.shield {
-        output.push_str("### Shield\n\n");
-        output.push_str(&format!("{}\n\n", shield));
-    }
-
-    // Gear
-    output.push_str("### Gear\n\n");
-    if !sheet.equipment.gear.is_empty() {
-        for item in &sheet.equipment.gear {
-            output.push_str(&format!("- {}\n", item));
+        for (i, cypher) in character.cyphers.iter().enumerate() {
+            markdown.push_str(&format!(
+                "{}. **{}** (Level {}, {})\n",
+                i + 1,
+                cypher.name,
+                cypher.level,
+                cypher.cypher_type
+            ));
+            markdown.push_str(&format!("   - *Form:* {}\n", cypher.form));
+            markdown.push_str(&format!("   - *Effect:* {}\n", cypher.effect));
+            markdown.push_str("\n");
         }
-    } else {
-        output.push_str("*None*\n");
     }
-    output.push_str("\n");
 
-    // Currency
-    output.push_str("### Currency\n\n");
-    output.push_str(&format!("**Shins:** {}\n\n", sheet.equipment.shins));
-
-    // Cyphers
-    output.push_str("## Cyphers\n\n");
-    output.push_str(&format!(
-        "**Limit:** {} | **Current:** {}\n\n",
-        sheet.cypher_limit,
-        sheet.cyphers.len()
-    ));
-
-    if !sheet.cyphers.is_empty() {
-        for (i, cypher) in sheet.cyphers.iter().enumerate() {
-            output.push_str(&format!("{}. {}\n", i + 1, cypher));
+    // ========== ARTIFACTS ==========
+    if !character.artifacts.is_empty() {
+        markdown.push_str("## Artifacts\n\n");
+        for (i, artifact) in character.artifacts.iter().enumerate() {
+            markdown.push_str(&format!(
+                "{}. **{}** (Level {}, {})\n",
+                i + 1,
+                artifact.name,
+                artifact.level,
+                artifact.form_type
+            ));
+            markdown.push_str(&format!("   - *Depletion:* {}\n", artifact.depletion));
+            markdown.push_str(&format!("   - *Form:* {}\n", artifact.form));
+            markdown.push_str(&format!("   - *Effect:* {}\n", artifact.effect));
+            markdown.push_str("\n");
         }
-        output.push_str("\n");
-    } else {
-        output.push_str("*No cyphers currently carried*\n\n");
     }
 
-    // Background
-    output.push_str("## Background\n\n");
-
-    if !sheet.background.connection_to_party.is_empty() {
-        output.push_str("### Connection to Party\n\n");
-        output.push_str(&format!("{}\n\n", sheet.background.connection_to_party));
-    }
-
-    if let Some(descriptor_link) = &sheet.background.descriptor_link {
-        output.push_str("### Descriptor Link\n\n");
-        output.push_str(&format!("{}\n\n", descriptor_link));
-    }
-
-    if let Some(focus_link) = &sheet.background.focus_link {
-        output.push_str("### Focus Link\n\n");
-        output.push_str(&format!("{}\n\n", focus_link));
-    }
-
-    if !sheet.background.notes.is_empty() {
-        output.push_str("### Notes\n\n");
-        for note in &sheet.background.notes {
-            output.push_str(&format!("- {}\n", note));
+    // ========== ODDITIES ==========
+    if !character.oddities.is_empty() {
+        markdown.push_str("## Oddities\n\n");
+        for (i, oddity) in character.oddities.iter().enumerate() {
+            markdown.push_str(&format!(
+                "{}. **{}** ({} shins)\n",
+                i + 1,
+                oddity.name,
+                oddity.value_shins
+            ));
+            markdown.push_str(&format!("   - {}\n", oddity.description));
+            markdown.push_str("\n");
         }
-        output.push_str("\n");
     }
 
-    // Advancement
-    if !sheet.advances.is_empty() {
-        output.push_str("## Advancement\n\n");
-        for advance in &sheet.advances {
-            output.push_str(&format!("- {}\n", advance));
-        }
-        output.push_str("\n");
+    // Abilities, background, etc...
+    markdown.push_str("## Special Abilities\n\n");
+    for ability in &character.special_abilities {
+        markdown.push_str(&format!("- {}\n", ability));
     }
 
-    // Footer
-    output.push_str("---\n\n");
-    output.push_str("*Generated by Numenera Character Generator*\n");
-
-    output
+    markdown
 }
+
 
 /// Save a character sheet to a markdown file
 pub fn save_character_sheet(sheet: &CharacterSheet, output_dir: &str) -> Result<String> {

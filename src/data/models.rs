@@ -303,7 +303,123 @@ pub struct Cypher {
 // Root structure for cyphers.toml
 #[derive(Debug, Clone, Deserialize, Serialize)]
 pub struct CyphersData {
-    pub cyphers: Vec<Cypher>,
+    pub cypher: Vec<Cypher>,
+}
+
+// ==========================================
+// ARTIFACTS (artifacts.toml)
+// ==========================================
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Artifact {
+    pub id: String,
+    pub name: String,
+    pub level_formula: String,
+    pub depletion: String,
+    pub form_type: String,
+    pub category: String,
+    pub tags: Vec<String>,
+    pub effect: String,
+    pub form: String,
+    pub gm_intrusion: String,
+    #[serde(default)]
+    pub crafting: Option<ArtifactCrafting>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ArtifactCrafting {
+    pub source: String,
+    #[serde(default)]
+    pub difficulty: Option<u32>,
+    #[serde(default)]
+    pub time_minutes: Option<u32>,
+    #[serde(default)]
+    pub iotum: Vec<IotumRequirement>,
+}
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct IotumRequirement {
+    pub name: String,
+    pub quantity: u32,
+}
+
+// Root structure for artifacts.toml
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct ArtifactsData {
+    pub artifact: Vec<Artifact>,
+}
+
+// ==========================================
+// ODDITIES (oddities.toml)
+// ==========================================
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Oddity {
+    pub id: String,
+    pub name: String,
+    pub category: String,
+    pub theme: String,
+    pub value_shins: u32,
+    pub tags: Vec<String>,
+    pub source: String,
+    pub description: String,
+    #[serde(default)]
+    pub table_number: Option<u32>,
+}
+
+// Root structure for oddities.toml
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct OdditiesData {
+    pub oddity: Vec<Oddity>,
+}
+
+// ==========================================
+// DISCOVERIES (discoveries.toml)
+// ==========================================
+
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct Discovery {
+    pub id: String,
+    pub name: String,
+    #[serde(rename = "type")]
+    pub discovery_type: String,
+    pub scale: String,
+    pub tags: Vec<String>,
+    pub source: String,
+    pub function: String,
+    pub effect: String,
+    pub gm_intrusion: String,
+}
+
+// Root structure for discoveries.toml
+#[derive(Debug, Clone, Deserialize, Serialize)]
+pub struct DiscoveriesData {
+    pub discovery: Vec<Discovery>,
+}
+
+// ==========================================
+// CYPHER/ARTIFACT INSTANCES
+// ==========================================
+
+/// An instance of a cypher with a rolled level
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct CypherInstance {
+    pub name: String,
+    pub level: u32,
+    pub cypher_type: String,
+    pub effect: String,
+    pub form: String,
+}
+
+/// An instance of an artifact with a rolled level
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ArtifactInstance {
+    pub name: String,
+    pub level: u32,
+    pub depletion: String,
+    pub form_type: String,
+    pub effect: String,
+    pub form: String,
 }
 
 // ==========================================
@@ -411,7 +527,7 @@ pub struct SpeciesData {
 }
 
 // ==========================================
-// HELPER TYPES
+// GAME DATA - ALL LOADED DATA
 // ==========================================
 
 /// Represents all loaded game data
@@ -422,6 +538,9 @@ pub struct GameData {
     pub foci: Vec<Focus>,
     pub equipment: EquipmentData,
     pub cyphers: Vec<Cypher>,
+    pub artifacts: Vec<Artifact>,
+    pub oddities: Vec<Oddity>,
+    pub discoveries: Vec<Discovery>,
     pub species: Vec<Species>,
 }
 
@@ -443,6 +562,9 @@ impl GameData {
                 ammunition: Vec::new(),
             },
             cyphers: Vec::new(),
+            artifacts: Vec::new(),
+            oddities: Vec::new(),
+            discoveries: Vec::new(),
             species: Vec::new(),
         }
     }

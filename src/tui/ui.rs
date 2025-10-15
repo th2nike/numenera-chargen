@@ -27,7 +27,6 @@ pub fn render(f: &mut Frame, app: &App) {
     render_title_bar(f, chunks[0], app);
 
     // Render appropriate screen
-// Render appropriate screen
     match app.current_screen {
         Screen::MainMenu => screens::main_menu::render(f, chunks[1], app),
         Screen::NameInput => screens::name_input::render(f, chunks[1], app),
@@ -37,6 +36,9 @@ pub fn render(f: &mut Frame, app: &App) {
         Screen::FocusSelect => screens::focus_select::render(f, chunks[1], app),
         Screen::StatAllocation => screens::stat_allocations::render(f, chunks[1], app),
         Screen::AbilitySelect => screens::ability_select::render(f, chunks[1], app),
+        Screen::CypherSelect => screens::cypher_select::render(f, chunks[1], app),      // NEW
+        Screen::ArtifactSelect => screens::artifact_select::render(f, chunks[1], app),  // NEW
+        Screen::OdditySelect => screens::oddity_select::render(f, chunks[1], app),      // NEW
         Screen::CharacterPreview => screens::character_preview::render(f, chunks[1], app),
     }
 
@@ -67,12 +69,15 @@ fn render_help_bar(f: &mut Frame, area: Rect, app: &App) {
     let help_text = match app.current_screen {
         Screen::MainMenu => "1: Interactive | 2: Random | Q: Quit",
         Screen::NameInput => "Type name | Enter: Continue | ESC: Back",
-        Screen::GenderSelect => "1: Male | 2: Female | 3: Other | ESC: Back",  // Add this
+        Screen::GenderSelect => "1: Male | 2: Female | 3: Other | ESC: Back",
         Screen::TypeSelect => "↑↓/j/k: Navigate | Enter: Select | ESC: Back",
         Screen::DescriptorSelect => "↑↓/j/k: Navigate | Enter: Select | ESC: Back",
         Screen::FocusSelect => "↑↓/j/k: Navigate | Enter: Select | ESC: Back",
         Screen::StatAllocation => "+/-: Adjust | Tab: Next stat | Enter: Continue | ESC: Back",
         Screen::AbilitySelect => "↑↓: Navigate | Space: Toggle | Enter: Continue | ESC: Back",
+        Screen::CypherSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",    // NEW
+        Screen::ArtifactSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",  // NEW
+        Screen::OdditySelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Finish | ESC: Back",  // NEW
         Screen::CharacterPreview => "S: Save | N: New Character | Q: Quit",
     };
 

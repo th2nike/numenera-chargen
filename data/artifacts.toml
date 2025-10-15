@@ -1,0 +1,1236 @@
+# Numenera Artifacts Database
+# Auto-generated from markdown
+
+
+[[artifact]]
+id = "amber_casement"
+name = "Amber Casement"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'stasis']
+
+effect = """
+Encases a creature or object (up to human size) in solid amber for 1 minute per artifact level. Target inside cannot move or breathe but does not age. Amber can be shattered (10 points Armor, 20 Health).
+"""
+
+form = "Bronze gauntlet with gem-like nozzle."
+gm_intrusion = "Device backfires, trapping the user in amber instead."
+
+[[artifact]]
+id = "analyzer_drone"
+name = "Analyzer Drone"
+level_formula = "1d6+2"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['utility', 'drone']
+
+effect = """
+Follows its user for 24 hours, granting +1 step to two knowledge or perception-related tasks. Can record 1 hour of visual/audio data.
+"""
+
+form = "Metallic orb, 1 foot wide, projecting blue scanning light."
+gm_intrusion = "Drone develops a glitching “personality,” refusing commands or wandering off."
+
+[[artifact]]
+id = "armor_generator"
+name = "Armor Generator"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'forcefield']
+
+effect = """
+Creates a personal force field granting +3 Armor for 10 minutes × level. Absorbs energy equally well as physical blows.
+"""
+
+form = "Hexagonal belt module that shimmers when active."
+gm_intrusion = "Sudden depletion surge; the field collapses violently, knocking the user prone."
+
+[[artifact]]
+id = "atmospheric_converter"
+name = "Atmospheric Converter"
+level_formula = "1d6+1"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['environment', 'utility']
+
+effect = """
+Purifies or modifies atmosphere in short radius, creating breathable air or inert gases. Works for 10 minutes × level.
+"""
+
+form = "2-foot-tall column of whirring vents."
+gm_intrusion = "Reverses polarity, consuming local oxygen instead."
+
+[[artifact]]
+id = "beacon_shard"
+name = "Beacon Shard"
+level_formula = "1d6+2"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['communication', 'locator']
+
+effect = """
+Sends beacon pulse detectable up to 100 miles or to matching shard attuned to its frequency.
+"""
+
+form = "Faceted crystal with internal flicker."
+gm_intrusion = "Signal draws unintended attention—perhaps bandits or something alien."
+
+[[artifact]]
+id = "bio_scanner"
+name = "Bio-Scanner"
+level_formula = "1d6+1"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Healing"
+tags = ['utility', 'medical']
+
+effect = """
+Determines biological species, health, toxins, or mutations of any living target within short range.
+"""
+
+form = "Flat panel glowing with soft green grid."
+gm_intrusion = "Scanner misreads, labeling healthy subjects as infected or hostile."
+
+[[artifact]]
+id = "chronal_displacer"
+name = "Chronal Displacer"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Defensive"
+tags = ['time', 'defensive']
+
+effect = """
+Once activated, grants one free action in a round (time flicker) or phases the user outside reality for 10 seconds (immune to attacks but cannot act).
+"""
+
+form = "Transparent belt disc with swirling particles inside."
+gm_intrusion = "Temporal afterimage acts independently for one round."
+
+[[artifact]]
+id = "cloaking_field"
+name = "Cloaking Field"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'stealth']
+
+effect = """
+Grants full invisibility for 1 minute × level or until attacking.
+"""
+
+form = "Cloak of woven synth-thread humming faintly."
+gm_intrusion = "Field flickers under strong light, revealing a silhouette."
+
+[[artifact]]
+id = "combat_implant_suite"
+name = "Combat Implant Suite"
+level_formula = "1d6+3"
+depletion = "1 in 1d6"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'augmentation']
+
+effect = """
+User gains +2 to Might, Speed, and Intellect Edge for 1 hour; immune to fear effects. Afterward, suffers 3 Intellect damage from feedback.
+"""
+
+form = "Syringe of self-assembling nanites."
+gm_intrusion = "Implants overclock dangerously, inflicting pain and tremors."
+
+[[artifact]]
+id = "communication_orb"
+name = "Communication Orb"
+level_formula = "1d6+2"
+depletion = "—"
+form_type = "Usable"
+category = "Utility"
+tags = ['communication', 'utility']
+
+effect = """
+User can communicate vocally or telepathically with any known individual anywhere on the same planet.
+"""
+
+form = "Floating glass orb radiating faint blue light."
+gm_intrusion = "Background transmission reveals conversation to unintended listener."
+
+[[artifact]]
+id = "containment_sphere"
+name = "Containment Sphere"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'energy']
+
+effect = """
+Creates a 10-foot-radius barrier trapping or protecting objects of level ≤ artifact’s level.
+"""
+
+form = "Metallic orb splitting into three hovering prongs forming a triangle of light."
+gm_intrusion = "Field collapses explosively, damaging all inside."
+
+[[artifact]]
+id = "conversion_beam"
+name = "Conversion Beam"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'energy']
+
+effect = """
+Deals 6 damage and briefly alters target’s substance (stone, metal, etc.) for 1 round per level.
+"""
+
+form = "Cylindrical tube with spiraling glass chamber."
+gm_intrusion = "Beam rebounds, converting nearby object—or ally."
+
+[[artifact]]
+id = "crystal_resonator"
+name = "Crystal Resonator"
+level_formula = "1d6+1"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['utility', 'sound']
+
+effect = """
+Amplifies or cancels sound waves; eases all auditory perception tasks 2 steps; can shatter fragile materials (5 damage) within short range.
+"""
+
+form = "Palm-sized prism emitting harmonic tone."
+gm_intrusion = "Resonance triggers hidden machinery nearby."
+
+[[artifact]]
+id = "data_tether"
+name = "Data Tether"
+level_formula = "1d6+2"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['datasphere', 'communication']
+
+effect = """
+User can download information equivalent to a few pages of data per round; tasks to locate info eased 2 steps.
+"""
+
+form = "Fiber-optic filament coiling from wrist to neck."
+gm_intrusion = "Data surge causes confusion or psychic echo from an ancient AI."
+
+[[artifact]]
+id = "deflection_field"
+name = "Deflection Field"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'force']
+
+effect = """
+Reduces all ranged attack damage by 3 for 1 minute × level.
+"""
+
+form = "Silver armband emitting faint distortion field."
+gm_intrusion = "Ricochet deflects a projectile into an ally."
+
+[[artifact]]
+id = "dimension_lens"
+name = "Dimension Lens"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['exploration', 'dimensional']
+
+effect = """
+Allows the user to perceive or open a brief window into a parallel or distant location (short range portal or scry).
+"""
+
+form = "Polished lens ringed in faintly humming runes."
+gm_intrusion = "Portal opens to an unexpected, hostile dimension."
+
+[[artifact]]
+id = "energy_projector"
+name = "Energy Projector"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'energy']
+
+effect = """
+Fires beam for 6 damage (ignores 2 Armor); range long; 1 attack/round until depletion triggers.
+"""
+
+form = "Sleek alloy tube with light fins that vent heat."
+gm_intrusion = "Power capacitor overheats, forcing one-round cooldown."
+
+[[artifact]]
+id = "flight_pack"
+name = "Flight Pack"
+level_formula = "1d6+2"
+depletion = "1 in 1d6"
+form_type = "Usable"
+category = "Movement"
+tags = ['movement', 'flight']
+
+effect = """
+Enables sustained flight for 1 hour × level; speed equal to long range per round.  Carrying more than a light load reduces duration by half.
+"""
+
+form = "Metal backpack with humming vents."
+gm_intrusion = "A thruster stalls mid-air; emergency landing required or fall ensues."
+
+[[artifact]]
+id = "force_blade_emitter"
+name = "Force Blade Emitter"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'energy']
+
+effect = """
+Creates a blade of pure energy dealing 7 damage and ignoring Armor ≤ 2.  Lasts for 10 minutes × level or until depleted.
+"""
+
+form = "Short metal grip that erupts in brilliant light when triggered."
+gm_intrusion = "Energy surge ignites flammable materials near the user."
+
+[[artifact]]
+id = "force_thrower"
+name = "Force Thrower"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'telekinetic']
+
+effect = """
+Hurls an object or creature up to long range, inflicting 6 damage and knocking it prone.  Can also clear debris or breach doors.
+"""
+
+form = "Pistol-sized tube that kicks back when fired."
+gm_intrusion = "Recoil throws the user backward instead."
+
+[[artifact]]
+id = "gravitic_harness"
+name = "Gravitic Harness"
+level_formula = "1d6+2"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Defensive"
+tags = ['movement', 'defensive']
+
+effect = """
+Negates weight for 1 hour × level; falls slowly and lands harmlessly from any height.  Can lift up to 200 lbs × level vertically per round.
+"""
+
+form = "Webbed belt of black metal plates."
+gm_intrusion = "Polarity inverts, slamming user to ground or ceiling."
+
+[[artifact]]
+id = "healing_module"
+name = "Healing Module"
+level_formula = "1d6+1"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Healing"
+tags = ['healing', 'medical']
+
+effect = """
+Restores 1d6 + level points to any Pool and stops bleeding or poison.  Takes one minute to operate.
+"""
+
+form = "White puck that releases silver mist when activated."
+gm_intrusion = "Nanites over-replicate, causing pain (1 Intellect damage)."
+
+[[artifact]]
+id = "holo_servitor"
+name = "Holo-Servitor"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['utility', 'construct']
+
+effect = """
+Projects a humanoid image with limited AI; performs simple tasks (skill level 2) for 1 hour × level.  Immune to physical harm.
+"""
+
+form = "Palm device emitting light matrix."
+gm_intrusion = "Projection misinterprets orders or imitates the user’s voice unbidden."
+
+[[artifact]]
+id = "hover_disk"
+name = "Hover Disk"
+level_formula = "1d6+1"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Movement"
+tags = ['movement', 'transport']
+
+effect = """
+Carries up to 200 lbs × level at Short-range speed for 10 minutes × level.
+"""
+
+form = "Silver disk that floats three feet above ground."
+gm_intrusion = "Power dip causes sudden drop or spin."
+
+[[artifact]]
+id = "lightning_projector"
+name = "Lightning Projector"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'energy']
+
+effect = """
+Fires bolt to long range for 7 damage; secondary arcs strike others within Immediate range for 3 damage.
+"""
+
+form = "Ribbed metal staff crackling with blue light."
+gm_intrusion = "Feedback shocks the user for 3 damage."
+
+[[artifact]]
+id = "magnetic_shield_bracelet"
+name = "Magnetic Shield Bracelet"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'magnetic']
+
+effect = """
+Grants +3 Armor vs. metal weapons for 1 minute × level; can deflect projectiles (eases Speed defense 2 steps).
+"""
+
+form = "Coiled band of dark iron filaments."
+gm_intrusion = "Pulls in loose metal gear instead of repelling it."
+
+[[artifact]]
+id = "mind_link_node"
+name = "Mind-Link Node"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['communication', 'psychic']
+
+effect = """
+Links up to four wearers within long range for telepathic communication and emotion sharing for 1 hour × level.
+"""
+
+form = "Thin circuit etched onto temple skin."
+gm_intrusion = "Emotions bleed between users, causing confusion or arguments."
+
+[[artifact]]
+id = "molecular_assembler"
+name = "Molecular Assembler"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['creation', 'utility']
+
+effect = """
+Creates simple objects (≤ 1 ft³ × level) of stone, metal, or organic material given raw feedstock; complex devices require GM approval.
+"""
+
+form = "Desk-sized box with shifting nozzles and glow panels."
+gm_intrusion = "Assembler produces an unintended living or unstable variant."
+
+[[artifact]]
+id = "neural_interface"
+name = "Neural Interface"
+level_formula = "1d6+2"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['datasphere', 'communication']
+
+effect = """
+For 10 minutes × level, the user may control or communicate with any device ≤ artifact’s level within long range as though it were an extension of their body.
+"""
+
+form = "Slender circlet of braided synth-wire or subdermal jack."
+gm_intrusion = "Echo of a past user’s mind overlays the user’s thoughts."
+
+[[artifact]]
+id = "null_field_emitter"
+name = "Null Field Emitter"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'energy']
+
+effect = """
+Creates a 10-foot-radius sphere that cancels energy attacks and numenera effects of level ≤ artifact’s level for 1 minute × level.
+"""
+
+form = "Dull gray plate with swirling void inside."
+gm_intrusion = "Field drains the power of carried cyphers or artifacts."
+
+[[artifact]]
+id = "particle_accelerator_baton"
+name = "Particle Accelerator Baton"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'energy']
+
+effect = """
+Melee or ranged blast dealing 7 damage; targets within Immediate range of the impact take 2 damage.
+"""
+
+form = "4-foot silver staff with pulsing coils."
+gm_intrusion = "Baton overheats, forcing a Speed defense or 3 damage to user."
+
+[[artifact]]
+id = "phase_boots"
+name = "Phase Boots"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Movement"
+tags = ['movement', 'dimensional']
+
+effect = """
+Allows walking through solid objects up to 1 ft × level thick or hovering inches above ground for 10 minutes × level.
+"""
+
+form = "Soft gray boots that shimmer with ghostly light."
+gm_intrusion = "Depletes mid-stride, trapping user inside a wall or floor."
+
+[[artifact]]
+id = "plasma_rifle"
+name = "Plasma Rifle"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'fire']
+
+effect = """
+Deals 8 damage, ignores 2 Armor; burst fire fills a short-range cone for 6 damage.
+"""
+
+form = "Long black weapon venting bluish steam."
+gm_intrusion = "Vent clog causes small explosion near user (3 damage)."
+
+[[artifact]]
+id = "portable_gate"
+name = "Portable Gate"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Movement"
+tags = ['movement', 'dimensional']
+
+effect = """
+Two rings placed up to long-range apart form a portal connecting them for 10 minutes × level.
+"""
+
+form = "Matching hoops of luminous alloy."
+gm_intrusion = "Gate links to an unknown destination before stabilizing."
+
+[[artifact]]
+id = "reality_anchor"
+name = "Reality Anchor"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'dimensional']
+
+effect = """
+Creates 30-foot sphere immune to teleportation, phasing, or dimensional intrusion for 1 hour × level.
+"""
+
+form = "Tri-pronged rod humming with deep resonance."
+gm_intrusion = "Anchor destabilizes, dragging part of reality with it."
+
+[[artifact]]
+id = "regeneration_chamber"
+name = "Regeneration Chamber"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Healing"
+tags = ['healing', 'medical']
+
+effect = """
+Heals all Pools to full over one hour; restores severed limbs or organ damage if user remains for 10 hours.
+"""
+
+form = "Transparent pod filled with luminous green fluid."
+gm_intrusion = "Pod misreads genetics, inducing mutation or duplication."
+
+[[artifact]]
+id = "sensor_cluster"
+name = "Sensor Cluster"
+level_formula = "1d6+2"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['utility', 'perception']
+
+effect = """
+User gains +2 steps on all perception and tracking tasks within long range for 1 hour × level.
+"""
+
+form = "Small hovering drone or visor array."
+gm_intrusion = "Detects phantom signals that lure the party astray."
+
+[[artifact]]
+id = "shielding_belt"
+name = "Shielding Belt"
+level_formula = "1d6+3"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'forcefield']
+
+effect = """
+Adds +3 Armor and halves damage from energy attacks for 10 minutes × level.
+"""
+
+form = "Belt of interlocked hex-plates."
+gm_intrusion = "Belt overheats, dealing 2 damage to wearer’s torso."
+
+[[artifact]]
+id = "singularity_bomb"
+name = "Singularity Bomb"
+level_formula = "1d6+4"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'gravity']
+
+effect = """
+Creates brief black hole in short-range area; inflicts 12 damage and pulls unsecured objects toward center.
+"""
+
+form = "Smooth matte sphere that hums softly."
+gm_intrusion = "Gravitic core destabilizes; delayed detonation or implosion hazard."
+
+[[artifact]]
+id = "sleep_inducer"
+name = "Sleep Inducer"
+level_formula = "1d6+1"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'psychic']
+
+effect = """
+All creatures in short radius of level ≤ artifact fall asleep for 10 minutes × level unless they succeed Intellect Defense 4.
+"""
+
+form = "Rod with gentle chime or sprayer of silver mist."
+gm_intrusion = "Emits at wrong frequency—targets allies as well."
+
+[[artifact]]
+id = "stealth_skin"
+name = "Stealth Skin"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Defensive"
+tags = ['defensive', 'stealth']
+
+effect = """
+Grants +2 steps to all stealth tasks for 1 hour × level; complete invisibility if motionless.
+"""
+
+form = "Iridescent bodysuit or injected nanofilm."
+gm_intrusion = "Field glitches, flashing bright colors under stress."
+
+[[artifact]]
+id = "thought_crown"
+name = "Thought Crown"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['psychic', 'communication']
+
+effect = """
+User can read surface thoughts in short range or project calm/fear emotions; Intellect Defense 5 to resist.
+"""
+
+form = "Filigree circlet of glass fibers pulsing faintly."
+gm_intrusion = "Overload floods user’s mind with nearby thoughts."
+
+[[artifact]]
+id = "temporal_stasis_pod"
+name = "Temporal Stasis Pod"
+level_formula = "1d6+4"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['time', 'preservation']
+
+effect = """
+Contents do not age or change; remains preserved until pod is opened. Duration potentially indefinite.
+"""
+
+form = "Coffin-sized cylinder of translucent crystal."
+gm_intrusion = "Opening releases a time-shifted being or anomaly from the distant past."
+
+[[artifact]]
+id = "translator_crown"
+name = "Translator Crown"
+level_formula = "1d6+2"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['communication', 'linguistics']
+
+effect = """
+While worn, translates any spoken language of level ≤ artifact in real time, both to and from the user.  Literacy is not granted.
+"""
+
+form = "Thin silver band etched with micro-runes that pulse when active."
+gm_intrusion = "The crown mistranslates key words—turning diplomacy into insult."
+
+[[artifact]]
+id = "vapor_projector"
+name = "Vapor Projector"
+level_formula = "1d6+1"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['environment', 'utility']
+
+effect = """
+Fills a short-range area with dense fog for 10 minutes × level, granting two-step ease to hiding or escape actions.  Can disperse toxins or spread aerosols.
+"""
+
+form = "Metal tube with rotating vents and faint hiss."
+gm_intrusion = "Mist reacts with air, forming irritating or flammable haze."
+
+[[artifact]]
+id = "vortex_gauntlet"
+name = "Vortex Gauntlet"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'gravity']
+
+effect = """
+Creates a short-range implosive pull drawing creatures and objects inward; deals 8 damage to those caught at the center (Might Defense 5 to resist).
+"""
+
+form = "Heavy bracer with whirling black core."
+gm_intrusion = "Gauntlet’s polarity flips—repelling violently instead of pulling."
+
+[[artifact]]
+id = "waveform_emitter"
+name = "Waveform Emitter"
+level_formula = "1d6+2"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['utility', 'sound']
+
+effect = """
+Choose on activation—(a) create 30-ft cone of concussive force (6 damage), (b) cancel all sound in short range, or (c) generate soothing resonance that eases one Intellect task by 2 steps.
+"""
+
+form = "Circular emitter with concentric rings that vibrate audibly."
+gm_intrusion = "Resonance agitates nearby fragile structures, causing collapse."
+
+[[artifact]]
+id = "weaponized_drone"
+name = "Weaponized Drone"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'construct']
+
+effect = """
+Follows simple verbal orders; attacks with twin energy bolts (6 damage each) for 10 minutes × level or until destroyed.
+"""
+
+form = "Metallic sphere bristling with mini-cannons and sensors."
+gm_intrusion = "Drone’s IFF system misidentifies the party as targets."
+
+[[artifact]]
+id = "weather_modulator"
+name = "Weather Modulator"
+level_formula = "1d6+4"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['environment', 'mega']
+
+effect = """
+Alters weather over a 1-mile radius (temperature, precipitation, wind) for 1 hour × level. Full storms or heat waves require time to build.
+"""
+
+form = "Eight-foot pylon with rotating dish and blue corona."
+gm_intrusion = "Atmospheric systems respond unpredictably—hail, lightning, or toxic rain."
+
+[[artifact]]
+id = "windslice_blade"
+name = "Windslice Blade"
+level_formula = "1d6+3"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['offensive', 'air']
+
+effect = """
+Melee attacks deal 7 damage and can strike targets up to short range as wind crescents (5 damage). Ignores Armor ≤ 2.
+"""
+
+form = "Lightweight silver blade that hums like a gale."
+gm_intrusion = "Air burst rebounds, knocking the wielder backward or slicing nearby objects."
+
+[[artifact]]
+id = "plasma_lance"
+name = "Plasma Lance"
+level_formula = "6"
+depletion = "1 in d20"
+form_type = "Usable"
+category = "Offensive"
+tags = ['crafted', 'weapon']
+
+effect = """
+Fires a beam up to long range, inflicting 8 points of damage that ignores 2 Armor. The beam cuts or melts most mundane materials.
+"""
+
+form = "Unknown form"
+gm_intrusion = "The emitter overheats, venting plasma that scorches the user for 3 damage."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "grav_staff"
+name = "Grav-Staff"
+level_formula = "5"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'tool']
+
+effect = """
+Choose one option per action:
+
+- Push or pull a 100 kg object within short range.
+    
+- Reverse gravity for one target, hurling it 5 m up (5 damage).
+    
+- Negate fall damage for one creature.  
+    **Crafting Details:** 1 × Phased Ferrofluid, 1 × Conducting Stone.  
+    **Crafting Difficulty:** 5 • **Crafting Time:** 1 hour.  
+    **GM Intrusion:** The gravity surge backlashes, pulling debris or allies toward the user.
+    
+
+---
+"""
+
+form = "Unknown form"
+gm_intrusion = "The gravity surge backlashes, pulling debris or allies toward the user."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "command_circlet"
+name = "Command Circlet"
+level_formula = "5"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'interface']
+
+effect = """
+User may issue mental commands to connected devices within short range for 10 minutes. All follow simple single-sentence directives.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Feedback from linked minds overwhelms the user, stunning them for one round."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "deflection_harness"
+name = "Deflection Harness"
+level_formula = "5"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'defense']
+
+effect = """
+Activating the harness grants +2 Armor for ten minutes.
+"""
+
+form = "Unknown form"
+gm_intrusion = "A power spike creates a loud electrical crack, alerting enemies."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "density_belt"
+name = "Density Belt"
+level_formula = "5"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'utility']
+
+effect = """
+Toggle between “light” (half weight, +1 Speed edge for 1 min) or “heavy” (double weight, +2 Armor for 1 min).
+"""
+
+form = "Unknown form"
+gm_intrusion = "Field fluctuates, slinging the user into the air or through a floor panel."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "repair_gauntlet"
+name = "Repair Gauntlet"
+level_formula = "4"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Healing"
+tags = ['crafted', 'healing', 'machine']
+
+effect = """
+Restores 1d6 points of health to a machine or cyborg; half effect on organic flesh.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Nanites malfunction, causing pain and 2 damage to the patient."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "resonance_blade"
+name = "Resonance Blade"
+level_formula = "5"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Offensive"
+tags = ['crafted', 'weapon']
+
+effect = """
+Deals 5 points of damage and ignores 2 Armor. Critical hit: target drops held item.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Vibrations destabilize, damaging the weapon (–1 to future attacks)."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "stabilizing_beacon"
+name = "Stabilizing Beacon"
+level_formula = "6"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'dimensional']
+
+effect = """
+Suppresses teleportation, rifts, and dimensional distortion within 100 m for 1 hour.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Creates a dimensional echo—ghostly duplicates appear momentarily."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "temporal_recorder"
+name = "Temporal Recorder"
+level_formula = "7"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'information']
+
+effect = """
+Records one minute of events in 10 m radius and can replay them at any time. Record over existing data as action.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Phantom voices from the past bleed through, distracting listeners."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "thoughtwave_relay"
+name = "Thoughtwave Relay"
+level_formula = "7"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'communication']
+
+effect = """
+Connects up to five creatures within 10 km for 10 minutes of mental speech.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Foreign minds join the network, broadcasting unwanted thoughts."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "weather_staff"
+name = "Weather Staff"
+level_formula = "8"
+depletion = "1 in 1d10"
+form_type = "Usable"
+category = "Utility"
+tags = ['crafted', 'environmental']
+
+effect = """
+Alters weather in a 1 km radius — summon rain, disperse fog, or calm winds for 1 hour.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Unintended storms erupt nearby or draw hostile attention."
+
+[artifact.crafting]
+source = "Destiny"
+
+[[artifact]]
+id = "power_generator"
+name = "Power Generator"
+level_formula = "4"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'energy', 'crafted', 'community']
+
+effect = """
+Provides continuous power for all installations within the same community (rank ≤ 6). Grants +1 Infrastructure while active.
+"""
+
+form = "Unknown form"
+gm_intrusion = "An unstable core pulse darkens the settlement for hours or causes localized explosions."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Conducting Stone", quantity = 2 },
+    { name = "Responsive Synth", quantity = 1 },
+]
+
+[[artifact]]
+id = "healing_bay"
+name = "Healing Bay"
+level_formula = "5"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Healing"
+tags = ['installation', 'medical', 'crafted', 'community']
+
+effect = """
+Heals 1d6 Health per day to all treated citizens (up to 10 simultaneously). Removes disease and radiation effects over time.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Nanite programming error creates mutagenic side effects in patients."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Smart Tissue", quantity = 2 },
+    { name = "Responsive Synth", quantity = 1 },
+]
+
+[[artifact]]
+id = "defense_turret_array"
+name = "Defense Turret Array"
+level_formula = "6"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'defense', 'crafted', 'community']
+
+effect = """
+Attacks as a level 6 creature dealing 6 damage to hostile targets each round.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Targeting matrix malfunction causes it to fire on allies or infrastructure."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Azure Steel", quantity = 1 },
+    { name = "Detonation Seeds", quantity = 1 },
+    { name = "Charged Residuum", quantity = 1 },
+]
+
+[[artifact]]
+id = "weather_control_tower"
+name = "Weather Control Tower"
+level_formula = "8"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'environment', 'crafted', 'community']
+
+effect = """
+Regulates local climate in 1 km radius for 1 day — dispels storms or summons rain.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Climatic feedback creates freak hail or lightning storms in neighboring regions."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Planar Gel", quantity = 1 },
+    { name = "Quantium", quantity = 1 },
+    { name = "Photic Core", quantity = 1 },
+]
+
+[[artifact]]
+id = "datasphere_relay"
+name = "Datasphere Relay"
+level_formula = "6"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'communication', 'crafted', 'community']
+
+effect = """
+Transmits data across up to 1 000 km. Allows linking of up to three settlements for shared resources (+1 Influence network bonus).
+"""
+
+form = "Unknown form"
+gm_intrusion = "The relay attracts digital entities that corrupt local systems."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Io Glass", quantity = 1 },
+    { name = "Conducting Stone", quantity = 1 },
+    { name = "Responsive Synth", quantity = 1 },
+]
+
+[[artifact]]
+id = "power_barrier_generator"
+name = "Power Barrier Generator"
+level_formula = "7"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'defense', 'crafted', 'community']
+
+effect = """
+Absorbs 20 points of damage per Devastation before collapsing.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Field destabilizes, overloading installations and shorting power grids."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Planar Gel", quantity = 1 },
+    { name = "Charged Residuum", quantity = 1 },
+    { name = "Quantium", quantity = 1 },
+]
+
+[[artifact]]
+id = "environmental_purification_plant"
+name = "Environmental Purification Plant"
+level_formula = "7"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'environment', 'crafted', 'community']
+
+effect = """
+Filters toxins, disease, and radiation from a 1 km radius area over 10 minutes.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Filter nanites become sentient or spread uncontrolled."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Dynamic Jelly", quantity = 1 },
+    { name = "Smart Tissue", quantity = 1 },
+    { name = "Charged Residuum", quantity = 1 },
+]
+
+[[artifact]]
+id = "fabrication_bay"
+name = "Fabrication Bay"
+level_formula = "6"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'crafting', 'crafted', 'community']
+
+effect = """
+Halves crafting time for all Wrights in the community and grants +1 Infrastructure.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Autoforge creates malfunctioning constructs or self-replicating machines."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Responsive Synth", quantity = 2 },
+    { name = "Conducting Stone", quantity = 1 },
+]
+
+[[artifact]]
+id = "communication_hub"
+name = "Communication Hub"
+level_formula = "5"
+depletion = "1 in 1d20"
+form_type = "Usable"
+category = "Utility"
+tags = ['installation', 'information', 'crafted', 'community']
+
+effect = """
+Allows instant exchange of information between linked communities; research projects complete 10 % faster.
+"""
+
+form = "Unknown form"
+gm_intrusion = "Data overload draws unwanted attention from Datasphere entities."
+
+[artifact.crafting]
+source = "Destiny"
+iotum = [
+    { name = "Io Glass", quantity = 1 },
+    { name = "Responsive Synth", quantity = 1 },
+]

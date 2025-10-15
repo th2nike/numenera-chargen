@@ -2,8 +2,8 @@
 // Character sheet - the final compiled character
 
 use serde::{Deserialize, Serialize};
-
 use super::stats::{DamageTrack, Edge, Effort, Pools};
+use crate::data::{ArtifactInstance, CypherInstance, Oddity};
 
 // ==========================================
 // CHARACTER SHEET
@@ -35,10 +35,10 @@ pub struct CharacterSheet {
     pub tier: u32,
 
     // Character Sentence: "I am a [adjective] [noun] who [verbs]"
-    pub character_type: String,     // noun (Glaive, Nano, Jack, etc.)
-    pub descriptor: Option<String>, // adjective (Charming, Clever, etc.) - None if species replaces
-    pub species: Option<String>,    // species (Varjellen, Lattimor, Mutant) - replaces descriptor
-    pub focus: String,              // verbs (Bears a Halo of Fire, etc.)
+    pub character_type: String,
+    pub descriptor: Option<String>,
+    pub species: Option<String>,
+    pub focus: String,
 
     // Stats
     pub pools: CharacterPools,
@@ -54,15 +54,23 @@ pub struct CharacterSheet {
 
     // Abilities
     pub special_abilities: Vec<String>,
-    pub type_abilities: Vec<String>, // Selected from tier abilities
-    pub focus_ability: String,       // Tier 1 focus ability
+    pub type_abilities: Vec<String>,
+    pub focus_ability: String,
 
     // Equipment
     pub equipment: Equipment,
 
+    // ========== NUMENERA ITEMS (NEW) ==========
     // Cyphers
     pub cypher_limit: u32,
-    pub cyphers: Vec<String>, // Names of cyphers
+    pub cyphers: Vec<CypherInstance>,  // CHANGED: was Vec<String>
+    
+    // Artifacts (NEW)
+    pub artifacts: Vec<ArtifactInstance>,
+    
+    // Oddities (NEW)
+    pub oddities: Vec<Oddity>,
+    // =========================================
 
     // Background
     pub background: Background,
@@ -263,7 +271,9 @@ impl CharacterSheet {
             focus_ability: String::new(),
             equipment: Equipment::new(),
             cypher_limit: 2,
-            cyphers: Vec::new(),
+            cyphers: Vec::new(),     // Now Vec<CypherInstance>
+            artifacts: Vec::new(),   // NEW
+            oddities: Vec::new(),    // NEW
             background: Background::new(),
             xp: 0,
             advances: Vec::new(),
@@ -311,6 +321,88 @@ impl CharacterSheet {
         }
     }
 
+        /// Add a cypher instance
+    pub fn add_cypher(&mut self, cypher: CypherInstance) -> Result<(), String> {
+        if self.cyphers.len() >= self.cypher_limit as usize {
+            return Err(format!(
+                "Cypher limit reached ({}/{})",
+                self.cyphers.len(),
+                self.cypher_limit
+            ));
+        }
+        self.cyphers.push(cypher);
+        Ok(())
+    }
+
+    /// Remove a cypher by index
+    pub fn remove_cypher(&mut self, index: usize) -> Option<CypherInstance> {
+        if index < self.cyphers.len() {
+            Some(self.cyphers.remove(index))
+        } else {
+            None
+        }
+    }
+
+    /// Check if can carry more cyphers
+    pub fn can_carry_cypher(&self) -> bool {
+        (self.cyphers.len() as u32) < self.cypher_limit
+    }
+
+    /// Get number of cyphers carried
+    pub fn cypher_count(&self) -> usize {
+        self.cyphers.len()
+    }
+
+    // ==========================================
+    // ARTIFACT MANAGEMENT
+    // ==========================================
+
+    /// Add an artifact
+    pub fn add_artifact(&mut self, artifact: ArtifactInstance) {
+        self.artifacts.push(artifact);
+    }
+
+    /// Remove an artifact by index
+    pub fn remove_artifact(&mut self, index: usize) -> Option<ArtifactInstance> {
+        if index < self.artifacts.len() {
+            Some(self.artifacts.remove(index))
+        } else {
+            None
+        }
+    }
+
+    /// Get artifact count
+    pub fn artifact_count(&self) -> usize {
+        self.artifacts.len()
+    }
+
+    // ==========================================
+    // ODDITY MANAGEMENT
+    // ==========================================
+
+    /// Add an oddity
+    pub fn add_oddity(&mut self, oddity: Oddity) {
+        self.oddities.push(oddity);
+    }
+
+    /// Remove an oddity by index
+    pub fn remove_oddity(&mut self, index: usize) -> Option<Oddity> {
+        if index < self.oddities.len() {
+            Some(self.oddities.remove(index))
+        } else {
+            None
+        }
+    }
+
+    /// Get oddity count
+    pub fn oddity_count(&self) -> usize {
+        self.oddities.len()
+    }
+
+    // ==========================================
+    // SUMMARY WITH NUMENERA
+    // ==========================================
+
     /// Get a summary of the character for quick reference
     pub fn summary(&self) -> String {
         format!(
@@ -323,7 +415,9 @@ impl CharacterSheet {
              Effort: {}\n\
              Armor: {}\n\
              \n\
-             Cypher Limit: {} | Current: {}\n\
+             Cyphers: {}/{}\n\
+             Artifacts: {}\n\
+             Oddities: {}\n\
              Shins: {}",
             self.name,
             self.character_sentence(),
@@ -333,11 +427,14 @@ impl CharacterSheet {
             self.edge,
             self.effort.max_effort,
             self.armor,
-            self.cypher_limit,
             self.cyphers.len(),
+            self.cypher_limit,
+            self.artifacts.len(),
+            self.oddities.len(),
             self.equipment.shins
         )
     }
+
 }
 
 // ==========================================

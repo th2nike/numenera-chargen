@@ -4,7 +4,17 @@
 use anyhow::{Context, Result};
 
 use crate::character::sheet::Gender;
-use crate::data::{CharacterType, Descriptor, Focus, GameData, Species};
+use crate::data::{
+    CharacterType, 
+    Descriptor, 
+    Focus, 
+    GameData, 
+    Species,
+    // ADD THESE:
+    ArtifactInstance, 
+    CypherInstance, 
+    Oddity,
+};
 
 use super::sheet::{CharacterPools, CharacterSheet, Equipment, Skills};
 use super::stats::{Edge, Effort, Pools};
@@ -13,6 +23,7 @@ use super::stats::{Edge, Effort, Pools};
 // CHARACTER BUILDER
 // ==========================================
 
+/// Builder for creating characters step by step
 /// Builder for creating characters step by step
 pub struct CharacterBuilder {
     name: Option<String>,
@@ -24,6 +35,12 @@ pub struct CharacterBuilder {
     bonus_points: Pools,
     selected_abilities: Vec<String>,
     selected_connection: Option<String>,
+    
+    // ========== NUMENERA ITEMS (NEW) ==========
+    selected_cyphers: Vec<CypherInstance>,
+    selected_artifacts: Vec<ArtifactInstance>,
+    selected_oddities: Vec<Oddity>,
+    // =========================================
 }
 
 impl CharacterBuilder {
@@ -39,6 +56,9 @@ impl CharacterBuilder {
             bonus_points: Pools::zero(),
             selected_abilities: Vec::new(),
             selected_connection: None,
+            selected_cyphers: Vec::new(),      // NEW
+            selected_artifacts: Vec::new(),    // NEW
+            selected_oddities: Vec::new(),     // NEW
         }
     }
 
@@ -95,6 +115,42 @@ impl CharacterBuilder {
         self.selected_connection = Some(connection);
         self
     }
+
+    pub fn add_cypher(mut self, cypher: CypherInstance) -> Self {
+        self.selected_cyphers.push(cypher);
+        self
+    }
+
+    /// Add multiple cyphers
+    pub fn with_cyphers(mut self, cyphers: Vec<CypherInstance>) -> Self {
+        self.selected_cyphers = cyphers;
+        self
+    }
+
+    /// Add an artifact
+    pub fn add_artifact(mut self, artifact: ArtifactInstance) -> Self {
+        self.selected_artifacts.push(artifact);
+        self
+    }
+
+    /// Add multiple artifacts
+    pub fn with_artifacts(mut self, artifacts: Vec<ArtifactInstance>) -> Self {
+        self.selected_artifacts = artifacts;
+        self
+    }
+
+    /// Add an oddity
+    pub fn add_oddity(mut self, oddity: Oddity) -> Self {
+        self.selected_oddities.push(oddity);
+        self
+    }
+
+    /// Add multiple oddities
+    pub fn with_oddities(mut self, oddities: Vec<Oddity>) -> Self {
+        self.selected_oddities = oddities;
+        self
+    }
+
 
     /// Build the final character sheet
     pub fn build(self) -> Result<CharacterSheet> {
@@ -183,6 +239,26 @@ impl CharacterBuilder {
         if !focus.connections.is_empty() {
             sheet.background.focus_link = Some(focus.connections[0].clone());
         }
+
+        // ========== ADD NUMENERA ITEMS (NEW) ==========
+        // Add cyphers
+        for cypher in self.selected_cyphers {
+            if let Err(e) = sheet.add_cypher(cypher) {
+                eprintln!("Warning: Could not add cypher: {}", e);
+            }
+        }
+
+        // Add artifacts
+        for artifact in self.selected_artifacts {
+            sheet.add_artifact(artifact);
+        }
+
+        // Add oddities
+        for oddity in self.selected_oddities {
+            sheet.add_oddity(oddity);
+        }
+        // ===========================================
+
 
         Ok(sheet)
     }

@@ -14,7 +14,6 @@ const DATA_DIR: &str = "data";
 // PUBLIC LOADING FUNCTIONS
 // ==========================================
 
-/// Load all game data from TOML files
 pub fn load_all_data() -> Result<GameData> {
     let mut data = GameData::new();
 
@@ -23,6 +22,9 @@ pub fn load_all_data() -> Result<GameData> {
     data.foci = load_foci()?;
     data.equipment = load_equipment()?;
     data.cyphers = load_cyphers()?;
+    data.artifacts = load_artifacts()?;      // NEW
+    data.oddities = load_oddities()?;        // NEW
+    data.discoveries = load_discoveries()?;  // NEW
     data.species = load_species()?;
 
     Ok(data)
@@ -85,7 +87,7 @@ pub fn load_cyphers() -> Result<Vec<Cypher>> {
     let data: CyphersData =
         toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
 
-    Ok(data.cyphers)
+    Ok(data.cypher)
 }
 
 /// Load species from species.toml
@@ -166,6 +168,52 @@ pub fn get_cyphers_by_category<'a>(cyphers: &'a [Cypher], category: &str) -> Vec
         .collect()
 }
 
+/// Roll a dice formula like "1d6", "1d6+2", "1d6+4"
+pub fn roll_level_formula(formula: &str) -> u32 {
+    use rand::Rng;
+    let mut rng = rand::thread_rng();
+    
+    if let Some(plus_pos) = formula.find('+') {
+        // Handle "1d6+2" format
+        let base = roll_level_formula(&formula[..plus_pos]);
+        let bonus: u32 = formula[plus_pos+1..].trim().parse().unwrap_or(0);
+        base + bonus
+    } else if formula.contains("d6") {
+        // Roll 1d6
+        rng.gen_range(1..=6)
+    } else {
+        // Fixed level
+        formula.parse().unwrap_or(1)
+    }
+}
+
+/// Create a cypher instance with rolled level
+pub fn create_cypher_instance(cypher: &Cypher) -> CypherInstance {
+    let level = roll_level_formula(&cypher.level_formula);
+    
+    CypherInstance {
+        name: cypher.name.clone(),
+        level,
+        cypher_type: cypher.cypher_type.clone(),
+        effect: cypher.effect.clone(),
+        form: cypher.form.clone(),
+    }
+}
+
+/// Create an artifact instance with rolled level
+pub fn create_artifact_instance(artifact: &Artifact) -> ArtifactInstance {
+    let level = roll_level_formula(&artifact.level_formula);
+    
+    ArtifactInstance {
+        name: artifact.name.clone(),
+        level,
+        depletion: artifact.depletion.clone(),
+        form_type: artifact.form_type.clone(),
+        effect: artifact.effect.clone(),
+        form: artifact.form.clone(),
+    }
+}
+
 // ==========================================
 // VALIDATION FUNCTIONS
 // ==========================================
@@ -178,6 +226,9 @@ pub fn validate_data_files() -> Result<()> {
         "foci.toml",
         "equipment.toml",
         "cyphers.toml",
+        "artifacts.toml",    // NEW
+        "oddities.toml",     // NEW
+        "discoveries.toml",  // NEW
         "species.toml",
     ];
 
@@ -231,6 +282,9 @@ pub fn data_summary(data: &GameData) -> String {
          - {} weapons\n\
          - {} armor pieces\n\
          - {} cyphers\n\
+         - {} artifacts\n\
+         - {} oddities\n\
+         - {} discoveries\n\
          - {} species options",
         data.types.len(),
         data.descriptors.len(),
@@ -238,6 +292,9 @@ pub fn data_summary(data: &GameData) -> String {
         data.equipment.weapons.len(),
         data.equipment.armor.len(),
         data.cyphers.len(),
+        data.artifacts.len(),
+        data.oddities.len(),
+        data.discoveries.len(),
         data.species.len()
     )
 }
@@ -352,4 +409,40 @@ mod tests {
         assert_eq!(arkus_foci.len(), 1);
         assert_eq!(arkus_foci[0].name, "Leads");
     }
+}
+
+/// Load artifacts from artifacts.toml
+pub fn load_artifacts() -> Result<Vec<Artifact>> {
+    let path = Path::new(DATA_DIR).join("artifacts.toml");
+    let content =
+        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
+
+    let data: ArtifactsData =
+        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
+
+    Ok(data.artifact)
+}
+
+/// Load oddities from oddities.toml
+pub fn load_oddities() -> Result<Vec<Oddity>> {
+    let path = Path::new(DATA_DIR).join("oddities.toml");
+    let content =
+        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
+
+    let data: OdditiesData =
+        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
+
+    Ok(data.oddity)
+}
+
+/// Load discoveries from discoveries.toml
+pub fn load_discoveries() -> Result<Vec<Discovery>> {
+    let path = Path::new(DATA_DIR).join("discoveries.toml");
+    let content =
+        fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
+
+    let data: DiscoveriesData =
+        toml::from_str(&content).with_context(|| format!("Failed to parse {}", path.display()))?;
+
+    Ok(data.discovery)
 }
