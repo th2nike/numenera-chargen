@@ -75,10 +75,10 @@ fn render_help_bar(f: &mut Frame, area: Rect, app: &App) {
         Screen::FocusSelect => "↑↓/j/k: Navigate | Enter: Select | ESC: Back",
         Screen::StatAllocation => "+/-: Adjust | Tab: Next stat | Enter: Continue | ESC: Back",
         Screen::AbilitySelect => "↑↓: Navigate | Space: Toggle | Enter: Continue | ESC: Back",
-        Screen::CypherSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",    // NEW
-        Screen::ArtifactSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",  // NEW
-        Screen::OdditySelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Finish | ESC: Back",  // NEW
-        Screen::CharacterPreview => "S: Save | N: New Character | Q: Quit",
+        Screen::CypherSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",
+        Screen::ArtifactSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",
+        Screen::OdditySelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Finish | ESC: Back",
+        Screen::CharacterPreview => "↑↓/j/k: Scroll | Tab: Switch Panel | PgUp/PgDn: Fast Scroll | S: Save | N: New | Q: Quit",
     };
 
     let help = Paragraph::new(help_text)

@@ -9,11 +9,20 @@ use crate::{character::sheet::Gender, data::GameData, CharacterSheet};
 
 /// Application state
 pub struct App {
-    pub game_data: GameData,
-    pub should_quit: bool,
     pub current_screen: Screen,
+    pub should_quit: bool,
+    pub game_data: GameData,
     pub character_builder: CharacterBuilder,
     pub generated_character: Option<CharacterSheet>,
+    pub preview_panel_focus: PreviewPanel,  // Which panel is focused
+    pub preview_left_scroll: usize,         // Scroll offset for left panel
+    pub preview_right_scroll: usize,        // Scroll offset for right panel
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum PreviewPanel {
+    Left,
+    Right,
 }
 
 /// Current screen in the UI
@@ -62,11 +71,14 @@ pub struct CharacterBuilder {
 impl App {
     pub fn new(game_data: GameData) -> Self {
         Self {
-            game_data,
-            should_quit: false,
             current_screen: Screen::MainMenu,
+            should_quit: false,
+            game_data,
             character_builder: CharacterBuilder::new(),
             generated_character: None,
+            preview_panel_focus: PreviewPanel::Left,  // NEW
+            preview_left_scroll: 0,                   // NEW
+            preview_right_scroll: 0,                  // NEW
         }
     }
 
@@ -421,27 +433,84 @@ impl App {
     }
 
     fn handle_preview_keys(&mut self, key: KeyEvent) -> Result<()> {
-        // Make sure no modifiers are pressed
-        if key.modifiers.contains(KeyModifiers::CONTROL) 
-            || key.modifiers.contains(KeyModifiers::ALT) {
-            return Ok(());
-        }
-
         match key.code {
-            KeyCode::Char('s') | KeyCode::Char('S') => {
-                // Save character with auto-generated filename
-                if let Err(e) = self.save_character() {
-                    // TODO: Show error in UI
-                    eprintln!("Failed to save character: {}", e);
+            // Tab to switch panels
+            KeyCode::Tab => {
+                self.preview_panel_focus = match self.preview_panel_focus {
+                    PreviewPanel::Left => PreviewPanel::Right,
+                    PreviewPanel::Right => PreviewPanel::Left,
+                };
+            }
+            
+            // Scroll current panel
+            KeyCode::Up | KeyCode::Char('k') => {
+                match self.preview_panel_focus {
+                    PreviewPanel::Left => {
+                        self.preview_left_scroll = self.preview_left_scroll.saturating_sub(1);
+                    }
+                    PreviewPanel::Right => {
+                        self.preview_right_scroll = self.preview_right_scroll.saturating_sub(1);
+                    }
                 }
-                self.should_quit = true;
+            }
+            KeyCode::Down | KeyCode::Char('j') => {
+                match self.preview_panel_focus {
+                    PreviewPanel::Left => {
+                        self.preview_left_scroll = self.preview_left_scroll.saturating_add(1);
+                    }
+                    PreviewPanel::Right => {
+                        self.preview_right_scroll = self.preview_right_scroll.saturating_add(1);
+                    }
+                }
+            }
+            
+            // Page up/down for faster scrolling
+            KeyCode::PageUp => {
+                match self.preview_panel_focus {
+                    PreviewPanel::Left => {
+                        self.preview_left_scroll = self.preview_left_scroll.saturating_sub(5);
+                    }
+                    PreviewPanel::Right => {
+                        self.preview_right_scroll = self.preview_right_scroll.saturating_sub(5);
+                    }
+                }
+            }
+            KeyCode::PageDown => {
+                match self.preview_panel_focus {
+                    PreviewPanel::Left => {
+                        self.preview_left_scroll = self.preview_left_scroll.saturating_add(5);
+                    }
+                    PreviewPanel::Right => {
+                        self.preview_right_scroll = self.preview_right_scroll.saturating_add(5);
+                    }
+                }
+            }
+            
+            // Home/End to jump to top/bottom
+            KeyCode::Home => {
+                match self.preview_panel_focus {
+                    PreviewPanel::Left => self.preview_left_scroll = 0,
+                    PreviewPanel::Right => self.preview_right_scroll = 0,
+                }
+            }
+            KeyCode::End => {
+                match self.preview_panel_focus {
+                    PreviewPanel::Left => self.preview_left_scroll = 9999, // Will be clamped
+                    PreviewPanel::Right => self.preview_right_scroll = 9999,
+                }
+            }
+            
+            KeyCode::Char('s') | KeyCode::Char('S') => {
+                self.save_character()?;
             }
             KeyCode::Char('n') | KeyCode::Char('N') => {
-                // New character - reset builder
                 self.character_builder = CharacterBuilder::new();
+                self.generated_character = None;
+                self.preview_left_scroll = 0;   // Reset scrolls
+                self.preview_right_scroll = 0;
                 self.current_screen = Screen::MainMenu;
             }
-            KeyCode::Char('q') | KeyCode::Char('Q') | KeyCode::Esc => {
+            KeyCode::Char('q') | KeyCode::Char('Q') => {
                 self.should_quit = true;
             }
             _ => {}
@@ -611,6 +680,8 @@ impl App {
                 self.character_builder.selected_oddities.clear();
             }
             KeyCode::Enter => {
+                self.preview_left_scroll = 0;    // ADD THIS
+                self.preview_right_scroll = 0;   // ADD THIS
                 self.current_screen = Screen::CharacterPreview;
             }
             KeyCode::Esc => {
