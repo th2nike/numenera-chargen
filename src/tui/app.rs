@@ -1086,154 +1086,81 @@ impl App {
     }
 
     /// Apply shop purchases to character sheet
+    /// Apply shop purchases to character sheet
     fn apply_shop_purchases(&self, character: &mut crate::CharacterSheet) -> Result<()> {
-    let total_cost: u32 = self
-        .character_builder
-        .purchased_items
-        .iter()
-        .map(|item| item.cost * item.quantity)
-        .sum();
+        let total_cost: u32 = self
+            .character_builder
+            .purchased_items
+            .iter()
+            .map(|item| item.cost * item.quantity)
+            .sum();
 
-    // ========== DEBUG LOGGING ==========
-    eprintln!("\n╔══════════════════════════════════════════════╗");
-    eprintln!("║   APPLYING SHOP PURCHASES (DEBUG MODE)      ║");
-    eprintln!("╚══════════════════════════════════════════════╝");
-    eprintln!("Total items to apply: {}", self.character_builder.purchased_items.len());
-    eprintln!("Total cost: {} shins", total_cost);
-    eprintln!("Character has: {} shins\n", character.equipment.shins);
-    
-    for (i, item) in self.character_builder.purchased_items.iter().enumerate() {
-        eprintln!("Item #{}: {} (qty: {}, category: '{}')", 
-            i + 1, item.name, item.quantity, item.category);
-    }
-    eprintln!();
-    // ====================================
+        // Deduct shins
+        if character.equipment.shins >= total_cost {
+            character.equipment.shins -= total_cost;
+        } else {
+            // Can't afford - just return without applying purchases
+            return Ok(());
+        }
 
-    // Deduct shins
-    if character.equipment.shins >= total_cost {
-        character.equipment.shins -= total_cost;
-        eprintln!("✓ Shins deducted. Remaining: {}", character.equipment.shins);
-    } else {
-        eprintln!("✗ ERROR: Not enough shins! Cost: {}, Available: {}", 
-            total_cost, character.equipment.shins);
-        eprintln!("══════════════════════════════════════════════\n");
-        return Ok(());
-    }
-    eprintln!();
-
-    // Apply purchases by category
-    for (i, item) in self.character_builder.purchased_items.iter().enumerate() {
-        eprintln!("─────────────────────────────────────────────");
-        eprintln!("Processing item #{}: {}", i + 1, item.name);
-        eprintln!("  Category: '{}'", item.category);
-        
-        match item.category.as_str() {
-            "Weapons" => {
-                eprintln!("  → Searching for weapon in equipment data...");
-                // Add weapon with details
-                if let Some(weapon) = self
-                    .game_data
-                    .equipment
-                    .weapons
-                    .iter()
-                    .find(|w| w.name == item.name)
-                {
-                    eprintln!("  → Found weapon: {} ({} damage)", weapon.name, weapon.damage);
+        // Apply purchases by category
+        for item in self.character_builder.purchased_items.iter() {
+            match item.category.as_str() {
+                "Weapons" => {
+                    // Add weapon with details
+                    if let Some(weapon) = self
+                        .game_data
+                        .equipment
+                        .weapons
+                        .iter()
+                        .find(|w| w.name == item.name)
+                    {
+                        for _ in 0..item.quantity {
+                            let weapon_string = format!("{} ({} damage)", weapon.name, weapon.damage);
+                            character.equipment.add_weapon(weapon_string);
+                        }
+                    }
+                }
+                "Armor" => {
+                    // Replace armor (only keep the last one purchased)
+                    if let Some(armor) = self
+                        .game_data
+                        .equipment
+                        .armor
+                        .iter()
+                        .find(|a| a.name == item.name)
+                    {
+                        let armor_string = format!(
+                            "{} (+{} Armor, Speed Effort +{})",
+                            armor.name, armor.armor_bonus, armor.speed_effort_cost
+                        );
+                        character.equipment.armor = Some(armor_string);
+                        character.armor = armor.armor_bonus;
+                    }
+                }
+                "Shields" => {
+                    if let Some(shield) = self
+                        .game_data
+                        .equipment
+                        .shields
+                        .iter()
+                        .find(|s| s.name == item.name)
+                    {
+                        character.equipment.shield = Some(shield.name.clone());
+                    }
+                }
+                "Gear" | "Consumables" | "Clothing" => {
+                    // Add to gear list
                     for _ in 0..item.quantity {
-                        let weapon_string = format!("{} ({} damage)", weapon.name, weapon.damage);
-                        character.equipment.add_weapon(weapon_string.clone());
-                        eprintln!("  ✓ Added: {}", weapon_string);
-                    }
-                } else {
-                    eprintln!("  ✗ Weapon NOT FOUND in equipment.toml!");
-                    eprintln!("     Searched for: '{}'", item.name);
-                }
-            }
-            "Armor" => {
-                eprintln!("  → Searching for armor in equipment data...");
-                eprintln!("     Looking for: '{}'", item.name);
-                
-                // Replace armor (only keep the last one purchased)
-                if let Some(armor) = self
-                    .game_data
-                    .equipment
-                    .armor
-                    .iter()
-                    .find(|a| a.name == item.name)
-                {
-                    let armor_string = format!(
-                        "{} (+{} Armor, Speed Effort +{})",
-                        armor.name, armor.armor_bonus, armor.speed_effort_cost
-                    );
-                    
-                    eprintln!("  → Found armor: {}", armor.name);
-                    eprintln!("     Armor bonus: {}", armor.armor_bonus);
-                    eprintln!("     Speed effort cost: {}", armor.speed_effort_cost);
-                    eprintln!("  → BEFORE: character.equipment.armor = {:?}", character.equipment.armor);
-                    eprintln!("  → BEFORE: character.armor = {}", character.armor);
-                    
-                    character.equipment.armor = Some(armor_string.clone());
-                    character.armor = armor.armor_bonus;
-                    
-                    eprintln!("  → AFTER:  character.equipment.armor = {:?}", character.equipment.armor);
-                    eprintln!("  → AFTER:  character.armor = {}", character.armor);
-                    eprintln!("  ✓ Armor successfully applied!");
-                } else {
-                    eprintln!("  ✗ Armor NOT FOUND in equipment.toml!");
-                    eprintln!("     Searched for: '{}'", item.name);
-                    eprintln!("     Available armor in equipment.toml:");
-                    for (j, a) in self.game_data.equipment.armor.iter().enumerate() {
-                        eprintln!("       {}: '{}'", j + 1, a.name);
+                        character.equipment.add_gear(item.name.clone());
                     }
                 }
-            }
-            "Shields" => {
-                eprintln!("  → Searching for shield in equipment data...");
-                if let Some(shield) = self
-                    .game_data
-                    .equipment
-                    .shields
-                    .iter()
-                    .find(|s| s.name == item.name)
-                {
-                    eprintln!("  → Found shield: {}", shield.name);
-                    eprintln!("  → BEFORE: character.equipment.shield = {:?}", character.equipment.shield);
-                    
-                    character.equipment.shield = Some(shield.name.clone());
-                    
-                    eprintln!("  → AFTER:  character.equipment.shield = {:?}", character.equipment.shield);
-                    eprintln!("  ✓ Shield successfully applied!");
-                } else {
-                    eprintln!("  ✗ Shield NOT FOUND in equipment.toml!");
-                    eprintln!("     Searched for: '{}'", item.name);
-                }
-            }
-            "Gear" | "Consumables" | "Clothing" => {
-                eprintln!("  → Adding as gear item...");
-                // Add to gear list
-                for _ in 0..item.quantity {
-                    character.equipment.add_gear(item.name.clone());
-                    eprintln!("  ✓ Added to gear: {}", item.name);
-                }
-            }
-            _ => {
-                eprintln!("  ✗ UNKNOWN CATEGORY: '{}'", item.category);
+                _ => {}
             }
         }
+
+        Ok(())
     }
-
-    eprintln!("─────────────────────────────────────────────");
-    eprintln!("\n╔══════════════════════════════════════════════╗");
-    eprintln!("║   SHOP PURCHASES COMPLETE - FINAL STATE     ║");
-    eprintln!("╚══════════════════════════════════════════════╝");
-    eprintln!("Final character.equipment.armor: {:?}", character.equipment.armor);
-    eprintln!("Final character.armor (numeric): {}", character.armor);
-    eprintln!("Final character.equipment.shield: {:?}", character.equipment.shield);
-    eprintln!("Final character.equipment.shins: {}", character.equipment.shins);
-    eprintln!("══════════════════════════════════════════════\n");
-
-    Ok(())
-}
 
 }
 
