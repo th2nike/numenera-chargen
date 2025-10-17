@@ -3,12 +3,9 @@
 
 use anyhow::{Context, Result};
 use std::fs;
-use std::path::Path;
-
+use std::path::PathBuf;
 use super::models::*;
 
-/// Base data directory path
-const DATA_DIR: &str = "data";
 
 // ==========================================
 // PUBLIC LOADING FUNCTIONS
@@ -32,7 +29,7 @@ pub fn load_all_data() -> Result<GameData> {
 
 /// Load character types from types.toml
 pub fn load_types() -> Result<Vec<CharacterType>> {
-    let path = Path::new(DATA_DIR).join("types.toml");
+    let path = data_dir().join("types.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -42,9 +39,24 @@ pub fn load_types() -> Result<Vec<CharacterType>> {
     Ok(data.types)
 }
 
+fn data_dir() -> PathBuf {
+    // Try to find data directory relative to executable
+    if let Ok(exe_path) = std::env::current_exe() {
+        if let Some(exe_dir) = exe_path.parent() {
+            let data_path = exe_dir.join("data");
+            if data_path.exists() {
+                return data_path;
+            }
+        }
+    }
+    
+    // Fallback to current directory (for development)
+    PathBuf::from("data")
+}
+
 /// Load descriptors from descriptors.toml
 pub fn load_descriptors() -> Result<Vec<Descriptor>> {
-    let path = Path::new(DATA_DIR).join("descriptors.toml");
+    let path = data_dir().join("descriptors.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -56,7 +68,7 @@ pub fn load_descriptors() -> Result<Vec<Descriptor>> {
 
 /// Load foci from foci.toml
 pub fn load_foci() -> Result<Vec<Focus>> {
-    let path = Path::new(DATA_DIR).join("foci.toml");
+    let path = data_dir().join("foci.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -68,7 +80,7 @@ pub fn load_foci() -> Result<Vec<Focus>> {
 
 /// Load equipment from equipment.toml
 pub fn load_equipment() -> Result<EquipmentData> {
-    let path = Path::new(DATA_DIR).join("equipment.toml");
+    let path = data_dir().join("equipment.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -80,7 +92,7 @@ pub fn load_equipment() -> Result<EquipmentData> {
 
 /// Load cyphers from cyphers.toml
 pub fn load_cyphers() -> Result<Vec<Cypher>> {
-    let path = Path::new(DATA_DIR).join("cyphers.toml");
+    let path = data_dir().join("cyphers.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -92,7 +104,7 @@ pub fn load_cyphers() -> Result<Vec<Cypher>> {
 
 /// Load species from species.toml
 pub fn load_species() -> Result<Vec<Species>> {
-    let path = Path::new(DATA_DIR).join("species.toml");
+    let path = data_dir().join("species.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -233,7 +245,7 @@ pub fn validate_data_files() -> Result<()> {
     ];
 
     for file in &required_files {
-        let path = Path::new(DATA_DIR).join(file);
+        let path = data_dir().join(file);
         if !path.exists() {
             anyhow::bail!("Required data file not found: {}", path.display());
         }
@@ -301,7 +313,7 @@ pub fn data_summary(data: &GameData) -> String {
 
 /// Load artifacts from artifacts.toml
 pub fn load_artifacts() -> Result<Vec<Artifact>> {
-    let path = Path::new(DATA_DIR).join("artifacts.toml");
+    let path = data_dir().join("artifacts.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -313,7 +325,7 @@ pub fn load_artifacts() -> Result<Vec<Artifact>> {
 
 /// Load oddities from oddities.toml
 pub fn load_oddities() -> Result<Vec<Oddity>> {
-    let path = Path::new(DATA_DIR).join("oddities.toml");
+    let path = data_dir().join("oddities.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 
@@ -325,7 +337,7 @@ pub fn load_oddities() -> Result<Vec<Oddity>> {
 
 /// Load discoveries from discoveries.toml
 pub fn load_discoveries() -> Result<Vec<Discovery>> {
-    let path = Path::new(DATA_DIR).join("discoveries.toml");
+    let path = data_dir().join("discoveries.toml");
     let content =
         fs::read_to_string(&path).with_context(|| format!("Failed to read {}", path.display()))?;
 

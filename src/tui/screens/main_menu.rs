@@ -60,7 +60,7 @@ pub fn render(f: &mut Frame, area: Rect, _app: &App) {
         )),
         Line::from(""),
         Line::from(Span::styled(
-            "6 Types • 49 Descriptors • 51 Foci",
+            "6 Types • 49 Descriptors • 51 Foci • Equipment Shop",
             Style::default().fg(Color::Gray),
         )),
     ];

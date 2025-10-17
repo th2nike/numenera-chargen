@@ -49,12 +49,27 @@ pub fn format_character_sheet(character: &CharacterSheet) -> String {
         markdown.push_str("\n\n");
     }
 
-    // Equipment (abbreviated)
+    // Equipment (complete)
     markdown.push_str("## Equipment\n\n");
     markdown.push_str(&format!("**Shins:** {}\n\n", character.equipment.shins));
+
     if !character.equipment.weapons.is_empty() {
         markdown.push_str("**Weapons:** ");
         markdown.push_str(&character.equipment.weapons.join(", "));
+        markdown.push_str("\n\n");
+    }
+
+    if let Some(armor) = &character.equipment.armor {
+        markdown.push_str(&format!("**Armor:** {}\n\n", armor));
+    }
+
+    if let Some(shield) = &character.equipment.shield {
+        markdown.push_str(&format!("**Shield:** {}\n\n", shield));
+    }
+
+    if !character.equipment.gear.is_empty() {
+        markdown.push_str("**Gear:** ");
+        markdown.push_str(&character.equipment.gear.join(", "));
         markdown.push_str("\n\n");
     }
 

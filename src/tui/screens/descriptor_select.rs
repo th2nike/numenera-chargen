@@ -36,17 +36,37 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let descriptor_count = app.game_data.descriptors.len();
     let total_count = descriptor_count + app.game_data.species.len();
 
-    // Calculate visible range - more generous to account for headers
-    let visible_items = (chunks[1].height as usize / 3).max(8); // Increased from 5
-    let scroll_offset = if selected > visible_items / 2 {
-        (selected - visible_items / 2).min(total_count.saturating_sub(visible_items))
-    } else {
+    // Calculate visible range - account for headers (each takes 2 lines) and items (3 lines each)
+    // Available height for content
+    let available_height = chunks[1].height.saturating_sub(4) as usize; // Leave space for scroll indicators
+    
+    // Each item takes 3 lines (name, tagline, blank), headers take 2 lines each
+    let items_per_screen = available_height / 3;
+    let visible_items = items_per_screen.max(5); // Minimum 5 items visible
+    
+    // Smart scrolling: keep selected item in middle third of screen
+    let scroll_offset = if selected < visible_items / 3 {
         0
+    } else if selected > total_count.saturating_sub(visible_items * 2 / 3) {
+        total_count.saturating_sub(visible_items)
+    } else {
+        selected.saturating_sub(visible_items / 3)
     };
+    
     let scroll_end = (scroll_offset + visible_items).min(total_count);
 
-    // Always show descriptor header if we're rendering any descriptors
-    if scroll_offset < descriptor_count {
+    // Add scroll indicator at top if needed
+    if scroll_offset > 0 {
+        lines.push(Line::from(Span::styled(
+            "↑ More above ↑",
+            Style::default().fg(Color::DarkGray).add_modifier(Modifier::BOLD),
+        )));
+        lines.push(Line::from(""));
+    }
+
+    // Show descriptor header if we're rendering any descriptors
+    let rendering_descriptors = scroll_offset < descriptor_count;
+    if rendering_descriptors {
         lines.push(Line::from(Span::styled(
             "── Descriptors ──",
             Style::default()
@@ -56,10 +76,13 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         lines.push(Line::from(""));
     }
 
-    // Render descriptors
+    // Render descriptors in visible range
     for (i, descriptor) in app.game_data.descriptors.iter().enumerate() {
         if i < scroll_offset || i >= scroll_end {
             continue;
+        }
+        if i >= descriptor_count {
+            break; // Safety check
         }
 
         let is_selected = i == selected;
@@ -71,9 +94,14 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         lines.push(Line::from(""));
     }
 
-    // Always show species header if we're rendering any species
-    if scroll_end > descriptor_count {
-        lines.push(Line::from(""));
+    // Show species header if we're rendering any species
+    let rendering_species = scroll_end > descriptor_count;
+    if rendering_species {
+        // Add spacing if we also rendered descriptors
+        if rendering_descriptors {
+            lines.push(Line::from(""));
+        }
+        
         lines.push(Line::from(Span::styled(
             "── Species (replaces descriptor) ──",
             Style::default()
@@ -83,7 +111,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         lines.push(Line::from(""));
     }
 
-    // Render species
+    // Render species in visible range
     for (i, species) in app.game_data.species.iter().enumerate() {
         let idx = descriptor_count + i;
 
@@ -125,20 +153,12 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         lines.push(Line::from(""));
     }
 
-    // Scroll indicators
-    if scroll_offset > 0 {
-        lines.insert(
-            1,
-            Line::from(Span::styled(
-                "↑ More above ↑",
-                Style::default().fg(Color::DarkGray),
-            )),
-        );
-    }
+    // Add scroll indicator at bottom if needed
     if scroll_end < total_count {
+        lines.push(Line::from(""));
         lines.push(Line::from(Span::styled(
             "↓ More below ↓",
-            Style::default().fg(Color::DarkGray),
+            Style::default().fg(Color::DarkGray).add_modifier(Modifier::BOLD),
         )));
     }
 

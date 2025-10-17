@@ -1,10 +1,10 @@
 # Numenera Character Generator
 
-A Rust CLI and TUI tool for generating Numenera characters from the Discovery and Destiny core books.
+A Rust TUI and CLI tool for generating complete Numenera characters from the Discovery and Destiny core books, with full equipment management and character sheet export.
 
 ## Features
 
-- 🎮 **Interactive TUI mode** - Beautiful terminal UI with full keyboard navigation
+- 🎮 **Interactive TUI mode** - Beautiful terminal UI with complete character creation workflow
 - 💬 **Interactive CLI mode** - Step-by-step guided character building
 - 🎲 **Random character generation** - Full random or constrained by type/descriptor
 - 👤 **Gender selection** - Choose Male, Female, or Other for your character
@@ -13,7 +13,13 @@ A Rust CLI and TUI tool for generating Numenera characters from the Discovery an
   - 49 descriptors (24 Discovery + 25 Destiny)
   - 51 foci (24 Discovery + 27 Destiny)
   - 3+ species options (Varjellen, Lattimor, Mutant)
-- 📄 **Markdown export** - Obsidian-compatible character sheets
+  - 100+ cyphers with automatic level rolling
+  - 80+ artifacts
+  - 100+ oddities
+  - Complete equipment catalog (weapons, armor, shields, gear)
+- 🛒 **Equipment shop system** - Purchase starting equipment with your shins
+- 🎒 **Numenera management** - Select cyphers (based on type limit) and oddities
+- 📄 **Markdown export** - Obsidian-compatible character sheets with full details
 - ✅ **Full test coverage** - Automated tests for data validation and generation
 
 ## Installation
@@ -24,7 +30,6 @@ A Rust CLI and TUI tool for generating Numenera characters from the Discovery an
 - Cargo (comes with Rust)
 
 ### Build from Source
-
 ```bash
 git clone https://github.com/yourusername/numenera-chargen
 cd numenera-chargen
@@ -37,8 +42,7 @@ The binary will be in `target/release/numenera-chargen` (or `.exe` on Windows).
 
 ### TUI Mode (Recommended)
 
-Beautiful terminal interface with full character creation workflow:
-
+Beautiful terminal interface with complete character creation workflow:
 ```bash
 cargo run tui
 # or after building:
@@ -46,39 +50,78 @@ cargo run tui
 ```
 
 **TUI Features:**
-- **Option 1: Interactive Creation** - Step through character creation with visual feedback
-  1. Enter character name
-  2. Select gender (Male/Female/Other)
-  3. Choose character type
-  4. Pick descriptor or species
-  5. Select focus
-  6. Allocate bonus stat points
-  7. Choose type abilities
-  8. Preview and save
 
-- **Option 2: Random Generation** - Instantly generate a complete random character
-  - Automatic name generation
-  - Random gender assignment
-  - All choices made automatically
-  - Full character preview with stats
+#### **Option 1: Interactive Creation**
+Complete step-by-step character creation with visual feedback:
+
+1. **Enter character name** - Type your character's name
+2. **Select gender** - Male, Female, or Other
+3. **Choose character type** - Pick from 6 types (Glaive, Nano, Jack, Arkus, Wright, Delve)
+4. **Pick descriptor or species** - Choose personality/background or play as a non-human
+5. **Select focus** - Define what makes you unique (filtered by suitable types)
+6. **Allocate bonus stat points** - Distribute your bonus points among Might, Speed, and Intellect
+7. **Choose type abilities** - Select starting abilities from your type's tier 1 options
+8. **Select cyphers** - Choose cyphers up to your type's limit (levels rolled automatically)
+9. **Select oddity** - Pick exactly one oddity (required)
+10. **Equipment shop** - Purchase starting gear with your shins
+11. **Preview and save** - Review complete character sheet and save as Markdown
+
+#### **Option 2: Random Generation**
+Instantly generate a complete random character:
+- Automatic name generation
+- Random gender assignment
+- All choices made automatically
+- Full cyphers, oddities, and equipment
+- Complete character preview
 
 **TUI Controls:**
+
+**Main Menu:**
 - `1` - Start interactive character creation
 - `2` - Generate random character
+- `Q` or `Esc` - Quit
+
+**Navigation:**
 - `↑/↓` or `j/k` - Navigate lists
-- `Enter` - Select/confirm
-- `Space` - Toggle selections (abilities)
-- `+/-` or `←/→` - Adjust stat points
-- `Tab` - Next stat (during allocation)
-- `Esc` - Go back
-- `Ctrl+C` or `Q` - Quit
-- `S` - Save character (on preview screen)
-- `N` - Create new character (on preview screen)
+- `Enter` - Select/confirm choice
+- `Esc` - Go back to previous screen
+- `Ctrl+C` - Quit application
+
+**Stat Allocation:**
+- `↑/↓` or `j/k` - Select stat
+- `+/=` or `→` - Increase selected stat
+- `-/_` or `←` - Decrease selected stat
+- `Tab` - Move to next stat
+- `Enter` - Confirm (only when all points allocated)
+
+**Ability/Cypher/Oddity Selection:**
+- `↑/↓` or `j/k` - Navigate list
+- `Space` - Toggle selection
+- `R` - Random selection
+- `C` - Clear all selections
+- `Enter` - Confirm and proceed
+
+**Equipment Shop:**
+- `←/→` or `h/l` - Switch between categories
+- `↑/↓` or `j/k` - Navigate items
+- `Space` - Add item to cart
+- `R` - Remove last item from cart
+- `C` - Clear entire cart
+- `Enter` - Purchase items and continue
+- `Esc` - Skip shop (continue without purchasing)
+
+**Character Preview:**
+- `Tab` - Switch between left and right panels
+- `↑/↓` or `j/k` - Scroll current panel
+- `PageUp/PageDown` - Scroll faster
+- `Home/End` - Jump to top/bottom
+- `S` - Save character to file
+- `N` - Create new character (restart)
+- `Q` - Quit application
 
 ### Interactive CLI Mode
 
 Step-by-step character creation with text prompts:
-
 ```bash
 cargo run interactive
 ```
@@ -91,23 +134,23 @@ This will guide you through:
 5. Focus selection
 6. Bonus point allocation
 7. Type ability selection
+8. Cypher selection
+9. Oddity selection
+10. Equipment purchases
 
 ### Random Generation
 
 Generate a completely random character:
-
 ```bash
 cargo run random
 ```
 
 Generate multiple random characters:
-
 ```bash
 cargo run random -c 5
 ```
 
 Generate a random character of a specific type:
-
 ```bash
 cargo run random --type Glaive
 cargo run random --type Nano
@@ -118,7 +161,6 @@ cargo run random --type Delve
 ```
 
 Generate with specific type and descriptor:
-
 ```bash
 cargo run random --type Glaive --descriptor Strong
 cargo run random --type Nano --descriptor Mystical
@@ -127,31 +169,41 @@ cargo run random --type Nano --descriptor Mystical
 ### List Available Options
 
 List all character types:
-
 ```bash
 cargo run list types
 ```
 
 List all descriptors:
-
 ```bash
 cargo run list descriptors
 ```
 
 List all foci:
-
 ```bash
 cargo run list foci
 ```
 
 List all species:
-
 ```bash
 cargo run list species
 ```
 
-List everything:
+List all cyphers:
+```bash
+cargo run list cyphers
+```
 
+List all artifacts:
+```bash
+cargo run list artifacts
+```
+
+List all oddities:
+```bash
+cargo run list oddities
+```
+
+List everything:
 ```bash
 cargo run list all
 ```
@@ -159,7 +211,6 @@ cargo run list all
 ### Validate Data Files
 
 Check that all TOML data files are valid and properly formatted:
-
 ```bash
 cargo run validate
 ```
@@ -167,10 +218,33 @@ cargo run validate
 ### Show Application Info
 
 Display version and feature information:
-
 ```bash
 cargo run info
 ```
+
+## Character Creation Details
+
+### Stat Pools
+- Base pools from character type
+- Modifiers from descriptor or species
+- 6 bonus points to distribute freely
+- All pools must be positive
+
+### Cyphers
+- Number based on type's cypher limit (typically 2-3)
+- Levels automatically rolled (1d6 or 1d6+X based on cypher)
+- Can select manually or randomize
+
+### Oddities
+- Exactly 1 oddity required
+- Purely for flavor and roleplay
+- Each has a shin value
+
+### Equipment Shop
+- Starting shins from type and descriptor
+- Six categories: Weapons, Armor, Shields, Gear, Consumables, Clothing
+- Cannot exceed budget
+- Purchased items automatically added to character sheet
 
 ## Output
 
@@ -179,7 +253,6 @@ Characters are saved as Markdown files in the `output/` directory with automatic
 **Filename format:** `CharacterName_YYYY-MM-DD_HH-MM-SS.md`
 
 You can specify a custom output directory:
-
 ```bash
 cargo run random --output my_characters
 cargo run interactive --output my_characters
@@ -188,7 +261,6 @@ cargo run interactive --output my_characters
 The generated Markdown files are compatible with Obsidian and other Markdown editors.
 
 ### Example Output
-
 ```markdown
 # Beren Oakenshield
 
@@ -212,7 +284,7 @@ The generated Markdown files are compatible with Obsidian and other Markdown edi
 | **Speed**     | 11 | 11 |
 | **Intellect** | 17 | 17 |
 
-## Edge
+## Edge & Effort
 
 | Stat       | Edge |
 |------------|------|
@@ -220,65 +292,122 @@ The generated Markdown files are compatible with Obsidian and other Markdown edi
 | **Speed**     | 0 |
 | **Intellect** | 1 |
 
-## Effort
-
-- **Maximum Effort:** 1
-- **Effort Cost:** 3 points (minus Edge)
+**Maximum Effort:** 1
 
 ## Armor
 
 - **Total Armor:** 0
 
+## Skills
+
+### Trained
+- One physical skill (balancing, climbing, jumping, or swimming)
+- Positive social interaction
+- Mental-influence abilities
+
 ## Type Abilities
 
-- **Hedge Magic**
-- **Ward**
+### Fleet of Foot
+Trained in running.
 
-...
+### Impressive Display (2 Intellect, Action)
+Make an attack in a dramatic fashion to impress onlookers. If successful, gain +1 asset to interaction with witnesses for one hour.
+
+## Focus Ability
+
+### Shroud of Flame (1 Intellect, Enabler)
+Your body becomes shrouded in flame for 10 minutes. You gain +2 Armor against external fire, and anyone touching or striking you in melee takes 2 fire damage.
+
+## Equipment & Items
+
+**Armor:** Leather jerkin (+1 Armor, Speed Effort +1)
+
+**Gear:**
+- Explorer's Pack
+- Rope (15m)
+- Rations x3
+- Spikes (10)
+- Hammer
+- Boots
+- Torches x3
+- Glowglobes x2
+- Fire-resistant artifact spray (treats starting gear)
+
+**Shins:** 15
+
+## Cyphers (1/2)
+
+### 1. Adhesion Clamps (lvl 4, Wearable)
+**Form:** Pair of disk-shaped gauntlets or climbing boots that hum softly.
+**Effect:** While active, the wearer can climb or hang from walls and ceilings with no skill roll.
+
+## Oddities (1)
+
+### 1. d100 (10 shins)
+An oddity from the d100 table.
+
+## Background
+
+**Descriptor Link:** You have a good relationship with a local merchant who gives you discounts.
+
+**Focus Link:** Your fire cannot harm one chosen PC.
+
+**Connection to Party:** You convinced one PC that something they were about to do was a bad idea.
 ```
 
 ## Character Preview Display
 
-The TUI mode shows a comprehensive character preview including:
+The TUI mode shows a comprehensive two-panel character preview:
 
-- **Character name and gender**
-- **Character sentence** (descriptor/type/focus)
-- **Tier and armor**
-- **Stat Pools** - Current/Maximum for Might, Speed, and Intellect
-- **Edge** - All three edge values (Might, Speed, Intellect)
-- **Effort** - Maximum effort level
-- **Type Abilities** - All selected abilities
+**Left Panel:**
+- Character name and gender
+- Character sentence (descriptor/type/focus)
+- Tier and armor
+- Stat Pools with current/maximum values
+- Edge values
+- Effort level
+- Skills (trained, specialized, inabilities)
+- Type abilities with descriptions
+- Focus ability with full details
+- Special abilities from descriptor/species
+
+**Right Panel:**
+- Equipment & items
+  - Weapons with damage
+  - Armor with bonus and speed cost
+  - Shield (if equipped)
+  - Gear list
+  - Remaining shins
+- Cyphers with levels and effects
+- Artifacts (if any from focus/descriptor)
+- Oddities with value
+- Background connections
 
 ## Development
 
 ### Running Tests
 
 Run all tests:
-
 ```bash
 cargo test
 ```
 
 Run tests with output:
-
 ```bash
 cargo test -- --nocapture
 ```
 
 Run specific test:
-
 ```bash
 cargo test test_generate_random_character
 ```
 
 Run data validation tests:
-
 ```bash
 cargo test --test data_tests
 ```
 
 ### Project Structure
-
 ```
 numenera-chargen/
 ├── src/
@@ -314,14 +443,19 @@ numenera-chargen/
 │           ├── focus_select.rs
 │           ├── stat_allocations.rs
 │           ├── ability_select.rs
+│           ├── cypher_select.rs
+│           ├── oddity_select.rs
+│           ├── equipment_shop.rs
 │           └── character_preview.rs
 ├── data/                    # TOML data files
 │   ├── types.toml           # Character types
 │   ├── descriptors.toml     # Descriptors
 │   ├── foci.toml            # Foci
 │   ├── species.toml         # Species
-│   ├── equipment.toml       # Equipment
-│   └── cyphers.toml         # Cyphers
+│   ├── equipment.toml       # Equipment catalog
+│   ├── cyphers.toml         # Cyphers
+│   ├── artifacts.toml       # Artifacts
+│   └── oddities.toml        # Oddities
 ├── tests/                   # Integration tests
 └── output/                  # Generated character sheets
 ```
@@ -332,7 +466,7 @@ All game data is stored in TOML files in the `data/` directory. These files foll
 
 ### Adding Custom Content
 
-You can add your own custom descriptors, foci, or other content by editing the TOML files. Just follow the existing structure and run `cargo run validate` to ensure your additions are valid.
+You can add your own custom descriptors, foci, equipment, or other content by editing the TOML files. Just follow the existing structure and run `cargo run validate` to ensure your additions are valid.
 
 ## Command Reference
 
@@ -364,25 +498,36 @@ You can add your own custom descriptors, foci, or other content by editing the T
 | `descriptors` | All descriptors |
 | `foci` | All foci |
 | `species` | All species options |
+| `cyphers` | All cyphers |
+| `artifacts` | All artifacts |
+| `oddities` | All oddities |
 | `all` | Everything |
 
-## Roadmap
+## Features by Version
 
-- [x] CLI interactive mode
-- [x] Random character generation
-- [x] Markdown export
-- [x] Full Discovery + Destiny content
-- [x] Species support
-- [x] Automated tests
-- [x] TUI (Terminal UI) with Ratatui
-- [x] Gender selection
-- [x] Complete stat preview (pools, edge, effort)
+### Version 1.0 (Current)
+- ✅ Complete TUI with 10-step character creation
+- ✅ Cypher selection with automatic level rolling
+- ✅ Oddity selection (exactly 1 required)
+- ✅ Equipment shop system with budget management
+- ✅ Full character preview with scrollable panels
+- ✅ Stat allocation with visual feedback
+- ✅ Ability selection interface
+- ✅ Random character generation
+- ✅ Markdown export
+- ✅ Complete Discovery + Destiny content
+- ✅ Species support
+- ✅ Gender selection
+- ✅ Automated tests
+
+### Planned Features
 - [ ] PDF export
 - [ ] Character advancement tracking
-- [ ] Custom content management
-- [ ] Save/load characters
-- [ ] Equipment management UI
-- [ ] Cypher tracking
+- [ ] Custom content management UI
+- [ ] Save/load characters (JSON format)
+- [ ] Character editing mode
+- [ ] Party management
+- [ ] Campaign tracking
 
 ## Contributing
 
@@ -415,54 +560,11 @@ MIT License - see LICENSE file for details.
 - TOML parsing by [toml](https://github.com/toml-rs/toml)
 - Terminal UI by [ratatui](https://github.com/ratatui-org/ratatui)
 - Serialization by [serde](https://serde.rs/)
+- Random generation by [rand](https://github.com/rust-random/rand)
 
 ## Support
 
 For issues, questions, or suggestions, please open an issue on GitHub.
-
-## Screenshots
-
-### TUI Main Menu
-```
-╔══════════════════════════════════════════════════╗
-║    NUMENERA CHARACTER GENERATOR                  ║
-╚══════════════════════════════════════════════════╝
-
-[1] Interactive Character Creation
-[2] Random Character Generation
-[Q] Quit
-
-Help: 1: Interactive | 2: Random | Q: Quit
-```
-
-### Character Preview
-```
-Character Complete!
-
-Beren Oakenshield
-(Male)
-
-I am a Charming Nano who Fuses Mind and Machine
-
-═══ Character Summary ═══
-
-Tier: 1  •  Armor: 0
-
-Stat Pools (Current / Maximum):
-  Might:     8 / 8
-  Speed:     11 / 11
-  Intellect: 17 / 17
-
-Edge & Effort:
-  Edge:   Might 0  •  Speed 0  •  Intellect 1
-  Effort: 1
-
-Type Abilities: 2
-  • Hedge Magic
-  • Ward
-
-[S] Save Character  |  [N] New Character  |  [Q] Quit
-```
 
 ---
 

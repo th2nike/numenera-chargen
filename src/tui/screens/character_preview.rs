@@ -49,25 +49,132 @@ fn get_character(app: &App) -> Option<crate::CharacterSheet> {
         return Some(character.clone());
     }
 
+    // ========== VALIDATION BEFORE BUILDING ==========
+    // Make sure all required fields are present
+    let character_type = app.character_builder.character_type.as_deref()?;
+    let descriptor_or_species = app.character_builder.descriptor_or_species.as_deref()?;
+    let focus = app.character_builder.focus.as_deref()?;
+    
+    // Name can be empty for preview, use placeholder
+    let name = if app.character_builder.name.is_empty() {
+        "Unnamed Character".to_string()
+    } else {
+        app.character_builder.name.clone()
+    };
+    // ================================================
+
     // Otherwise, build from builder (manual creation)
-    crate::character::build_character(
+    let mut character = crate::character::build_character(
         &app.game_data,
-        app.character_builder.name.clone(),
-        app.character_builder
-            .character_type
-            .as_deref()
-            .unwrap_or("Unknown"),
-        app.character_builder
-            .descriptor_or_species
-            .as_deref()
-            .unwrap_or("Unknown"),
-        app.character_builder.focus.as_deref().unwrap_or("Unknown"),
+        name,
+        character_type,
+        descriptor_or_species,
+        focus,
         app.character_builder.bonus_might,
         app.character_builder.bonus_speed,
         app.character_builder.bonus_intellect,
         app.character_builder.selected_abilities.clone(),
     )
-    .ok()
+    .ok()?;
+
+    // Set gender
+    character.gender = app.character_builder.gender.clone();
+
+    // Add cyphers
+    for cypher in app.character_builder.selected_cyphers.iter() {
+        let _ = character.add_cypher(cypher.clone());
+    }
+
+    // Add artifacts
+    for artifact in app.character_builder.selected_artifacts.iter() {
+        character.add_artifact(artifact.clone());
+    }
+
+    // Add oddities
+    for oddity in app.character_builder.selected_oddities.iter() {
+        character.add_oddity(oddity.clone());
+    }
+
+    // ========== APPLY SHOP PURCHASES ==========
+    if !app.character_builder.purchased_items.is_empty() {
+        let _ = apply_shop_purchases_to_preview(&mut character, app);
+    }
+    // ===========================================
+
+    Some(character)
+}
+
+/// Apply shop purchases for preview (helper function)
+fn apply_shop_purchases_to_preview(
+    character: &mut crate::CharacterSheet,
+    app: &App,
+) -> anyhow::Result<()> {
+    let total_cost: u32 = app
+        .character_builder
+        .purchased_items
+        .iter()
+        .map(|item| item.cost * item.quantity)
+        .sum();
+
+    // Deduct shins
+    if character.equipment.shins >= total_cost {
+        character.equipment.shins -= total_cost;
+    }
+
+    // Apply purchases
+    for item in &app.character_builder.purchased_items {
+        match item.category.as_str() {
+            "Weapons" => {
+                if let Some(weapon) = app
+                    .game_data
+                    .equipment
+                    .weapons
+                    .iter()
+                    .find(|w| w.name == item.name)
+                {
+                    for _ in 0..item.quantity {
+                        character
+                            .equipment
+                            .add_weapon(format!("{} ({} damage)", weapon.name, weapon.damage));
+                    }
+                }
+            }
+            "Armor" => {
+                if let Some(armor) = app
+                    .game_data
+                    .equipment
+                    .armor
+                    .iter()
+                    .find(|a| a.name == item.name)
+                {
+                    character.equipment.armor = Some(format!(
+                        "{} (+{} Armor, Speed Effort +{})",
+                        armor.name, armor.armor_bonus, armor.speed_effort_cost
+                    ));
+                    character.armor = armor.armor_bonus;
+                }
+            }
+            "Shields" => {
+                if let Some(shield) = app
+                    .game_data
+                    .equipment
+                    .shields
+                    .iter()
+                    .find(|s| s.name == item.name)
+                {
+                    character.equipment.shield = Some(shield.name.clone());
+                }
+            }
+            "Gear" | "Consumables" | "Clothing" => {
+                for _ in 0..item.quantity {
+                    character.equipment.add_gear(item.name.clone());
+                }
+            }
+            _ => {}
+        }
+    }
+
+    Ok(())
 }
 
 // ==========================================
@@ -254,8 +361,9 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
             Style::default().fg(Color::Gray),
         )));
         for skill in &character.skills.trained {
+            // REMOVED truncate() - show full skill name
             lines.push(Line::from(Span::styled(
-                format!("  • {}", truncate(skill, 30)),
+                format!("  • {}", skill),
                 Style::default().fg(Color::Green),
             )));
         }
@@ -267,8 +375,9 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
             Style::default().fg(Color::Gray),
         )));
         for skill in &character.skills.specialized {
+            // REMOVED truncate() - show full skill name
             lines.push(Line::from(Span::styled(
-                format!("  • {}", truncate(skill, 30)),
+                format!("  • {}", skill),
                 Style::default().fg(Color::Yellow),
             )));
         }
@@ -289,40 +398,13 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
             Style::default().fg(Color::Gray),
         )));
         for ability in &character.type_abilities {
+            // REMOVED truncate() - show full ability name
             lines.push(Line::from(Span::styled(
-                format!("  • {}", truncate(ability, 30)),
+                format!("  • {}", ability),
                 Style::default().fg(Color::Yellow),
             )));
         }
     }
-
-    // ═══ EQUIPMENT SUMMARY ═══
-    lines.push(Line::from(""));
-    lines.push(Line::from(Span::styled(
-        "═══ EQUIPMENT ═══",
-        Style::default()
-            .fg(Color::Cyan)
-            .add_modifier(Modifier::BOLD),
-    )));
-
-    if !character.equipment.weapons.is_empty() {
-        lines.push(Line::from(Span::styled(
-            format!("Weapons: {}", character.equipment.weapons.join(", ")),
-            Style::default().fg(Color::White),
-        )));
-    }
-
-    if let Some(armor) = &character.equipment.armor {
-        lines.push(Line::from(Span::styled(
-            format!("Armor: {}", armor),
-            Style::default().fg(Color::White),
-        )));
-    }
-
-    lines.push(Line::from(Span::styled(
-        format!("Shins: {}", character.equipment.shins),
-        Style::default().fg(Color::Yellow),
-    )));
 
     // ========== APPLY SCROLLING ==========
     let is_focused = app.preview_panel_focus == PreviewPanel::Left;
@@ -380,13 +462,72 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
 }
 
 // ==========================================
-// RIGHT PANEL (CYPHERS, ARTIFACTS, ODDITIES)
+// RIGHT PANEL (EQUIPMENT & NUMENERA)
 // ==========================================
 
 fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterSheet, app: &App) {
     let mut lines = Vec::new();
 
-    // ═══ CYPHERS ═══
+    // === EQUIPMENT ===
+    lines.push(Line::from(""));
+    lines.push(Line::from(Span::styled(
+        "═══ EQUIPMENT ═══",
+        Style::default()
+            .fg(Color::Cyan)
+            .add_modifier(Modifier::BOLD),
+    )));
+
+    // Weapons
+    if !character.equipment.weapons.is_empty() {
+        lines.push(Line::from(Span::styled(
+            "Weapons:",
+            Style::default().fg(Color::Gray),
+        )));
+        for weapon in &character.equipment.weapons {
+            lines.push(Line::from(Span::styled(
+                format!("  • {}", weapon),
+                Style::default().fg(Color::White),
+            )));
+        }
+    }
+
+    // Armor
+    if let Some(armor) = &character.equipment.armor {
+        lines.push(Line::from(Span::styled(
+            format!("Armor: {}", armor),
+            Style::default().fg(Color::White),
+        )));
+    }
+
+    // Shield
+    if let Some(shield) = &character.equipment.shield {
+        lines.push(Line::from(Span::styled(
+            format!("Shield: {}", shield),
+            Style::default().fg(Color::White),
+        )));
+    }
+
+    // Gear
+    if !character.equipment.gear.is_empty() {
+        lines.push(Line::from(Span::styled(
+            "Gear:",
+            Style::default().fg(Color::Gray),
+        )));
+        for gear_item in &character.equipment.gear {
+            lines.push(Line::from(Span::styled(
+                format!("  • {}", gear_item),
+                Style::default().fg(Color::White),
+            )));
+        }
+    }
+
+    // Shins
+    lines.push(Line::from(Span::styled(
+        format!("Shins: {}", character.equipment.shins),
+        Style::default().fg(Color::Yellow),
+    )));
+
+    // === CYPHERS ===
     lines.push(Line::from(""));
     lines.push(Line::from(Span::styled(
         format!(
@@ -419,18 +560,18 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
                     .add_modifier(Modifier::BOLD),
             )));
             lines.push(Line::from(Span::styled(
-                format!("   Form: {}", truncate(&cypher.form, 45)),
+                format!("   Form: {}", cypher.form),
                 Style::default().fg(Color::Gray),
             )));
             lines.push(Line::from(Span::styled(
-                format!("   Effect: {}", truncate(&cypher.effect, 43)),
+                format!("   Effect: {}", cypher.effect),
                 Style::default().fg(Color::DarkGray),
             )));
             lines.push(Line::from(""));
         }
     }
 
-    // ═══ ARTIFACTS ═══
+    // === ARTIFACTS ===
     if !character.artifacts.is_empty() {
         lines.push(Line::from(Span::styled(
             format!("═══ ARTIFACTS ({}) ═══", character.artifacts.len()),
@@ -453,22 +594,18 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
                     .add_modifier(Modifier::BOLD),
             )));
             lines.push(Line::from(Span::styled(
-                format!(
-                    "   Depletion: {} | Form: {}",
-                    artifact.depletion,
-                    truncate(&artifact.form, 25)
-                ),
+                format!("   Depletion: {} | Form: {}", artifact.depletion, artifact.form),
                 Style::default().fg(Color::Gray),
             )));
             lines.push(Line::from(Span::styled(
-                format!("   Effect: {}", truncate(&artifact.effect, 43)),
+                format!("   Effect: {}", artifact.effect),
                 Style::default().fg(Color::DarkGray),
             )));
             lines.push(Line::from(""));
         }
     }
 
-    // ═══ ODDITIES ═══
+    // === ODDITIES ===
     if !character.oddities.is_empty() {
         lines.push(Line::from(Span::styled(
             format!("═══ ODDITIES ({}) ═══", character.oddities.len()),
@@ -485,21 +622,25 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
                     .add_modifier(Modifier::BOLD),
             )));
             lines.push(Line::from(Span::styled(
-                format!("   {}", truncate(&oddity.description, 47)),
+                format!("   {}", oddity.description),
                 Style::default().fg(Color::DarkGray),
             )));
             lines.push(Line::from(""));
         }
     }
 
-    // If no numenera at all
-    if character.cyphers.is_empty()
+    // If no items at all
+    if character.equipment.weapons.is_empty()
+        && character.equipment.armor.is_none()
+        && character.equipment.shield.is_none()
+        && character.equipment.gear.is_empty()
+        && character.cyphers.is_empty()
         && character.artifacts.is_empty()
         && character.oddities.is_empty()
     {
         lines.push(Line::from(""));
         lines.push(Line::from(Span::styled(
-            "No numenera items carried",
+            "No equipment or numenera carried",
             Style::default()
                 .fg(Color::DarkGray)
                 .add_modifier(Modifier::ITALIC),
@@ -509,14 +650,12 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     // ========== APPLY SCROLLING ==========
     let is_focused = app.preview_panel_focus == PreviewPanel::Right;
     let scroll_offset = app.preview_right_scroll;
-    let visible_height = area.height.saturating_sub(2) as usize; // Subtract border
+    let visible_height = area.height.saturating_sub(2) as usize;
 
-    // Calculate visible range
     let total_lines = lines.len();
     let max_scroll = total_lines.saturating_sub(visible_height);
     let clamped_scroll = scroll_offset.min(max_scroll);
 
-    // Show scroll indicators
     let mut display_lines = Vec::new();
     if clamped_scroll > 0 {
         display_lines.push(Line::from(Span::styled(
@@ -525,7 +664,6 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
         )));
     }
 
-    // Add visible lines
     let end_idx = (clamped_scroll + visible_height).min(total_lines);
     display_lines.extend_from_slice(&lines[clamped_scroll..end_idx]);
 
@@ -537,13 +675,13 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
     }
 
     let border_color = if is_focused {
-        Color::Green
+        Color::Cyan
     } else {
         Color::DarkGray
     };
     let title_style = if is_focused {
         Style::default()
-            .fg(Color::Green)
+            .fg(Color::Cyan)
             .add_modifier(Modifier::BOLD)
     } else {
         Style::default().fg(Color::Gray)
@@ -554,7 +692,7 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
             Block::default()
                 .borders(Borders::ALL)
                 .border_style(Style::default().fg(border_color))
-                .title(Span::styled(" Numenera Items ", title_style)),
+                .title(Span::styled(" Equipment & Items ", title_style)),
         )
         .wrap(Wrap { trim: true });
 
@@ -633,11 +771,11 @@ fn get_pool_color(current: i32, maximum: i32) -> Style {
     }
 }
 
-/// Truncate string to max length with ellipsis
-fn truncate(s: &str, max_len: usize) -> String {
-    if s.len() <= max_len {
-        s.to_string()
-    } else {
-        format!("{}...", &s[..max_len.saturating_sub(3)])
-    }
-}
+// /// Truncate string to max length with ellipsis
+// fn truncate(s: &str, max_len: usize) -> String {
+//     if s.len() <= max_len {
+//         s.to_string()
+//     } else {
+//         format!("{}...", &s[..max_len.saturating_sub(3)])
+//     }
+// }

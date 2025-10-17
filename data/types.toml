@@ -34,7 +34,7 @@ examples = [
 ]
 
 [types.equipment]
-weapons = ["Sword", "Dagger"]  # Or ["Battleaxe", "Handaxe"] for variety
+weapons = ["Sword", "Dagger", "Battleaxe", "Handaxe"]
 armor = "Leather Jerkin"
 explorer_pack = true
 shins = 5

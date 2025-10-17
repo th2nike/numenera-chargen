@@ -62,7 +62,11 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         }
 
         let is_selected = i == selected_state;
-        let is_chosen = app.character_builder.selected_artifacts.contains(&i);
+        let is_chosen = app
+            .character_builder
+            .selected_artifacts
+            .iter()
+            .any(|a| a.name == artifact.name);
 
         let prefix = if is_chosen { "[✓] " } else { "[ ] " };
         let style = if is_selected {

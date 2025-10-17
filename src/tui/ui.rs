@@ -39,6 +39,7 @@ pub fn render(f: &mut Frame, app: &App) {
         Screen::CypherSelect => screens::cypher_select::render(f, chunks[1], app),
         Screen::ArtifactSelect => screens::artifact_select::render(f, chunks[1], app),
         Screen::OdditySelect => screens::oddity_select::render(f, chunks[1], app),
+        Screen::EquipmentShop => screens::equipment_shop::render(f, chunks[1], app),
         Screen::CharacterPreview => screens::character_preview::render(f, chunks[1], app),
     }
 
@@ -78,6 +79,7 @@ fn render_help_bar(f: &mut Frame, area: Rect, app: &App) {
         Screen::CypherSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",
         Screen::ArtifactSelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Next | ESC: Back",
         Screen::OdditySelect => "↑↓: Navigate | Space: Toggle | R: Random | C: Clear | Enter: Finish | ESC: Back",
+        Screen::EquipmentShop => "←→: Category | ↑↓: Item | Space: Add | R: Remove | C: Clear | Enter: Buy | ESC: Skip",  // NEW
         Screen::CharacterPreview => "↑↓/j/k: Scroll | Tab: Switch Panel | PgUp/PgDn: Fast Scroll | S: Save | N: New | Q: Quit",
     };
 

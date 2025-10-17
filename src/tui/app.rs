@@ -1,11 +1,11 @@
 // src/tui/app.rs
 // Application state management
 
+use crate::character::sheet::{CharacterSheet, Gender};
+use crate::data::GameData;
+use crate::data::{ArtifactInstance, CypherInstance, Oddity};
 use anyhow::Result;
-use chrono;
 use crossterm::event::{KeyCode, KeyEvent, KeyModifiers};
-
-use crate::{character::sheet::Gender, data::GameData, CharacterSheet};
 
 /// Application state
 pub struct App {
@@ -17,12 +17,22 @@ pub struct App {
     pub preview_panel_focus: PreviewPanel, // Which panel is focused
     pub preview_left_scroll: usize,        // Scroll offset for left panel
     pub preview_right_scroll: usize,       // Scroll offset for right panel
+    pub shop_category: ShopCategory,
+    pub shop_list_state: usize,
+    pub shop_cart: Vec<ShopItem>,
+    pub shop_selected_category_index: usize,
 }
 
 #[derive(Debug, Clone, PartialEq)]
 pub enum PreviewPanel {
     Left,
     Right,
+}
+
+impl ShopItem {
+    pub fn total_cost(&self) -> u32 {
+        self.cost * self.quantity
+    }
 }
 
 /// Current screen in the UI
@@ -39,7 +49,50 @@ pub enum Screen {
     CypherSelect,
     ArtifactSelect,
     OdditySelect,
+    EquipmentShop,
     CharacterPreview,
+}
+
+#[derive(Debug, Clone, PartialEq)]
+pub enum ShopCategory {
+    Weapons,
+    Armor,
+    Shields,
+    Gear,
+    Consumables,
+    Clothing,
+}
+
+#[derive(Debug, Clone)]
+pub struct ShopItem {
+    pub name: String,
+    pub cost: u32,
+    pub category: String,
+    pub quantity: u32, // For stackable items
+}
+
+impl ShopCategory {
+    pub fn all() -> Vec<ShopCategory> {
+        vec![
+            ShopCategory::Weapons,
+            ShopCategory::Armor,
+            ShopCategory::Shields,
+            ShopCategory::Gear,
+            ShopCategory::Consumables,
+            ShopCategory::Clothing,
+        ]
+    }
+
+    pub fn name(&self) -> &str {
+        match self {
+            ShopCategory::Weapons => "Weapons",
+            ShopCategory::Armor => "Armor",
+            ShopCategory::Shields => "Shields",
+            ShopCategory::Gear => "Gear",
+            ShopCategory::Consumables => "Consumables",
+            ShopCategory::Clothing => "Clothing",
+        }
+    }
 }
 
 /// Builder state for creating a character
@@ -57,13 +110,11 @@ pub struct CharacterBuilder {
     pub bonus_intellect: i32,
     pub selected_abilities: Vec<String>,
 
-    // ========== NUMENERA SELECTION ==========
-    pub selected_cyphers: Vec<usize>, // Indices of selected cyphers
-    pub selected_artifacts: Vec<usize>, // Indices of selected artifacts
-    pub selected_oddities: Vec<usize>, // Indices of selected oddities
-    // ===========================================
+    pub selected_cyphers: Vec<CypherInstance>,
+    pub selected_artifacts: Vec<ArtifactInstance>,
+    pub selected_oddities: Vec<Oddity>,
 
-    // UI state
+    pub purchased_items: Vec<ShopItem>,
     pub list_state: usize,
     pub scroll_offset: usize,
 }
@@ -79,6 +130,10 @@ impl App {
             preview_panel_focus: PreviewPanel::Left,
             preview_left_scroll: 0,
             preview_right_scroll: 0,
+            shop_category: ShopCategory::Weapons,
+            shop_list_state: 0,
+            shop_cart: Vec::new(),
+            shop_selected_category_index: 0,
         }
     }
 
@@ -113,6 +168,7 @@ impl App {
             Screen::CypherSelect => self.handle_cypher_select_keys(key),
             Screen::ArtifactSelect => self.handle_artifact_select_keys(key),
             Screen::OdditySelect => self.handle_oddity_select_keys(key),
+            Screen::EquipmentShop => self.handle_equipment_shop_keys(key),
             Screen::CharacterPreview => self.handle_preview_keys(key),
         }
     }
@@ -297,6 +353,7 @@ impl App {
                 if self.character_builder.list_state < suitable_foci.len() {
                     let selected = suitable_foci[self.character_builder.list_state];
                     self.character_builder.focus = Some(selected.name.clone());
+                    self.character_builder.reset_list_state();
                     self.current_screen = Screen::StatAllocation;
                 }
             }
@@ -511,7 +568,7 @@ impl App {
     fn handle_cypher_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_cyphers = self.game_data.cyphers.len();
 
-        // Determine cypher limit based on character type
+        // Determine cypher limit
         let cypher_limit = if let Some(type_name) = &self.character_builder.character_type {
             self.game_data
                 .types
@@ -531,21 +588,35 @@ impl App {
                 self.character_builder.move_down(total_cyphers);
             }
             KeyCode::Char(' ') => {
-                // Toggle selection
+                // Toggle selection - NOW WITH INSTANCES
                 let idx = self.character_builder.list_state;
+
+                // Check if already selected
                 if let Some(pos) = self
                     .character_builder
                     .selected_cyphers
                     .iter()
-                    .position(|&i| i == idx)
+                    .position(|c| {
+                        // Compare by name (since we can't compare instances directly)
+                        if let Some(cypher) = self.game_data.cyphers.get(idx) {
+                            c.name == cypher.name
+                        } else {
+                            false
+                        }
+                    })
                 {
+                    // Remove it
                     self.character_builder.selected_cyphers.remove(pos);
                 } else if self.character_builder.selected_cyphers.len() < cypher_limit {
-                    self.character_builder.selected_cyphers.push(idx);
+                    // Add new instance (roll level NOW and store it)
+                    if let Some(cypher) = self.game_data.cyphers.get(idx) {
+                        let instance = crate::data::create_cypher_instance(cypher);
+                        self.character_builder.selected_cyphers.push(instance);
+                    }
                 }
             }
             KeyCode::Char('r') | KeyCode::Char('R') => {
-                // Random selection to fill limit
+                // Random selection - WITH INSTANCES
                 use rand::Rng;
                 let mut rng = rand::thread_rng();
                 self.character_builder.selected_cyphers.clear();
@@ -553,18 +624,19 @@ impl App {
                 let mut available: Vec<usize> = (0..total_cyphers).collect();
                 for _ in 0..cypher_limit.min(total_cyphers) {
                     let idx = rng.gen_range(0..available.len());
-                    self.character_builder
-                        .selected_cyphers
-                        .push(available.remove(idx));
+                    let cypher_idx = available.remove(idx);
+
+                    if let Some(cypher) = self.game_data.cyphers.get(cypher_idx) {
+                        let instance = crate::data::create_cypher_instance(cypher);
+                        self.character_builder.selected_cyphers.push(instance);
+                    }
                 }
             }
             KeyCode::Char('c') | KeyCode::Char('C') => {
-                // Clear all selections
                 self.character_builder.selected_cyphers.clear();
             }
             KeyCode::Enter => {
-                // Can proceed even with 0 cyphers selected
-                self.current_screen = Screen::ArtifactSelect;
+                self.current_screen = Screen::OdditySelect;
                 self.character_builder.reset_list_state();
             }
             KeyCode::Esc => {
@@ -577,7 +649,7 @@ impl App {
 
     fn handle_artifact_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_artifacts = self.game_data.artifacts.len();
-        let max_artifacts = 3; // Reasonable limit for starting characters
+        let max_artifacts = 3;
 
         match key.code {
             KeyCode::Up | KeyCode::Char('k') => {
@@ -587,36 +659,47 @@ impl App {
                 self.character_builder.move_down(total_artifacts);
             }
             KeyCode::Char(' ') => {
-                // Toggle selection
                 let idx = self.character_builder.list_state;
+
+                // Check if already selected
                 if let Some(pos) = self
                     .character_builder
                     .selected_artifacts
                     .iter()
-                    .position(|&i| i == idx)
+                    .position(|a| {
+                        if let Some(artifact) = self.game_data.artifacts.get(idx) {
+                            a.name == artifact.name
+                        } else {
+                            false
+                        }
+                    })
                 {
                     self.character_builder.selected_artifacts.remove(pos);
                 } else if self.character_builder.selected_artifacts.len() < max_artifacts {
-                    self.character_builder.selected_artifacts.push(idx);
+                    if let Some(artifact) = self.game_data.artifacts.get(idx) {
+                        let instance = crate::data::create_artifact_instance(artifact);
+                        self.character_builder.selected_artifacts.push(instance);
+                    }
                 }
             }
             KeyCode::Char('r') | KeyCode::Char('R') => {
-                // Random selection (1-2 artifacts)
                 use rand::Rng;
                 let mut rng = rand::thread_rng();
                 self.character_builder.selected_artifacts.clear();
 
-                let count = rng.gen_range(1..=2).min(total_artifacts);
+                let count = rng.gen_range(1..=3).min(total_artifacts);
                 let mut available: Vec<usize> = (0..total_artifacts).collect();
                 for _ in 0..count {
                     let idx = rng.gen_range(0..available.len());
-                    self.character_builder
-                        .selected_artifacts
-                        .push(available.remove(idx));
+                    let artifact_idx = available.remove(idx);
+
+                    if let Some(artifact) = self.game_data.artifacts.get(artifact_idx) {
+                        let instance = crate::data::create_artifact_instance(artifact);
+                        self.character_builder.selected_artifacts.push(instance);
+                    }
                 }
             }
             KeyCode::Char('c') | KeyCode::Char('C') => {
-                // Clear all selections
                 self.character_builder.selected_artifacts.clear();
             }
             KeyCode::Enter => {
@@ -633,7 +716,7 @@ impl App {
 
     fn handle_oddity_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_oddities = self.game_data.oddities.len();
-        let max_oddities = 2; // Starting characters typically have 0-2 oddities
+        let required_oddities = 1;  // ← Changed from max_oddities to required_oddities
 
         match key.code {
             KeyCode::Up | KeyCode::Char('k') => {
@@ -643,54 +726,291 @@ impl App {
                 self.character_builder.move_down(total_oddities);
             }
             KeyCode::Char(' ') => {
-                // Toggle selection
                 let idx = self.character_builder.list_state;
+
+                // Check if already selected
                 if let Some(pos) = self
                     .character_builder
                     .selected_oddities
                     .iter()
-                    .position(|&i| i == idx)
+                    .position(|o| {
+                        if let Some(oddity) = self.game_data.oddities.get(idx) {
+                            o.name == oddity.name
+                        } else {
+                            false
+                        }
+                    })
                 {
                     self.character_builder.selected_oddities.remove(pos);
-                } else if self.character_builder.selected_oddities.len() < max_oddities {
-                    self.character_builder.selected_oddities.push(idx);
+                } else if self.character_builder.selected_oddities.len() < required_oddities {
+                    if let Some(oddity) = self.game_data.oddities.get(idx) {
+                        self.character_builder
+                            .selected_oddities
+                            .push(oddity.clone());
+                    }
+                } else {
+                    // Already have 1 oddity, replace it
+                    self.character_builder.selected_oddities.clear();
+                    if let Some(oddity) = self.game_data.oddities.get(idx) {
+                        self.character_builder
+                            .selected_oddities
+                            .push(oddity.clone());
+                    }
                 }
             }
             KeyCode::Char('r') | KeyCode::Char('R') => {
-                // Random selection (0-2 oddities)
-                use rand::Rng;
+                // Random selection - always pick exactly 1
+                use rand::seq::SliceRandom;
                 let mut rng = rand::thread_rng();
                 self.character_builder.selected_oddities.clear();
 
-                let count = rng.gen_range(0..=2).min(total_oddities);
-                let mut available: Vec<usize> = (0..total_oddities).collect();
-                for _ in 0..count {
-                    let idx = rng.gen_range(0..available.len());
+                if let Some(oddity) = self.game_data.oddities.choose(&mut rng) {
                     self.character_builder
                         .selected_oddities
-                        .push(available.remove(idx));
+                        .push(oddity.clone());
                 }
             }
             KeyCode::Char('c') | KeyCode::Char('C') => {
-                // Clear all selections
                 self.character_builder.selected_oddities.clear();
             }
             KeyCode::Enter => {
-                self.preview_left_scroll = 0;
-                self.preview_right_scroll = 0;
-                self.current_screen = Screen::CharacterPreview;
+                // Require exactly 1 oddity
+                if self.character_builder.selected_oddities.len() == required_oddities {
+                    self.shop_category = ShopCategory::Weapons;
+                    self.shop_list_state = 0;
+                    self.shop_cart.clear();
+                    self.shop_selected_category_index = 0;
+                    self.current_screen = Screen::EquipmentShop;
+                }
             }
             KeyCode::Esc => {
-                self.current_screen = Screen::ArtifactSelect;
+                self.current_screen = Screen::CypherSelect;  // ← Skip artifact screen
             }
             _ => {}
         }
         Ok(())
     }
 
+    fn handle_equipment_shop_keys(&mut self, key: KeyEvent) -> Result<()> {
+        match key.code {
+            // Switch between category list and item list
+            KeyCode::Tab => {
+                // Toggle focus between categories and items
+                // We'll use list_state position to determine focus
+            }
+
+            // Navigate categories (when focused on left)
+            KeyCode::Left | KeyCode::Char('h') => {
+                if self.shop_selected_category_index > 0 {
+                    self.shop_selected_category_index -= 1;
+                    self.shop_category =
+                        ShopCategory::all()[self.shop_selected_category_index].clone();
+                    self.shop_list_state = 0; // Reset item selection
+                }
+            }
+            KeyCode::Right | KeyCode::Char('l') => {
+                let categories = ShopCategory::all();
+                if self.shop_selected_category_index < categories.len() - 1 {
+                    self.shop_selected_category_index += 1;
+                    self.shop_category = categories[self.shop_selected_category_index].clone();
+                    self.shop_list_state = 0; // Reset item selection
+                }
+            }
+
+            // Navigate items (when focused on right)
+            KeyCode::Up | KeyCode::Char('k') => {
+                if self.shop_list_state > 0 {
+                    self.shop_list_state -= 1;
+                }
+            }
+            KeyCode::Down | KeyCode::Char('j') => {
+                let item_count = self.get_shop_items_for_category().len();
+                if self.shop_list_state < item_count.saturating_sub(1) {
+                    self.shop_list_state += 1;
+                }
+            }
+
+            // Add to cart
+            KeyCode::Char(' ') => {
+                self.add_selected_item_to_cart();
+            }
+
+            // Remove from cart
+            KeyCode::Char('r') | KeyCode::Char('R') => {
+                if !self.shop_cart.is_empty() {
+                    self.shop_cart.pop();
+                }
+            }
+
+            // Clear cart
+            KeyCode::Char('c') | KeyCode::Char('C') => {
+                self.shop_cart.clear();
+            }
+
+            // Checkout (buy items)
+            KeyCode::Enter => {
+                self.checkout_cart()?;
+                self.preview_left_scroll = 0;
+                self.preview_right_scroll = 0;
+                self.current_screen = Screen::CharacterPreview;
+            }
+
+            // Skip shop
+            KeyCode::Esc => {
+                self.shop_cart.clear();
+                self.preview_left_scroll = 0;
+                self.preview_right_scroll = 0;
+                self.current_screen = Screen::CharacterPreview;
+            }
+
+            _ => {}
+        }
+        Ok(())
+    }
+
+    /// Get items for the current category
+    pub fn get_shop_items_for_category(&self) -> Vec<(String, u32, String)> {
+        match self.shop_category {
+            ShopCategory::Weapons => self
+                .game_data
+                .equipment
+                .weapons
+                .iter()
+                .map(|w| {
+                    (
+                        w.name.clone(),
+                        w.cost,
+                        format!("{} weapon, {} damage", w.category, w.damage),
+                    )
+                })
+                .collect(),
+            ShopCategory::Armor => self
+                .game_data
+                .equipment
+                .armor
+                .iter()
+                .map(|a| {
+                    (
+                        a.name.clone(),
+                        a.cost,
+                        format!(
+                            "+{} Armor, Speed Effort +{}",
+                            a.armor_bonus, a.speed_effort_cost
+                        ),
+                    )
+                })
+                .collect(),
+            ShopCategory::Shields => self
+                .game_data
+                .equipment
+                .shields
+                .iter()
+                .map(|s| (s.name.clone(), s.cost, "Speed defense asset".to_string()))
+                .collect(),
+            ShopCategory::Gear => self
+                .game_data
+                .equipment
+                .gear
+                .iter()
+                .map(|g| (g.name.clone(), g.cost, g.notes.clone()))
+                .collect(),
+            ShopCategory::Consumables => self
+                .game_data
+                .equipment
+                .consumables
+                .iter()
+                .map(|c| (c.name.clone(), c.cost, c.notes.clone()))
+                .collect(),
+            ShopCategory::Clothing => self
+                .game_data
+                .equipment
+                .clothing
+                .iter()
+                .map(|c| (c.name.clone(), c.cost, c.notes.clone()))
+                .collect(),
+        }
+    }
+
+    /// Add selected item to cart
+    pub fn add_selected_item_to_cart(&mut self) {
+        let items = self.get_shop_items_for_category();
+        if let Some((name, cost, _)) = items.get(self.shop_list_state) {
+            // Check if already in cart (for stackable items, increase quantity)
+            if let Some(cart_item) = self.shop_cart.iter_mut().find(|item| item.name == *name) {
+                cart_item.quantity += 1;
+            } else {
+                self.shop_cart.push(ShopItem {
+                    name: name.clone(),
+                    cost: *cost,
+                    category: self.shop_category.name().to_string(),
+                    quantity: 1,
+                });
+            }
+        }
+    }
+
+    /// Calculate total cost of cart
+    pub fn cart_total(&self) -> u32 {
+        self.shop_cart
+            .iter()
+            .map(|item| item.cost * item.quantity)
+            .sum()
+    }
+
+    /// Get available shins
+    pub fn available_shins(&self) -> u32 {
+        // Calculate from character builder
+        let mut total = 0;
+
+        // Type shins
+        if let Some(type_name) = &self.character_builder.character_type {
+            if let Some(char_type) = self.game_data.types.iter().find(|t| t.name == *type_name) {
+                total += char_type.equipment.shins;
+            }
+        }
+
+        // Descriptor shins
+        if let Some(desc_name) = &self.character_builder.descriptor_or_species {
+            if !self.character_builder.is_species {
+                if let Some(desc) = self
+                    .game_data
+                    .descriptors
+                    .iter()
+                    .find(|d| d.name == *desc_name)
+                {
+                    total += desc.equipment.shins;
+                }
+            } else {
+                // Species shins
+                if let Some(species) = self.game_data.species.iter().find(|s| s.name == *desc_name)
+                {
+                    total += species.equipment.starting_shins;
+                }
+            }
+        }
+
+        total
+    }
+
+    /// Checkout and apply purchases to character
+    pub fn checkout_cart(&mut self) -> Result<()> {
+        let total_cost = self.cart_total();
+        let available = self.available_shins();
+
+        if total_cost > available {
+            // Can't afford - just clear cart
+            self.shop_cart.clear();
+            return Ok(());
+        }
+
+        // Store purchases in character builder
+        self.character_builder.purchased_items = self.shop_cart.clone();
+
+        Ok(())
+    }
+
     fn save_character(&self) -> Result<()> {
         use crate::character::build_character;
-        use crate::data::{create_artifact_instance, create_cypher_instance};
         use chrono::Local;
 
         // Check if we have a pre-generated character or need to build one
@@ -723,27 +1043,22 @@ impl App {
             char_sheet.gender = self.character_builder.gender.clone();
 
             // Add selected cyphers
-            for &idx in &self.character_builder.selected_cyphers {
-                if let Some(cypher) = self.game_data.cyphers.get(idx) {
-                    let instance = create_cypher_instance(cypher);
-                    let _ = char_sheet.add_cypher(instance);
-                }
+            for cypher in &self.character_builder.selected_cyphers {
+                let _ = char_sheet.add_cypher(cypher.clone());
             }
 
             // Add selected artifacts
-            for &idx in &self.character_builder.selected_artifacts {
-                if let Some(artifact) = self.game_data.artifacts.get(idx) {
-                    let instance = create_artifact_instance(artifact);
-                    char_sheet.add_artifact(instance);
-                }
+            for artifact in &self.character_builder.selected_artifacts {
+                char_sheet.add_artifact(artifact.clone());
             }
 
             // Add selected oddities
-            for &idx in &self.character_builder.selected_oddities {
-                if let Some(oddity) = self.game_data.oddities.get(idx) {
-                    char_sheet.add_oddity(oddity.clone());
-                }
+            for oddity in &self.character_builder.selected_oddities {
+                char_sheet.add_oddity(oddity.clone());
             }
+
+            // Apply shop purchases
+            self.apply_shop_purchases(&mut char_sheet)?;
 
             char_sheet
         };
@@ -769,6 +1084,157 @@ impl App {
 
         Ok(())
     }
+
+    /// Apply shop purchases to character sheet
+    fn apply_shop_purchases(&self, character: &mut crate::CharacterSheet) -> Result<()> {
+    let total_cost: u32 = self
+        .character_builder
+        .purchased_items
+        .iter()
+        .map(|item| item.cost * item.quantity)
+        .sum();
+
+    // ========== DEBUG LOGGING ==========
+    eprintln!("\n╔══════════════════════════════════════════════╗");
+    eprintln!("║   APPLYING SHOP PURCHASES (DEBUG MODE)      ║");
+    eprintln!("╚══════════════════════════════════════════════╝");
+    eprintln!("Total items to apply: {}", self.character_builder.purchased_items.len());
+    eprintln!("Total cost: {} shins", total_cost);
+    eprintln!("Character has: {} shins\n", character.equipment.shins);
+    
+    for (i, item) in self.character_builder.purchased_items.iter().enumerate() {
+        eprintln!("Item #{}: {} (qty: {}, category: '{}')", 
+            i + 1, item.name, item.quantity, item.category);
+    }
+    eprintln!();
+    // ====================================
+
+    // Deduct shins
+    if character.equipment.shins >= total_cost {
+        character.equipment.shins -= total_cost;
+        eprintln!("✓ Shins deducted. Remaining: {}", character.equipment.shins);
+    } else {
+        eprintln!("✗ ERROR: Not enough shins! Cost: {}, Available: {}", 
+            total_cost, character.equipment.shins);
+        eprintln!("══════════════════════════════════════════════\n");
+        return Ok(());
+    }
+    eprintln!();
+
+    // Apply purchases by category
+    for (i, item) in self.character_builder.purchased_items.iter().enumerate() {
+        eprintln!("─────────────────────────────────────────────");
+        eprintln!("Processing item #{}: {}", i + 1, item.name);
+        eprintln!("  Category: '{}'", item.category);
+        
+        match item.category.as_str() {
+            "Weapons" => {
+                eprintln!("  → Searching for weapon in equipment data...");
+                // Add weapon with details
+                if let Some(weapon) = self
+                    .game_data
+                    .equipment
+                    .weapons
+                    .iter()
+                    .find(|w| w.name == item.name)
+                {
+                    eprintln!("  → Found weapon: {} ({} damage)", weapon.name, weapon.damage);
+                    for _ in 0..item.quantity {
+                        let weapon_string = format!("{} ({} damage)", weapon.name, weapon.damage);
+                        character.equipment.add_weapon(weapon_string.clone());
+                        eprintln!("  ✓ Added: {}", weapon_string);
+                    }
+                } else {
+                    eprintln!("  ✗ Weapon NOT FOUND in equipment.toml!");
+                    eprintln!("     Searched for: '{}'", item.name);
+                }
+            }
+            "Armor" => {
+                eprintln!("  → Searching for armor in equipment data...");
+                eprintln!("     Looking for: '{}'", item.name);
+                
+                // Replace armor (only keep the last one purchased)
+                if let Some(armor) = self
+                    .game_data
+                    .equipment
+                    .armor
+                    .iter()
+                    .find(|a| a.name == item.name)
+                {
+                    let armor_string = format!(
+                        "{} (+{} Armor, Speed Effort +{})",
+                        armor.name, armor.armor_bonus, armor.speed_effort_cost
+                    );
+                    
+                    eprintln!("  → Found armor: {}", armor.name);
+                    eprintln!("     Armor bonus: {}", armor.armor_bonus);
+                    eprintln!("     Speed effort cost: {}", armor.speed_effort_cost);
+                    eprintln!("  → BEFORE: character.equipment.armor = {:?}", character.equipment.armor);
+                    eprintln!("  → BEFORE: character.armor = {}", character.armor);
+                    
+                    character.equipment.armor = Some(armor_string.clone());
+                    character.armor = armor.armor_bonus;
+                    
+                    eprintln!("  → AFTER:  character.equipment.armor = {:?}", character.equipment.armor);
+                    eprintln!("  → AFTER:  character.armor = {}", character.armor);
+                    eprintln!("  ✓ Armor successfully applied!");
+                } else {
+                    eprintln!("  ✗ Armor NOT FOUND in equipment.toml!");
+                    eprintln!("     Searched for: '{}'", item.name);
+                    eprintln!("     Available armor in equipment.toml:");
+                    for (j, a) in self.game_data.equipment.armor.iter().enumerate() {
+                        eprintln!("       {}: '{}'", j + 1, a.name);
+                    }
+                }
+            }
+            "Shields" => {
+                eprintln!("  → Searching for shield in equipment data...");
+                if let Some(shield) = self
+                    .game_data
+                    .equipment
+                    .shields
+                    .iter()
+                    .find(|s| s.name == item.name)
+                {
+                    eprintln!("  → Found shield: {}", shield.name);
+                    eprintln!("  → BEFORE: character.equipment.shield = {:?}", character.equipment.shield);
+                    
+                    character.equipment.shield = Some(shield.name.clone());
+                    
+                    eprintln!("  → AFTER:  character.equipment.shield = {:?}", character.equipment.shield);
+                    eprintln!("  ✓ Shield successfully applied!");
+                } else {
+                    eprintln!("  ✗ Shield NOT FOUND in equipment.toml!");
+                    eprintln!("     Searched for: '{}'", item.name);
+                }
+            }
+            "Gear" | "Consumables" | "Clothing" => {
+                eprintln!("  → Adding as gear item...");
+                // Add to gear list
+                for _ in 0..item.quantity {
+                    character.equipment.add_gear(item.name.clone());
+                    eprintln!("  ✓ Added to gear: {}", item.name);
+                }
+            }
+            _ => {
+                eprintln!("  ✗ UNKNOWN CATEGORY: '{}'", item.category);
+            }
+        }
+    }
+
+    eprintln!("─────────────────────────────────────────────");
+    eprintln!("\n╔══════════════════════════════════════════════╗");
+    eprintln!("║   SHOP PURCHASES COMPLETE - FINAL STATE     ║");
+    eprintln!("╚══════════════════════════════════════════════╝");
+    eprintln!("Final character.equipment.armor: {:?}", character.equipment.armor);
+    eprintln!("Final character.armor (numeric): {}", character.armor);
+    eprintln!("Final character.equipment.shield: {:?}", character.equipment.shield);
+    eprintln!("Final character.equipment.shins: {}", character.equipment.shins);
+    eprintln!("══════════════════════════════════════════════\n");
+
+    Ok(())
+}
+
 }
 
 impl CharacterBuilder {
@@ -788,6 +1254,7 @@ impl CharacterBuilder {
             selected_cyphers: Vec::new(),
             selected_artifacts: Vec::new(),
             selected_oddities: Vec::new(),
+            purchased_items: Vec::new(),
             list_state: 0,
             scroll_offset: 0,
         }

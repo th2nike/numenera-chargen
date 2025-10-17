@@ -23,7 +23,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         ])
         .split(block.inner(area));
 
-    let max_oddities = 2;
+    let max_oddities = 1;
 
     // Instructions
     let instructions = vec![
@@ -62,7 +62,11 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         }
 
         let is_selected = i == selected_state;
-        let is_chosen = app.character_builder.selected_oddities.contains(&i);
+        let is_chosen = app
+            .character_builder
+            .selected_oddities
+            .iter()
+            .any(|o| o.name == oddity.name);
 
         let prefix = if is_chosen { "[✓] " } else { "[ ] " };
         let style = if is_selected {

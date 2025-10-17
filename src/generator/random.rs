@@ -3,11 +3,11 @@
 
 use anyhow::{Context, Result};
 use rand::seq::SliceRandom;
-use rand::Rng; // For .choose()
+use rand::Rng;
 
 use crate::character::sheet::Gender;
 use crate::character::{build_character, CharacterSheet};
-use crate::data::{create_artifact_instance, create_cypher_instance, get_suitable_foci, GameData};
+use crate::data::{create_cypher_instance, GameData};
 
 // ==========================================
 // RANDOM GENERATION
@@ -42,7 +42,7 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
     };
 
     // Random focus (prefer suitable ones)
-    let suitable_foci = get_suitable_foci(&game_data.foci, &type_name);
+    let suitable_foci = crate::data::get_suitable_foci(&game_data.foci, &type_name);
     let focus = if !suitable_foci.is_empty() {
         suitable_foci[rng.gen_range(0..suitable_foci.len())]
             .name
@@ -86,35 +86,9 @@ pub fn generate_random(game_data: &GameData) -> Result<CharacterSheet> {
     // Set gender after building
     character.gender = gender;
 
-    // ========== ADD RANDOM NUMENERA ITEMS (NEW) ==========
-    let cypher_limit = character.cypher_limit as usize;
-
-    // Add random cyphers (fill to limit)
-    let cypher_count = rng.gen_range(cypher_limit.saturating_sub(1)..=cypher_limit);
-    for _ in 0..cypher_count {
-        if let Some(cypher) = game_data.cyphers.choose(&mut rng) {
-            let instance = create_cypher_instance(cypher);
-            let _ = character.add_cypher(instance);
-        }
-    }
-
-    // Add 0-2 random artifacts
-    let artifact_count = rng.gen_range(0..=2);
-    for _ in 0..artifact_count {
-        if let Some(artifact) = game_data.artifacts.choose(&mut rng) {
-            let instance = create_artifact_instance(artifact);
-            character.add_artifact(instance);
-        }
-    }
-
-    // Add 0-2 random oddities
-    let oddity_count = rng.gen_range(0..=2);
-    for _ in 0..oddity_count {
-        if let Some(oddity) = game_data.oddities.choose(&mut rng) {
-            character.add_oddity(oddity.clone());
-        }
-    }
-    // ===========================================
+    // ========== ADD RANDOM STARTING EQUIPMENT ==========
+    add_random_equipment(&mut rng, &mut character, game_data, &type_name)?;
+    // ===================================================
 
     Ok(character)
 }
@@ -149,7 +123,7 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
     };
 
     // Random suitable focus
-    let suitable_foci = get_suitable_foci(&game_data.foci, &character_type.name);
+    let suitable_foci = crate::data::get_suitable_foci(&game_data.foci, &character_type.name);
     let focus = if !suitable_foci.is_empty() {
         suitable_foci[rng.gen_range(0..suitable_foci.len())]
             .name
@@ -192,35 +166,9 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
     // Set gender after building
     character.gender = gender;
 
-    // ========== ADD RANDOM NUMENERA ITEMS (NEW) ==========
-    let cypher_limit = character.cypher_limit as usize;
-
-    // Add random cyphers (fill to limit)
-    let cypher_count = rng.gen_range(cypher_limit.saturating_sub(1)..=cypher_limit);
-    for _ in 0..cypher_count {
-        if let Some(cypher) = game_data.cyphers.choose(&mut rng) {
-            let instance = create_cypher_instance(cypher);
-            let _ = character.add_cypher(instance);
-        }
-    }
-
-    // Add 0-2 random artifacts
-    let artifact_count = rng.gen_range(0..=2);
-    for _ in 0..artifact_count {
-        if let Some(artifact) = game_data.artifacts.choose(&mut rng) {
-            let instance = create_artifact_instance(artifact);
-            character.add_artifact(instance);
-        }
-    }
-
-    // Add 0-2 random oddities
-    let oddity_count = rng.gen_range(0..=2);
-    for _ in 0..oddity_count {
-        if let Some(oddity) = game_data.oddities.choose(&mut rng) {
-            character.add_oddity(oddity.clone());
-        }
-    }
-    // ===========================================
+    // ========== ADD RANDOM STARTING EQUIPMENT ==========
+    add_random_equipment(&mut rng, &mut character, game_data, type_name)?;
+    // ===================================================
 
     Ok(character)
 }
@@ -255,7 +203,7 @@ pub fn generate_random_with_type_and_descriptor(
     };
 
     // Random suitable focus
-    let suitable_foci = get_suitable_foci(&game_data.foci, &character_type.name);
+    let suitable_foci = crate::data::get_suitable_foci(&game_data.foci, &character_type.name);
     let focus = if !suitable_foci.is_empty() {
         suitable_foci[rng.gen_range(0..suitable_foci.len())]
             .name
@@ -298,38 +246,138 @@ pub fn generate_random_with_type_and_descriptor(
     // Set gender after building
     character.gender = gender;
 
-    // ========== ADD RANDOM NUMENERA ITEMS
-    let cypher_limit = character.cypher_limit as usize;
+    // ========== ADD RANDOM STARTING EQUIPMENT ==========
+    add_random_equipment(&mut rng, &mut character, game_data, type_name)?;
+    // ===================================================
 
-    // Add random cyphers (fill to limit)
+    Ok(character)
+}
+
+// ==========================================
+// EQUIPMENT ASSIGNMENT
+// ==========================================
+
+/// Add random starting equipment based on character type rules
+fn add_random_equipment(
+    rng: &mut impl Rng,
+    character: &mut CharacterSheet,
+    game_data: &GameData,
+    type_name: &str,
+) -> Result<()> {
+    // Add weapons based on type
+    assign_random_weapons(rng, character, game_data, type_name)?;
+
+    // Add cyphers (fill to cypher limit)
+    let cypher_limit = character.cypher_limit as usize;
     let cypher_count = rng.gen_range(cypher_limit.saturating_sub(1)..=cypher_limit);
     for _ in 0..cypher_count {
-        if let Some(cypher) = game_data.cyphers.choose(&mut rng) {
+        if let Some(cypher) = game_data.cyphers.choose(rng) {
             let instance = create_cypher_instance(cypher);
             let _ = character.add_cypher(instance);
         }
     }
 
-    // Add 0-2 random artifacts
-    let artifact_count = rng.gen_range(0..=2);
-    for _ in 0..artifact_count {
-        if let Some(artifact) = game_data.artifacts.choose(&mut rng) {
-            let instance = create_artifact_instance(artifact);
-            character.add_artifact(instance);
-        }
+    // Add exactly 1 oddity (per rules)
+    if let Some(oddity) = game_data.oddities.choose(rng) {
+        character.add_oddity(oddity.clone());
     }
 
-    // Add 0-2 random oddities
-    let oddity_count = rng.gen_range(0..=2);
-    for _ in 0..oddity_count {
-        if let Some(oddity) = game_data.oddities.choose(&mut rng) {
-            character.add_oddity(oddity.clone());
-        }
-    }
-    // ===========================================
+    // NOTE: Artifacts are NOT part of starting equipment
 
-    Ok(character)
+    Ok(())
 }
+
+/// Assign random weapons based on character type rules
+fn assign_random_weapons(
+    rng: &mut impl Rng,
+    character: &mut CharacterSheet,
+    game_data: &GameData,
+    type_name: &str,
+) -> Result<()> {
+    match type_name {
+        "Glaive" => {
+            // Glaive: 2 weapons OR 1 weapon + shield
+            if rng.gen_bool(0.5) {
+                // 50% chance: 2 weapons
+                assign_random_weapons_by_category(rng, character, game_data, &[], 2)?;
+            } else {
+                // 50% chance: 1 weapon + 1 shield
+                assign_random_weapons_by_category(rng, character, game_data, &[], 1)?;
+                assign_random_shield(rng, character, game_data)?;
+            }
+        }
+        "Nano" | "Arkus" | "Wright" => {
+            // These types: 1 light weapon only
+            assign_random_weapons_by_category(rng, character, game_data, &["Light"], 1)?;
+        }
+        "Jack" => {
+            // Jack: 2-3 light or medium weapons
+            let count = rng.gen_range(2..=3);
+            assign_random_weapons_by_category(rng, character, game_data, &["Light", "Medium"], count)?;
+        }
+        "Delve" => {
+            // Delve: 1-2 weapons (light or medium)
+            let count = rng.gen_range(1..=2);
+            assign_random_weapons_by_category(rng, character, game_data, &["Light", "Medium"], count)?;
+        }
+        _ => {
+            // Default: 1 light weapon
+            assign_random_weapons_by_category(rng, character, game_data, &["Light"], 1)?;
+        }
+    }
+
+    Ok(())
+}
+
+/// Assign N random weapons from specified categories (empty = any category)
+fn assign_random_weapons_by_category(
+    rng: &mut impl Rng,
+    character: &mut CharacterSheet,
+    game_data: &GameData,
+    categories: &[&str],
+    count: usize,
+) -> Result<()> {
+    let available_weapons: Vec<_> = if categories.is_empty() {
+        // Any category
+        game_data.equipment.weapons.iter().collect()
+    } else {
+        // Filter by categories
+        game_data
+            .equipment
+            .weapons
+            .iter()
+            .filter(|w| categories.contains(&w.category.as_str()))
+            .collect()
+    };
+
+    if available_weapons.is_empty() {
+        return Ok(()); // No weapons available
+    }
+
+    for _ in 0..count {
+        if let Some(weapon) = available_weapons.choose(rng) {
+            character.equipment.add_weapon(format!(
+                "{} ({} damage)",
+                weapon.name, weapon.damage
+            ));
+        }
+    }
+
+    Ok(())
+}
+
+/// Assign a random shield
+fn assign_random_shield(
+    rng: &mut impl Rng,
+    character: &mut CharacterSheet,
+    game_data: &GameData,
+) -> Result<()> {
+    if let Some(shield) = game_data.equipment.shields.choose(rng) {
+        character.equipment.shield = Some(shield.name.clone());
+    }
+    Ok(())
+}
+
 // ==========================================
 // HELPER FUNCTIONS
 // ==========================================
@@ -385,13 +433,11 @@ fn generate_random_name(rng: &mut impl Rng) -> String {
 
 /// Randomly distribute bonus points across three stats
 fn distribute_bonus_points(rng: &mut impl Rng, total: i32) -> (i32, i32, i32) {
-    // Use a weighted random distribution
     let mut remaining = total;
     let mut might = 0;
     let mut speed = 0;
     let mut intellect = 0;
 
-    // Randomly distribute points
     while remaining > 0 {
         let roll = rng.gen_range(0..3);
         match roll {
@@ -423,7 +469,6 @@ fn select_random_abilities(
         anyhow::bail!("Not enough abilities available for selection");
     }
 
-    // Randomly select without replacement
     let mut selected = Vec::new();
     let mut available_indices: Vec<usize> = (0..available.len()).collect();
 

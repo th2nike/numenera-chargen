@@ -192,13 +192,8 @@ impl CharacterBuilder {
         sheet.skills = build_skills_helper(&character_type, &descriptor, &species, &focus);
 
         // Build equipment (WITH GAME_DATA)
-        sheet.equipment = build_equipment_helper(
-            &character_type,
-            &descriptor,
-            &species,
-            &focus,
-            game_data,
-        );
+        sheet.equipment =
+            build_equipment_helper(&character_type, &descriptor, &species, &focus, game_data);
 
         // Calculate armor (WITH GAME_DATA)
         sheet.armor = calculate_armor_helper(&character_type, &descriptor, game_data);

@@ -72,7 +72,11 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         }
 
         let is_selected = i == selected_state;
-        let is_chosen = app.character_builder.selected_cyphers.contains(&i);
+        let is_chosen = app
+            .character_builder
+            .selected_cyphers
+            .iter()
+            .any(|c| c.name == cypher.name);
 
         let prefix = if is_chosen { "[✓] " } else { "[ ] " };
         let style = if is_selected {
