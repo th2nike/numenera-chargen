@@ -1,11 +1,10 @@
 // src/data/loader.rs
 // Functions to load TOML data files
 
+use super::models::*;
 use anyhow::{Context, Result};
 use std::fs;
 use std::path::PathBuf;
-use super::models::*;
-
 
 // ==========================================
 // PUBLIC LOADING FUNCTIONS
@@ -49,7 +48,7 @@ fn data_dir() -> PathBuf {
             }
         }
     }
-    
+
     // Fallback to current directory (for development)
     PathBuf::from("data")
 }

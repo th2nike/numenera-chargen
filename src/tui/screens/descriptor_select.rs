@@ -39,11 +39,11 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     // Calculate visible range - account for headers (each takes 2 lines) and items (3 lines each)
     // Available height for content
     let available_height = chunks[1].height.saturating_sub(4) as usize; // Leave space for scroll indicators
-    
+
     // Each item takes 3 lines (name, tagline, blank), headers take 2 lines each
     let items_per_screen = available_height / 3;
     let visible_items = items_per_screen.max(5); // Minimum 5 items visible
-    
+
     // Smart scrolling: keep selected item in middle third of screen
     let scroll_offset = if selected < visible_items / 3 {
         0
@@ -52,14 +52,16 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     } else {
         selected.saturating_sub(visible_items / 3)
     };
-    
+
     let scroll_end = (scroll_offset + visible_items).min(total_count);
 
     // Add scroll indicator at top if needed
     if scroll_offset > 0 {
         lines.push(Line::from(Span::styled(
             "↑ More above ↑",
-            Style::default().fg(Color::DarkGray).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::DarkGray)
+                .add_modifier(Modifier::BOLD),
         )));
         lines.push(Line::from(""));
     }
@@ -101,7 +103,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         if rendering_descriptors {
             lines.push(Line::from(""));
         }
-        
+
         lines.push(Line::from(Span::styled(
             "── Species (replaces descriptor) ──",
             Style::default()
@@ -158,7 +160,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         lines.push(Line::from(""));
         lines.push(Line::from(Span::styled(
             "↓ More below ↓",
-            Style::default().fg(Color::DarkGray).add_modifier(Modifier::BOLD),
+            Style::default()
+                .fg(Color::DarkGray)
+                .add_modifier(Modifier::BOLD),
         )));
     }
 

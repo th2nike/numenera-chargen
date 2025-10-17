@@ -10,7 +10,8 @@ category = "Defensive"
 tags = ['defensive', 'stasis']
 
 effect = """
-Encases a creature or object (up to human size) in solid amber for 1 minute per artifact level. Target inside cannot move or breathe but does not age. Amber can be shattered (10 points Armor, 20 Health).
+Encases a creature or object (up to human size) in solid amber for 1 minute per artifact level. 
+Target inside cannot move or breathe but does not age. Amber can be shattered (10 points Armor, 20 Health).
 """
 
 form = "Bronze gauntlet with gem-like nozzle."
@@ -714,7 +715,8 @@ category = "Utility"
 tags = ['environment', 'utility']
 
 effect = """
-Fills a short-range area with dense fog for 10 minutes × level, granting two-step ease to hiding or escape actions.  Can disperse toxins or spread aerosols.
+Fills a short-range area with dense fog for 10 minutes × level, granting two-step ease to hiding or escape actions.  
+Can disperse toxins or spread aerosols.
 """
 
 form = "Metal tube with rotating vents and faint hiss."
@@ -746,7 +748,8 @@ category = "Utility"
 tags = ['utility', 'sound']
 
 effect = """
-Choose on activation—(a) create 30-ft cone of concussive force (6 damage), (b) cancel all sound in short range, or (c) generate soothing resonance that eases one Intellect task by 2 steps.
+Choose on activation—(a) create 30-ft cone of concussive force (6 damage), (b) cancel all sound in short range, 
+or (c) generate soothing resonance that eases one Intellect task by 2 steps.
 """
 
 form = "Circular emitter with concentric rings that vibrate audibly."
@@ -778,7 +781,8 @@ category = "Utility"
 tags = ['environment', 'mega']
 
 effect = """
-Alters weather over a 1-mile radius (temperature, precipitation, wind) for 1 hour × level. Full storms or heat waves require time to build.
+Alters weather over a 1-mile radius (temperature, precipitation, wind) for 1 hour × level. 
+Full storms or heat waves require time to build.
 """
 
 form = "Eight-foot pylon with rotating dish and blue corona."

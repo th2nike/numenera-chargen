@@ -313,12 +313,24 @@ fn assign_random_weapons(
         "Jack" => {
             // Jack: 2-3 light or medium weapons
             let count = rng.gen_range(2..=3);
-            assign_random_weapons_by_category(rng, character, game_data, &["Light", "Medium"], count)?;
+            assign_random_weapons_by_category(
+                rng,
+                character,
+                game_data,
+                &["Light", "Medium"],
+                count,
+            )?;
         }
         "Delve" => {
             // Delve: 1-2 weapons (light or medium)
             let count = rng.gen_range(1..=2);
-            assign_random_weapons_by_category(rng, character, game_data, &["Light", "Medium"], count)?;
+            assign_random_weapons_by_category(
+                rng,
+                character,
+                game_data,
+                &["Light", "Medium"],
+                count,
+            )?;
         }
         _ => {
             // Default: 1 light weapon
@@ -356,10 +368,9 @@ fn assign_random_weapons_by_category(
 
     for _ in 0..count {
         if let Some(weapon) = available_weapons.choose(rng) {
-            character.equipment.add_weapon(format!(
-                "{} ({} damage)",
-                weapon.name, weapon.damage
-            ));
+            character
+                .equipment
+                .add_weapon(format!("{} ({} damage)", weapon.name, weapon.damage));
         }
     }
 

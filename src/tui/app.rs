@@ -21,6 +21,7 @@ pub struct App {
     pub shop_list_state: usize,
     pub shop_cart: Vec<ShopItem>,
     pub shop_selected_category_index: usize,
+    pub last_saved_file: Option<String>,
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -134,6 +135,7 @@ impl App {
             shop_list_state: 0,
             shop_cart: Vec::new(),
             shop_selected_category_index: 0,
+            last_saved_file: None,
         }
     }
 
@@ -548,15 +550,27 @@ impl App {
             }
 
             KeyCode::Char('s') | KeyCode::Char('S') => {
-                self.save_character()?;
+                match self.save_character() {
+                    Ok(filename) => {
+                        // Store the saved filename to show in UI
+                        self.last_saved_file = Some(filename);
+                    }
+                    Err(e) => {
+                        eprintln!("Failed to save character: {}", e);
+                    }
+                }
             }
+
             KeyCode::Char('n') | KeyCode::Char('N') => {
+                // Reset everything for new character
                 self.character_builder = CharacterBuilder::new();
                 self.generated_character = None;
-                self.preview_left_scroll = 0; // Reset scrolls
+                self.preview_left_scroll = 0;
                 self.preview_right_scroll = 0;
+                self.last_saved_file = None; // ← Clear save status
                 self.current_screen = Screen::MainMenu;
             }
+
             KeyCode::Char('q') | KeyCode::Char('Q') => {
                 self.should_quit = true;
             }
@@ -716,7 +730,7 @@ impl App {
 
     fn handle_oddity_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_oddities = self.game_data.oddities.len();
-        let required_oddities = 1;  // ← Changed from max_oddities to required_oddities
+        let required_oddities = 1; // ← Changed from max_oddities to required_oddities
 
         match key.code {
             KeyCode::Up | KeyCode::Char('k') => {
@@ -784,7 +798,7 @@ impl App {
                 }
             }
             KeyCode::Esc => {
-                self.current_screen = Screen::CypherSelect;  // ← Skip artifact screen
+                self.current_screen = Screen::CypherSelect; // ← Skip artifact screen
             }
             _ => {}
         }
@@ -1009,7 +1023,8 @@ impl App {
         Ok(())
     }
 
-    fn save_character(&self) -> Result<()> {
+    fn save_character(&mut self) -> Result<String> {
+        // ← Changed from &self to &mut self, returns String
         use crate::character::build_character;
         use chrono::Local;
 
@@ -1082,10 +1097,9 @@ impl App {
         let markdown = crate::output::format_character_sheet(&character);
         std::fs::write(&output_path, markdown)?;
 
-        Ok(())
+        Ok(filename) // ← Return the filename
     }
 
-    /// Apply shop purchases to character sheet
     /// Apply shop purchases to character sheet
     fn apply_shop_purchases(&self, character: &mut crate::CharacterSheet) -> Result<()> {
         let total_cost: u32 = self
@@ -1116,7 +1130,8 @@ impl App {
                         .find(|w| w.name == item.name)
                     {
                         for _ in 0..item.quantity {
-                            let weapon_string = format!("{} ({} damage)", weapon.name, weapon.damage);
+                            let weapon_string =
+                                format!("{} ({} damage)", weapon.name, weapon.damage);
                             character.equipment.add_weapon(weapon_string);
                         }
                     }
@@ -1161,7 +1176,6 @@ impl App {
 
         Ok(())
     }
-
 }
 
 impl CharacterBuilder {

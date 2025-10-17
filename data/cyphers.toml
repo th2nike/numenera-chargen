@@ -106,7 +106,8 @@ duration = "Instant"
 tags = ['offensive', 'explosive']
 
 effect = """
-When activated (usually by a button or impact), it creates a burst affecting a short-range area for **damage = cypher level** unless noted. Targets in the area make Speed Defense rolls.
+When activated (usually by a button or impact), it creates a burst affecting a short-range area for **damage = cypher level** unless noted. 
+Targets in the area make Speed Defense rolls.
 """
 
 form = "Metal spheres, crystalline pods, or syringes that shatter on impact."
@@ -250,7 +251,8 @@ duration = "Instant"
 tags = ['offensive', 'chemical']
 
 effect = """
-Explodes in a short-range cloud; choose or roll gas type — sleep, poison, smoke, corrosive, rage, or stun. Victims in area defend with Speed 5 or suffer level damage + effect (sleep = 1 hr unconscious, poison = ongoing 2 dmg/round 1 min, etc.).
+Explodes in a short-range cloud; choose or roll gas type — sleep, poison, smoke, corrosive, rage, or stun. 
+Victims in area defend with Speed 5 or suffer level damage + effect (sleep = 1 hr unconscious, poison = ongoing 2 dmg/round 1 min, etc.).
 """
 
 form = "Metal canister with colored ring marking its gas type."
@@ -266,7 +268,8 @@ duration = "1 hour × level"
 tags = ['movement', 'flight']
 
 effect = """
-User and gear become nearly weightless; move vertically and horizontally as though flying (Short range speed). Ends abruptly when duration expires.
+User and gear become nearly weightless; move vertically and horizontally as though flying (Short range speed). 
+Ends abruptly when duration expires.
 """
 
 form = "Silver belt or disk that hums with rising tone when active."
@@ -362,7 +365,8 @@ duration = "24 hours"
 tags = ['utility', 'environment']
 
 effect = """
-Creates a 20-ft sphere of reinforced material, comfortable for up to six people; seals airtight and climate-controlled. Ends by folding into its original cube.
+Creates a 20-ft sphere of reinforced material, comfortable for up to six people; seals airtight and climate-controlled. 
+Ends by folding into its original cube.
 """
 
 form = "Palm-sized metal capsule that unfolds with a hum."
@@ -506,7 +510,8 @@ duration = "Instant"
 tags = ['offensive', 'chemical']
 
 effect = """
-Targets in short range suffer level damage + ongoing 1 damage per round for 1 minute (Might Defense to resist). Variants cause sleep, fear, or paralysis.
+Targets in short range suffer level damage + ongoing 1 damage per round for 1 minute (Might Defense to resist). 
+Variants cause sleep, fear, or paralysis.
 """
 
 form = "Needle pistol, aerosol sphere, or hypodermic dart."
@@ -634,7 +639,8 @@ duration = "10 minutes × level"
 tags = ['utility', 'sound']
 
 effect = """
-Choose mode on activation – **Silence:** no sound in short radius; **Resonance:** amplifies voice/instrument to long range; **Subdual:** stuns foes (Intellect Defense 4).
+Choose mode on activation – **Silence:** no sound in short radius; **Resonance:** amplifies voice/instrument to long range; 
+**Subdual:** stuns foes (Intellect Defense 4).
 """
 
 form = "Disk with ripple patterns and faint hum."
@@ -666,7 +672,8 @@ duration = "Instant"
 tags = ['movement', 'teleportation']
 
 effect = """
-Instantly transports up to one human-sized creature or object from current spot to another within long range. Accuracy depends on sight; unseen destinations risk minor displacement (1 damage).
+Instantly transports up to one human-sized creature or object from current spot to another within long range. 
+Accuracy depends on sight; unseen destinations risk minor displacement (1 damage).
 """
 
 form = "Paired metal rings or palm crystal flashing white."

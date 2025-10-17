@@ -29,9 +29,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let character = get_character(app);
 
     if let Some(char_sheet) = character {
-        render_header(f, main_chunks[0], &char_sheet);
+        render_header(f, main_chunks[0], &char_sheet, app);
         render_body(f, main_chunks[1], &char_sheet, app);
-        render_footer(f, main_chunks[2]);
+        render_footer(f, main_chunks[2], app);
     } else {
         render_error(f, main_chunks[1]);
     }
@@ -54,7 +54,7 @@ fn get_character(app: &App) -> Option<crate::CharacterSheet> {
     let character_type = app.character_builder.character_type.as_deref()?;
     let descriptor_or_species = app.character_builder.descriptor_or_species.as_deref()?;
     let focus = app.character_builder.focus.as_deref()?;
-    
+
     // Name can be empty for preview, use placeholder
     let name = if app.character_builder.name.is_empty() {
         "Unnamed Character".to_string()
@@ -181,8 +181,8 @@ fn apply_shop_purchases_to_preview(
 // HEADER SECTION (TOP 6 LINES)
 // ==========================================
 
-fn render_header(f: &mut Frame, area: Rect, character: &crate::CharacterSheet) {
-    let lines = vec![
+fn render_header(f: &mut Frame, area: Rect, character: &crate::CharacterSheet, app: &App) {
+    let mut lines = vec![
         Line::from(""),
         Line::from(vec![
             Span::styled(
@@ -202,24 +202,42 @@ fn render_header(f: &mut Frame, area: Rect, character: &crate::CharacterSheet) {
                 .fg(Color::Yellow)
                 .add_modifier(Modifier::ITALIC),
         )),
-        Line::from(vec![
-            Span::styled("Tier: ", Style::default().fg(Color::Gray)),
-            Span::styled(
-                character.tier.to_string(),
-                Style::default()
-                    .fg(Color::White)
-                    .add_modifier(Modifier::BOLD),
-            ),
-            Span::styled("  •  XP: ", Style::default().fg(Color::Gray)),
-            Span::styled(character.xp.to_string(), Style::default().fg(Color::White)),
-            Span::styled("  •  Armor: ", Style::default().fg(Color::Gray)),
-            Span::styled(
-                character.armor.to_string(),
-                Style::default().fg(Color::White),
-            ),
-        ]),
-        Line::from(""),
     ];
+
+    // ========== ADD SAVE STATUS MESSAGE ==========
+    if let Some(ref filename) = app.last_saved_file {
+        lines.push(Line::from(vec![
+            Span::styled("✓ ", Style::default().fg(Color::Green)),
+            Span::styled("Saved: ", Style::default().fg(Color::Green)),
+            Span::styled(
+                filename,
+                Style::default()
+                    .fg(Color::Green)
+                    .add_modifier(Modifier::ITALIC),
+            ),
+        ]));
+    } else {
+        lines.push(Line::from("")); // Empty line to maintain spacing
+    }
+    // =============================================
+
+    lines.push(Line::from(vec![
+        Span::styled("Tier: ", Style::default().fg(Color::Gray)),
+        Span::styled(
+            character.tier.to_string(),
+            Style::default()
+                .fg(Color::White)
+                .add_modifier(Modifier::BOLD),
+        ),
+        Span::styled("  • XP: ", Style::default().fg(Color::Gray)),
+        Span::styled(character.xp.to_string(), Style::default().fg(Color::White)),
+        Span::styled("  • Armor: ", Style::default().fg(Color::Gray)),
+        Span::styled(
+            character.armor.to_string(),
+            Style::default().fg(Color::White),
+        ),
+    ]));
+    lines.push(Line::from(""));
 
     let header = Paragraph::new(lines).alignment(Alignment::Center);
     f.render_widget(header, area);
@@ -594,7 +612,10 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
                     .add_modifier(Modifier::BOLD),
             )));
             lines.push(Line::from(Span::styled(
-                format!("   Depletion: {} | Form: {}", artifact.depletion, artifact.form),
+                format!(
+                    "   Depletion: {} | Form: {}",
+                    artifact.depletion, artifact.form
+                ),
                 Style::default().fg(Color::Gray),
             )));
             lines.push(Line::from(Span::styled(
@@ -703,18 +724,24 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
 // FOOTER SECTION (ACTIONS)
 // ==========================================
 
-fn render_footer(f: &mut Frame, area: Rect) {
+fn render_footer(f: &mut Frame, area: Rect, app: &App) {
+    let save_text = if app.last_saved_file.is_some() {
+        "[S] Save Another" // After saving, show this
+    } else {
+        "[S] Save" // Before saving, show this
+    };
+
     let actions = vec![
         Line::from(""),
         Line::from(vec![
             Span::styled(
-                "[S] Save",
+                save_text,
                 Style::default()
                     .fg(Color::Green)
                     .add_modifier(Modifier::BOLD),
             ),
             Span::raw("  |  "),
-            Span::styled("[N] New", Style::default().fg(Color::Cyan)),
+            Span::styled("[N] New Character", Style::default().fg(Color::Cyan)),
             Span::raw("  |  "),
             Span::styled("[Tab] Switch Panel", Style::default().fg(Color::Yellow)),
             Span::raw("  |  "),
