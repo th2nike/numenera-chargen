@@ -1,0 +1,209 @@
+# Numenera Discoveries Database
+
+[[discovery]]
+id = "__biological___psionic_entities"
+name = "🌿 Biological & Psionic Entities"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "Living or semi-living systems spawned by ancient bio-tech."
+
+effect = """
+No effect description available.
+"""
+
+gm_intrusion = "Device malfunctions unexpectedly."
+
+[[discovery]]
+id = "__catastrophic_engines"
+name = "💀 Catastrophic Engines"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "Colossal weapons or experimental relics dormant since forgotten wars."
+
+effect = """
+No effect description available.
+"""
+
+gm_intrusion = "Device malfunctions unexpectedly."
+
+[[discovery]]
+id = "example_discovery_rewards"
+name = "Example Discovery Rewards"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "Unknown function."
+
+effect = """
+No effect description available.
+"""
+
+gm_intrusion = "Device malfunctions unexpectedly."
+
+[[discovery]]
+id = "the_living_bridge"
+name = "The Living Bridge"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "A massive, vine-grown structure that repairs itself overnight and hums with faint bioluminescent light."
+
+effect = """
+Grants permanent safe passage across a hazardous chasm; could serve as an organic installation.
+"""
+
+gm_intrusion = "The bridge reacts violently when cut or burned."
+
+[[discovery]]
+id = "heart_of_the_foundry"
+name = "Heart of the Foundry"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "Deep within a ruin lies a molten core still manufacturing unknown components."
+
+effect = """
+Provides infinite low-grade iotum until disrupted.
+"""
+
+gm_intrusion = "The foundry awakens and demands “input” in the form of sacrifices or code."
+
+[[discovery]]
+id = "the_mirror_lake"
+name = "The Mirror Lake"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "A perfectly still body of water that reflects not the present but an alternate version of the viewer."
+
+effect = """
+Offers prophetic or psychological insight.
+"""
+
+gm_intrusion = "The reflection moves independently or swaps places."
+
+[[discovery]]
+id = "the_sleeping_colossus"
+name = "The Sleeping Colossus"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "A half-buried giant machine under a mountain."
+
+effect = """
+Could be reactivated as a defense installation or community guardian.
+"""
+
+gm_intrusion = "Reawakening disrupts local gravity for kilometers."
+
+[[discovery]]
+id = "the_whispering_vault"
+name = "The Whispering Vault"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "A datasphere server hidden in crystal chambers beneath ruins."
+
+effect = """
+Holds pre-numenera knowledge; accessing it grants +1 permanent Intellect Edge (GM discretion).
+"""
+
+gm_intrusion = "Downloading data invites a digital consciousness into a PC’s mind."
+
+[[discovery]]
+id = "the_garden_of_glass"
+name = "The Garden of Glass"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "An underground biome of crystalline plants emitting perpetual light."
+
+effect = """
+Provides unlimited illumination and minor power for nearby devices.
+"""
+
+gm_intrusion = "The flora grows into nearby structures, fusing with them."
+
+[[discovery]]
+id = "the_echo_city"
+name = "The Echo City"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "Ruined towers that occasionally shimmer back into full solidity for moments."
+
+effect = """
+Each manifestation reveals intact technology or beings from centuries past.
+"""
+
+gm_intrusion = "The city traps explorers during a temporal “return.”"
+
+[[discovery]]
+id = "the_singing_engine"
+name = "The Singing Engine"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "A buried reactor that produces both energy and harmonic sound."
+
+effect = """
+Powers nearby settlements; resonance grants +1 community Health.
+"""
+
+gm_intrusion = "Harmonics distort minds after prolonged exposure."
+
+[[discovery]]
+id = "the_endless_archive"
+name = "The Endless Archive"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "A subterranean library filled with hovering data orbs."
+
+effect = """
+Accessing it grants knowledge for any one major project or plan.
+"""
+
+gm_intrusion = "The archive erases one unrelated memory per visit."
+
+[[discovery]]
+id = "the_skyfall_crater"
+name = "The Skyfall Crater"
+type = "Phenomenon"
+scale = "Large"
+tags = []
+source = "Discovery"
+
+function = "An impact site where gravity behaves erratically."
+
+effect = """
+Serves as a potential power source or training ground for Wrights studying gravitational fields.
+"""
+
+gm_intrusion = "The anomaly expands unpredictably each season."

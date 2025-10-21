@@ -1,0 +1,829 @@
+# Numenera Cyphers Database
+
+[[cypher]]
+id = "adhesion_clamps"
+name = "Adhesion Clamps"
+level_formula = "1d6"
+type = "Wearable"
+category = "Movement"
+duration = "10 minutes × level"
+tags = ['movement', 'utility']
+
+effect = """
+While active, the wearer can climb or hang from walls and ceilings with no skill roll.
+"""
+
+form = "Pair of disk-shaped gauntlets or climbing boots that hum softly."
+gm_intrusion = "The clamps deactivate mid-climb, forcing a desperate grab or fall."
+
+[[cypher]]
+id = "antivenom"
+name = "Antivenom"
+level_formula = "1d6"
+type = "Internal"
+category = "Defensive"
+duration = "1 hour × level"
+tags = ['defensive', 'healing']
+
+effect = """
+Grants immunity to poisons of level ≤ the cypher’s level for the duration; ends any active poisoning.
+"""
+
+form = "Injector capsule or sub-dermal patch that glows green as it works."
+gm_intrusion = "The serum over-reacts, causing dizziness or nausea (1 Speed damage)."
+
+[[cypher]]
+id = "attractor"
+name = "Attractor"
+level_formula = "1d6+2"
+type = "Usable"
+category = "Movement"
+duration = "Instant"
+tags = ['movement', 'telekinetic']
+
+effect = """
+Pulls an object of up to human size (or lighter) from long range directly to the device or user; solid barriers stop it.
+"""
+
+form = "Smooth black sphere veined with flickering blue lines."
+gm_intrusion = "The attractor locks onto unintended metal objects—possibly the PCs’ armor or weapons."
+
+[[cypher]]
+id = "banishing_nodule"
+name = "Banishing Nodule"
+level_formula = "1d6"
+type = "Weapon Modification"
+category = "Offensive"
+duration = "Instant"
+tags = ['offensive', 'dimensional']
+
+effect = """
+The next successful hit teleports the target a random short distance in a random direction.
+"""
+
+form = "Glassy blue shard that sinks into a blade or arrowhead."
+gm_intrusion = "The nodule’s energy backfires, displacing the wielder instead."
+
+[[cypher]]
+id = "blinking_nodule"
+name = "Blinking Nodule"
+level_formula = "1d6"
+type = "Wearable"
+category = "Defensive"
+duration = "Instant"
+tags = ['defensive', 'teleportation']
+
+effect = """
+Each time the user takes damage, they instantly teleport to a random point within short range.
+"""
+
+form = "Tiny node embedded beneath the skin, pulsing with violet light."
+gm_intrusion = "The blink places the user inside a wall, ledge, or perilous spot."
+
+[[cypher]]
+id = "controlled_blinking_nodule"
+name = "Controlled Blinking Nodule"
+level_formula = "1d6+2"
+type = "Wearable"
+category = "Defensive"
+duration = "Instant"
+tags = ['defensive', 'teleportation']
+
+effect = """
+When damaged, the user may choose to instantly teleport to any visible spot within short range instead of at random.
+"""
+
+form = "Smooth silver stud or dermal implant engraved with control runes."
+gm_intrusion = "The device misreads intent, sending the user a few meters too far—perhaps into new danger."
+
+[[cypher]]
+id = "detonation__general_template_"
+name = "Detonation (General Template)"
+level_formula = "1d6+2"
+type = "Usable (thrown or placed)"
+category = "Offensive"
+duration = "Instant"
+tags = ['offensive', 'explosive']
+
+effect = """
+When activated (usually by a button or impact), it creates a burst affecting a short-range area for **damage = cypher level** unless noted. 
+Targets in the area make Speed Defense rolls.
+"""
+
+form = "Metal spheres, crystalline pods, or syringes that shatter on impact."
+gm_intrusion = "The device’s timer misfires—detonating one round late or in the wielder’s hand."
+
+[[cypher]]
+id = "disrupting_nodule"
+name = "Disrupting Nodule"
+level_formula = "1d6"
+type = "Weapon Modification"
+category = "Offensive"
+duration = "28 hours"
+tags = ['offensive', 'stun']
+
+effect = """
+The weapon inflicts an extra 1d6 bio-damage; living targets must make Intellect Defense 3 or lose their next action.
+"""
+
+form = "Translucent amber node that melts into the blade."
+gm_intrusion = "The field overloads, shocking the wielder for 2 points of Intellect damage."
+
+[[cypher]]
+id = "eagleseye"
+name = "Eagleseye"
+level_formula = "1d6"
+type = "Internal"
+category = "Utility"
+duration = "1 hour × level"
+tags = ['perception', 'utility']
+
+effect = """
+The user can see ten times farther and perceive minute details; visual tasks eased 2 steps.
+"""
+
+form = "Clear liquid eye-drops that refract like mercury."
+gm_intrusion = "Sensory feedback blinds the user for one round after intense light exposure."
+
+[[cypher]]
+id = "fireproofing_gel"
+name = "Fireproofing Gel"
+level_formula = "1d6"
+type = "Wearable"
+category = "Defensive"
+duration = "28 hours"
+tags = ['defensive', 'environment']
+
+effect = """
+Grants immunity to mundane fire and 2 Armor vs. heat/energy.
+"""
+
+form = "Silver tube of viscous fluid that solidifies on contact with air."
+gm_intrusion = "The gel smokes when near heat, revealing the user’s position."
+
+[[cypher]]
+id = "flame_wall_projector"
+name = "Flame Wall Projector"
+level_formula = "1d6+2"
+type = "Usable"
+category = "Offensive"
+duration = "10 minutes"
+tags = ['offensive', 'environment']
+
+effect = """
+Creates a wall of fire up to 20 ft long × 10 ft high that inflicts damage = level on contact; passing through causes an extra 2 damage.
+"""
+
+form = "Wand-like device with rotating heat-sink petals."
+gm_intrusion = "Local air ignition spreads flame beyond control."
+
+[[cypher]]
+id = "force_cube_projector"
+name = "Force Cube Projector"
+level_formula = "1d6+2"
+type = "Usable"
+category = "Defensive"
+duration = "1 hour × level"
+tags = ['defensive', 'barrier']
+
+effect = """
+Creates a cube (up to 20 ft per side) of solid force; nothing passes without GM-approved exceptions (e.g., teleportation).
+"""
+
+form = "Palm cube with whirring micro-gyros."
+gm_intrusion = "The field flickers—trapping user inside or collapsing suddenly."
+
+[[cypher]]
+id = "force_screen_emitter"
+name = "Force Screen Emitter"
+level_formula = "1d6+2"
+type = "Wearable"
+category = "Defensive"
+duration = "10 minutes × level"
+tags = ['defensive', 'personal']
+
+effect = """
+Provides **+3 Armor** vs. physical and energy damage while active.
+"""
+
+form = "Wrist-mounted bracer or belt module."
+gm_intrusion = "The screen refracts visibility—user is nearly invisible but also deafened."
+
+[[cypher]]
+id = "force_shield_nodule"
+name = "Force Shield Nodule"
+level_formula = "1d6+2"
+type = "Weapon Modification"
+category = "Defensive"
+duration = "28 hours"
+tags = ['defensive', 'counterattack']
+
+effect = """
+When the wielder defends with the weapon, gain +2 Armor for that attack; if attack misses, counter-strike deals +2 damage.
+"""
+
+form = "Shard that glows when raised."
+gm_intrusion = "Feedback surge drains the wielder’s Strength Pool by 2."
+
+[[cypher]]
+id = "force_nodule"
+name = "Force Nodule"
+level_formula = "1d6"
+type = "Weapon Modification"
+category = "Offensive"
+duration = "28 hours"
+tags = ['offensive', 'energy']
+
+effect = """
+Weapon inflicts +3 damage and can knock foe back 5 ft per level (Might Defense to resist).
+"""
+
+form = "Opaque white bead that fuses with the weapon’s haft."
+gm_intrusion = "A rebound pulse hurls the wielder backward instead."
+
+[[cypher]]
+id = "gas_bomb"
+name = "Gas Bomb"
+level_formula = "1d6+1"
+type = "Usable (thrown)"
+category = "Offensive"
+duration = "Instant"
+tags = ['offensive', 'chemical']
+
+effect = """
+Explodes in a short-range cloud; choose or roll gas type — sleep, poison, smoke, corrosive, rage, or stun. 
+Victims in area defend with Speed 5 or suffer level damage + effect (sleep = 1 hr unconscious, poison = ongoing 2 dmg/round 1 min, etc.).
+"""
+
+form = "Metal canister with colored ring marking its gas type."
+gm_intrusion = "Wind shifts suddenly, blowing the gas back toward the user."
+
+[[cypher]]
+id = "gravity_nullifier"
+name = "Gravity Nullifier"
+level_formula = "1d6+1"
+type = "Wearable/Usable"
+category = "Movement"
+duration = "1 hour × level"
+tags = ['movement', 'flight']
+
+effect = """
+User and gear become nearly weightless; move vertically and horizontally as though flying (Short range speed). 
+Ends abruptly when duration expires.
+"""
+
+form = "Silver belt or disk that hums with rising tone when active."
+gm_intrusion = "Field collapses mid-air; the user plummets."
+
+[[cypher]]
+id = "heat_nodule"
+name = "Heat Nodule"
+level_formula = "1d6"
+type = "Weapon Modification"
+category = "Offensive"
+duration = "28 hours"
+tags = ['offensive', 'fire']
+
+effect = """
+Weapon inflicts +2–4 fire damage and can ignite flammable material.
+"""
+
+form = "Reddish bead that fuses into the blade, glowing faintly."
+gm_intrusion = "Overheats, burning wielder for 2 damage."
+
+[[cypher]]
+id = "hunter_seeker_device"
+name = "Hunter/Seeker Device"
+level_formula = "1d6+2"
+type = "Usable"
+category = "Offensive"
+duration = "Instant"
+tags = ['offensive', 'tracking']
+
+effect = """
+Flies to target within long range, dealing damage = level + 2. May deliver toxin, detonation, or stun burst depending on form.
+"""
+
+form = "Fist-sized metal ovoid with sensor lenses."
+gm_intrusion = "Lock misreads—the device targets the nearest heat source (perhaps a PC)."
+
+[[cypher]]
+id = "image_projector"
+name = "Image Projector"
+level_formula = "1d6"
+type = "Usable"
+category = "Utility"
+duration = "10 minutes × level"
+tags = ['utility', 'illusion']
+
+effect = """
+Creates realistic image up to human size; simple programmed motions only. Interaction tasks vs Intellect 4 to discern illusion.
+"""
+
+form = "Coin-sized lens that hovers when active."
+gm_intrusion = "Projection records and replays something unintended."
+
+[[cypher]]
+id = "invisibility_projector"
+name = "Invisibility Projector"
+level_formula = "1d6+1"
+type = "Wearable"
+category = "Defensive"
+duration = "10 minutes × level"
+tags = ['defensive', 'stealth']
+
+effect = """
+User and carried gear become invisible; attacking or taking damage ends the effect for 1 round.
+"""
+
+form = "Thin circlet emitting faint heat shimmer."
+gm_intrusion = "Light distortion reveals a vague outline to nearby observers."
+
+[[cypher]]
+id = "instant_servant"
+name = "Instant Servant"
+level_formula = "1d6"
+type = "Usable"
+category = "Utility"
+duration = "8 hours"
+tags = ['utility', 'construct']
+
+effect = """
+Performs simple tasks (carry 10 lbs × level, fetch, clean, hold). Skill tasks count as Level 2. Cannot fight.
+"""
+
+form = "Folded polyhedron unfolding into drone form."
+gm_intrusion = "Servant misinterprets orders literally, causing inconvenience."
+
+[[cypher]]
+id = "instant_shelter"
+name = "Instant Shelter"
+level_formula = "1d6+2"
+type = "Usable"
+category = "Utility"
+duration = "24 hours"
+tags = ['utility', 'environment']
+
+effect = """
+Creates a 20-ft sphere of reinforced material, comfortable for up to six people; seals airtight and climate-controlled. 
+Ends by folding into its original cube.
+"""
+
+form = "Palm-sized metal capsule that unfolds with a hum."
+gm_intrusion = "Malfunction collapses structure prematurely or traps occupants."
+
+[[cypher]]
+id = "knowledge_enhancer"
+name = "Knowledge Enhancer"
+level_formula = "1d6"
+type = "Internal"
+category = "Utility"
+duration = "1 hour × level"
+tags = ['mental', 'buff']
+
+effect = """
+Grants training in one skill for duration (or specialization if already trained); +1 Intellect Edge for hour.
+"""
+
+form = "Injector capsule of amber fluid swarming with sparkles."
+gm_intrusion = "After use, 1 Intellect damage from migraine feedback."
+
+[[cypher]]
+id = "machine_control_implant"
+name = "Machine Control Implant"
+level_formula = "1d6+2"
+type = "Internal"
+category = "Utility"
+duration = "1 minute × level"
+tags = ['control', 'numenera']
+
+effect = """
+User can mentally control any machine ≤ cypher level within short range as if trained; each round requires concentration.
+"""
+
+form = "Silver circuit wafer dissolving through skin on contact."
+gm_intrusion = "Device resists control and acts on its own for one round."
+
+[[cypher]]
+id = "magnetic_master"
+name = "Magnetic Master"
+level_formula = "1d6"
+type = "Usable"
+category = "Utility"
+duration = "10 minutes × level"
+tags = ['utility', 'magnetism']
+
+effect = """
+Attracts or repels metal objects up to 50 lbs × level within short range. Ease related tasks by 2 steps.
+"""
+
+form = "Circular disk with alternating blue/red lights."
+gm_intrusion = "Draws in unintended metal objects from hidden sources."
+
+[[cypher]]
+id = "living_solvent"
+name = "Living Solvent"
+level_formula = "1d6"
+type = "Usable"
+category = "Utility"
+duration = "Instant"
+tags = ['chemical', 'utility']
+
+effect = """
+When released, dissolves any material of level ≤ cypher’s level at 1 ft³ per round. Stops when container resealed or fuel exhausted.
+"""
+
+form = "Glass vial alive with slowly swirling amber fluid."
+gm_intrusion = "Residue remains active, eating through pack or floor hours later."
+
+[[cypher]]
+id = "mental_scrambler"
+name = "Mental Scrambler"
+level_formula = "1d6+1"
+type = "Usable (field)"
+category = "Offensive"
+duration = "10 minutes × level"
+tags = ['psychic', 'offensive']
+
+effect = """
+All thinking creatures within short range must succeed an Intellect Defense 4 or become dazed and confused (lose next action). Mental powers fail or misfire.
+"""
+
+form = "Palm disc humming with white noise audible in the skull."
+gm_intrusion = "Field collapses suddenly, stunning the user instead."
+
+[[cypher]]
+id = "monoblade"
+name = "Monoblade"
+level_formula = "1d6"
+type = "Usable (weapon)"
+category = "Offensive"
+duration = "28 hours"
+tags = ['offensive', 'melee']
+
+effect = """
+Light weapon that ignores Armor ≤ 2; cutting tasks eased 2 steps.
+"""
+
+form = "Retractable metallic ribbon solidifying when charged."
+gm_intrusion = "Vibration surge slices through sheath, injuring wielder."
+
+[[cypher]]
+id = "motion_sensor"
+name = "Motion Sensor"
+level_formula = "1d6"
+type = "Usable"
+category = "Utility"
+duration = "28 hours"
+tags = ['utility', 'surveillance']
+
+effect = """
+Detects motion within short or long range depending on level; emits tone or light when triggered.
+"""
+
+form = "Insect-sized drone or coin-like puck."
+gm_intrusion = "Registers false positives from wind or echoes."
+
+[[cypher]]
+id = "personal_environment_field"
+name = "Personal Environment Field"
+level_formula = "1d6+2"
+type = "Wearable"
+category = "Defensive"
+duration = "28 hours"
+tags = ['defensive', 'environment']
+
+effect = """
+Grants immunity to temperature, pressure, or air-quality extremes; includes breathable atmosphere.
+"""
+
+form = "Neck collar or belt with faint blue haze."
+gm_intrusion = "Field flickers, allowing a burst of heat or vacuum through."
+
+[[cypher]]
+id = "poison_emitter___toxin_series"
+name = "Poison Emitter / Toxin Series"
+level_formula = "1d6"
+type = "Usable"
+category = "Offensive"
+duration = "Instant"
+tags = ['offensive', 'chemical']
+
+effect = """
+Targets in short range suffer level damage + ongoing 1 damage per round for 1 minute (Might Defense to resist). 
+Variants cause sleep, fear, or paralysis.
+"""
+
+form = "Needle pistol, aerosol sphere, or hypodermic dart."
+gm_intrusion = "Reservoir leaks, exposing user to trace dose."
+
+[[cypher]]
+id = "psychic_communique"
+name = "Psychic Communique"
+level_formula = "1d6"
+type = "Internal"
+category = "Utility"
+duration = "Instant"
+tags = ['communication', 'psychic']
+
+effect = """
+User sends a mental message (up to ten sentences) to any known individual at any distance on the same planet.
+"""
+
+form = "Crystal sliver that melts into skin."
+gm_intrusion = "Signal crosses—an unintended mind hears the message."
+
+[[cypher]]
+id = "ray_emitter"
+name = "Ray Emitter"
+level_formula = "1d6+1"
+type = "Usable"
+category = "Offensive"
+duration = "Instant"
+tags = ['offensive', 'energy']
+
+effect = """
+Fires a ray causing level damage of chosen type (heat, cold, paralysis, numbing). Range long.
+"""
+
+form = "Rod or pistol of polished ceramic with glowing seam."
+gm_intrusion = "Beam reflects off mirror-surface, striking friend or user."
+
+[[cypher]]
+id = "reality_spike"
+name = "Reality Spike"
+level_formula = "1d6+2"
+type = "Usable"
+category = "Utility"
+duration = "Permanent until removed"
+tags = ['utility', 'anchor']
+
+effect = """
+Once driven into a surface, it becomes immovable; objects tied to it cannot be moved by any force below level 10.
+"""
+
+form = "Black-iron stake with scrolling runes."
+gm_intrusion = "Spike warps local gravity, pinning unintended targets."
+
+[[cypher]]
+id = "repair_unit"
+name = "Repair Unit"
+level_formula = "1d6"
+type = "Usable (drone)"
+category = "Utility"
+duration = "10 minutes × level"
+tags = ['utility', 'construct']
+
+effect = """
+Repairs machines or structures of level ≤ cypher’s level, restoring 2 points per round. Cannot heal organics.
+"""
+
+form = "Compact drone with tool appendages."
+gm_intrusion = "Unit decides the PC’s gear needs “recycling.”"
+
+[[cypher]]
+id = "retaliation_nodule"
+name = "Retaliation Nodule"
+level_formula = "1d6"
+type = "Armor Modification"
+category = "Defensive"
+duration = "28 hours"
+tags = ['defensive', 'counterattack']
+
+effect = """
+When the wearer takes melee damage, attacker suffers equal to half the cypher’s level as energy shock.
+"""
+
+form = "Plate-mounted spike or integrated mesh."
+gm_intrusion = "Feedback pulse arcs to allies within immediate range."
+
+[[cypher]]
+id = "sheen_injector"
+name = "Sheen Injector"
+level_formula = "1d6"
+type = "Internal"
+category = "Healing"
+duration = "10 minutes × level"
+tags = ['healing', 'buff']
+
+effect = """
+User recovers 1d6 + level points to any Pool and gains +1 Armor for duration.
+"""
+
+form = "Translucent ampoule with iridescent fluid."
+gm_intrusion = "Overhealing causes pain shock (1 Speed damage)."
+
+[[cypher]]
+id = "skill_boost_nodule"
+name = "Skill Boost Nodule"
+level_formula = "1d6"
+type = "Internal"
+category = "Utility"
+duration = "1 hour × level"
+tags = ['mental', 'buff']
+
+effect = """
+User becomes trained in one chosen skill for duration; if already trained, becomes specialized.
+"""
+
+form = "Flexible injector patch mapping tiny circuits across skin."
+gm_intrusion = "Residual twitch or mental lag after expiry."
+
+[[cypher]]
+id = "sound___sonic_field_emitter"
+name = "Sound / Sonic Field Emitter"
+level_formula = "1d6+1"
+type = "Usable"
+category = "Utility"
+duration = "10 minutes × level"
+tags = ['utility', 'sound']
+
+effect = """
+Choose mode on activation – **Silence:** no sound in short radius; **Resonance:** amplifies voice/instrument to long range; 
+**Subdual:** stuns foes (Intellect Defense 4).
+"""
+
+form = "Disk with ripple patterns and faint hum."
+gm_intrusion = "Frequency spike ruptures eardrums or alerts creatures sensitive to vibration."
+
+[[cypher]]
+id = "telepathy_implant"
+name = "Telepathy Implant"
+level_formula = "1d6+1"
+type = "Internal"
+category = "Utility"
+duration = "10 minutes × level"
+tags = ['communication', 'psychic']
+
+effect = """
+User and one willing creature within short range share two-way thoughts for the duration. Complex data (maps, feelings) transfer clearly.
+"""
+
+form = "Thin metallic wafer that fuses behind the ear."
+gm_intrusion = "The link echoes fragments of stray minds nearby."
+
+[[cypher]]
+id = "teleporter"
+name = "Teleporter"
+level_formula = "1d6+2"
+type = "Usable"
+category = "Movement"
+duration = "Instant"
+tags = ['movement', 'teleportation']
+
+effect = """
+Instantly transports up to one human-sized creature or object from current spot to another within long range. 
+Accuracy depends on sight; unseen destinations risk minor displacement (1 damage).
+"""
+
+form = "Paired metal rings or palm crystal flashing white."
+gm_intrusion = "Random coordinate error—arrival above, below, or inside solid matter."
+
+[[cypher]]
+id = "temporal_viewer"
+name = "Temporal Viewer"
+level_formula = "1d6+1"
+type = "Usable"
+category = "Utility"
+duration = "1 minute × level"
+tags = ['perception', 'time']
+
+effect = """
+Shows events that occurred in the same area up to 1 hour × level ago, replayed as translucent figures. Cannot record.
+"""
+
+form = "Crystal monocle or floating orb projecting holographic ghosts."
+gm_intrusion = "Feedback shows *future* fragments—disturbing or misleading."
+
+[[cypher]]
+id = "time_dilation_nodule"
+name = "Time Dilation Nodule"
+level_formula = "1d6+2"
+type = "Wearable"
+category = "Defensive"
+duration = "10 minutes × level"
+tags = ['defensive', 'time']
+
+effect = """
+For duration, all Speed defense and initiative actions eased 2 steps; movements appear blurred.
+"""
+
+form = "Wristband with spinning inner ring."
+gm_intrusion = "Temporal lag leaves the user out of sync—acts last next round."
+
+[[cypher]]
+id = "tracer"
+name = "Tracer"
+level_formula = "1d6"
+type = "Usable (tagging device)"
+category = "Utility"
+duration = "28 hours"
+tags = ['tracking', 'utility']
+
+effect = """
+Tracks any tagged target within 1 mile × level; signal lost through lead or dimensional barriers.
+"""
+
+form = "Tiny coin-sized disk or fleck of glittering dust."
+gm_intrusion = "Another signal bleeds in—someone else is also tracking."
+
+[[cypher]]
+id = "visage_changer"
+name = "Visage Changer"
+level_formula = "1d6+1"
+type = "Internal/Wearable"
+category = "Utility"
+duration = "10 minutes × level"
+tags = ['illusion', 'disguise']
+
+effect = """
+Alters the user’s face, build, and voice to any roughly similar form; convincing disguise unless closely inspected (Intellect 4).
+"""
+
+form = "Gel-mask packet or dermal injection."
+gm_intrusion = "Partial reversion mid-conversation reveals glimpses of the true face."
+
+[[cypher]]
+id = "vocal_translator"
+name = "Vocal Translator"
+level_formula = "1d6"
+type = "Internal/Wearable"
+category = "Utility"
+duration = "1 hour × level"
+tags = ['communication', 'linguistics']
+
+effect = """
+User instantly understands and can speak any heard language of level ≤ cypher. Does not grant literacy.
+"""
+
+form = "Throat collar or nanite inhalant."
+gm_intrusion = "Device mistranslates an idiom, causing offense or confusion."
+
+[[cypher]]
+id = "visual_displacement_device"
+name = "Visual Displacement Device"
+level_formula = "1d6+1"
+type = "Wearable"
+category = "Defensive"
+duration = "10 minutes × level"
+tags = ['defensive', 'stealth']
+
+effect = """
+Attackers are hindered 2 steps when targeting user; duplicates move erratically.
+"""
+
+form = "Brooch or belt emitting refracted light motes."
+gm_intrusion = "A duplicate lingers briefly, confusing allies as well."
+
+[[cypher]]
+id = "warmth_projector"
+name = "Warmth Projector"
+level_formula = "1d6"
+type = "Wearable"
+category = "Utility"
+duration = "28 hours"
+tags = ['environment', 'survival']
+
+effect = """
+Maintains comfortable temperature in freezing conditions and prevents cold damage up to level.
+"""
+
+form = "Round disk worn at chest; faint orange glow."
+gm_intrusion = "Overheats nearby equipment or melts ice underfoot."
+
+[[cypher]]
+id = "water_breather"
+name = "Water Breather"
+level_formula = "1d6+1"
+type = "Internal"
+category = "Utility"
+duration = "1 hour × level"
+tags = ['environment', 'survival']
+
+effect = """
+User breathes underwater; gains +2 steps to swimming tasks.
+"""
+
+form = "Capsule releasing micro-gills along neck."
+gm_intrusion = "Sudden malfunction forces breath-holding until repaired."
+
+[[cypher]]
+id = "x_ray_viewer"
+name = "X-Ray Viewer"
+level_formula = "1d6+1"
+type = "Wearable"
+category = "Utility"
+duration = "10 minutes × level"
+tags = ['perception', 'vision']
+
+effect = """
+Allows sight through solid objects up to 1 ft × level thickness; dense metal blocks view.
+"""
+
+form = "Gray visor with flickering internal light."
+gm_intrusion = "Intense pulse blinds the user for one round and leaves ghost images."
+
+[cypher.crafting]
+source = "Destiny"
+difficulty = 1
+time_minutes = 10

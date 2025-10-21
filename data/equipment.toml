@@ -1,0 +1,731 @@
+# Numenera Character Generator - Equipment Data
+
+# Light Weapons (2 damage, trained for all types, ease attack +1 step)
+[[weapons]]
+name = "Dagger"
+category = "light"
+damage = 2
+cost = 1
+range = "immediate"
+notes = "Can be thrown to short range"
+
+[[weapons]]
+name = "Knife"
+category = "light"
+damage = 2
+cost = 1
+range = "immediate"
+notes = "Versatile tool and weapon"
+
+[[weapons]]
+name = "Handaxe"
+category = "light"
+damage = 2
+cost = 2
+range = "immediate"
+notes = "Can be thrown to short range"
+
+[[weapons]]
+name = "Throwing Dart"
+category = "light"
+damage = 2
+cost = 1
+range = "short"
+notes = "Designed for throwing"
+
+[[weapons]]
+name = "Light Club"
+category = "light"
+damage = 2
+cost = 1
+range = "immediate"
+notes = "Simple bludgeon"
+
+[[weapons]]
+name = "Whip"
+category = "light"
+damage = 2
+cost = 2
+range = "immediate"
+notes = "Can entangle at reach"
+
+[[weapons]]
+name = "Sling"
+category = "light"
+damage = 2
+cost = 1
+range = "long"
+notes = "Requires ammunition (stones)"
+
+[[weapons]]
+name = "Forearm Blade"
+category = "light"
+damage = 2
+cost = 3
+range = "immediate"
+notes = "Wrist-mounted blade, common among raiders"
+
+[[weapons]]
+name = "Razor Ring"
+category = "light"
+damage = 2
+cost = 2
+range = "short"
+notes = "Thrown ring with sharpened edge"
+
+[[weapons]]
+name = "Sisk"
+category = "light"
+damage = 2
+cost = 2
+range = "short"
+notes = "Bladed throwing disk"
+
+# Medium Weapons (4 damage)
+[[weapons]]
+name = "Sword"
+category = "medium"
+damage = 4
+cost = 5
+range = "immediate"
+notes = "Standard blade"
+
+[[weapons]]
+name = "Broadsword"
+category = "medium"
+damage = 4
+cost = 5
+range = "immediate"
+notes = "Wide-bladed sword"
+
+[[weapons]]
+name = "Battleaxe"
+category = "medium"
+damage = 4
+cost = 5
+range = "immediate"
+notes = "Heavy axe for combat"
+
+[[weapons]]
+name = "Mace"
+category = "medium"
+damage = 4
+cost = 5
+range = "immediate"
+notes = "Bludgeoning weapon"
+
+[[weapons]]
+name = "Spear"
+category = "medium"
+damage = 4
+cost = 3
+range = "immediate"
+notes = "Can be thrown to short range"
+
+[[weapons]]
+name = "Trident"
+category = "medium"
+damage = 4
+cost = 5
+range = "immediate"
+notes = "Three-pronged spear"
+
+[[weapons]]
+name = "Shortbow"
+category = "medium"
+damage = 4
+cost = 4
+range = "long"
+notes = "Requires arrows"
+
+[[weapons]]
+name = "Crossbow"
+category = "medium"
+damage = 4
+cost = 5
+range = "long"
+notes = "Requires bolts, slower reload"
+
+[[weapons]]
+name = "Javelin"
+category = "medium"
+damage = 4
+cost = 2
+range = "short"
+notes = "Throwing spear"
+
+[[weapons]]
+name = "Verred"
+category = "medium"
+damage = 4
+cost = 6
+range = "immediate"
+notes = "Forked short sword, asset to Speed defense"
+
+[[weapons]]
+name = "Yulk"
+category = "medium"
+damage = 4
+cost = 4
+range = "immediate"
+notes = "Metal claw on short haft"
+
+[[weapons]]
+name = "Crank Crossbow"
+category = "medium"
+damage = 4
+cost = 8
+range = "long"
+notes = "Magazine of 5 bolts, faster reload"
+
+# Heavy Weapons (6 damage, two-handed)
+[[weapons]]
+name = "Greatsword"
+category = "heavy"
+damage = 6
+cost = 9
+range = "immediate"
+notes = "Two-handed, massive blade"
+
+[[weapons]]
+name = "Greataxe"
+category = "heavy"
+damage = 6
+cost = 9
+range = "immediate"
+notes = "Two-handed, devastating axe"
+
+[[weapons]]
+name = "Maul"
+category = "heavy"
+damage = 6
+cost = 8
+range = "immediate"
+notes = "Two-handed hammer"
+
+[[weapons]]
+name = "Halberd"
+category = "heavy"
+damage = 6
+cost = 8
+range = "immediate"
+notes = "Two-handed polearm with axe and spike"
+
+[[weapons]]
+name = "Heavy Mace"
+category = "heavy"
+damage = 6
+cost = 8
+range = "immediate"
+notes = "Two-handed crushing weapon"
+
+[[weapons]]
+name = "Longbow"
+category = "heavy"
+damage = 6
+cost = 7
+range = "long"
+notes = "Two-handed, requires arrows"
+
+[[weapons]]
+name = "Heavy Crossbow"
+category = "heavy"
+damage = 6
+cost = 9
+range = "long"
+notes = "Two-handed, requires bolts, powerful"
+
+# Special Weapons
+[[weapons]]
+name = "Buzzer"
+category = "medium"
+damage = 4
+cost = 50
+range = "short"
+notes = "Fires 5 bladed disks, rapid fire, expensive"
+
+# ==========================================
+# ARMOR
+# ==========================================
+
+# Light Armor (+1 Armor, Speed Effort cost +1)
+[[armor]]
+name = "Leather Jerkin"
+category = "light"
+armor_bonus = 1
+speed_effort_cost = 1
+cost = 2
+notes = "Basic leather protection"
+
+[[armor]]
+name = "Hides and Furs"
+category = "light"
+armor_bonus = 1
+speed_effort_cost = 1
+cost = 2
+notes = "Animal hide armor"
+
+[[armor]]
+name = "Padded Cloth"
+category = "light"
+armor_bonus = 1
+speed_effort_cost = 1
+cost = 3
+notes = "Quilted protective clothing"
+
+# Special Light Armor (+2 Armor, Speed Effort cost +1)
+[[armor]]
+name = "Armoring Cloth"
+category = "light_special"
+armor_bonus = 2
+speed_effort_cost = 1
+cost = 40
+notes = "Advanced synthetic fibers"
+
+[[armor]]
+name = "Micromesh"
+category = "light_special"
+armor_bonus = 2
+speed_effort_cost = 1
+cost = 50
+notes = "Woven metallic mesh"
+
+# Medium Armor (+2 Armor, Speed Effort cost +2)
+[[armor]]
+name = "Beastskin"
+category = "medium"
+armor_bonus = 2
+speed_effort_cost = 2
+cost = 5
+notes = "Thick creature hide"
+
+[[armor]]
+name = "Brigandine"
+category = "medium"
+armor_bonus = 2
+speed_effort_cost = 2
+cost = 6
+notes = "Cloth with metal plates"
+
+[[armor]]
+name = "Chainmail"
+category = "medium"
+armor_bonus = 2
+speed_effort_cost = 2
+cost = 6
+notes = "Linked metal rings"
+
+# Special Medium Armor (+3 Armor, Speed Effort cost +2)
+[[armor]]
+name = "Metalweave Vest"
+category = "medium_special"
+armor_bonus = 3
+speed_effort_cost = 2
+cost = 40
+notes = "Flexible metal fabric"
+
+[[armor]]
+name = "Synth Breastplate"
+category = "medium_special"
+armor_bonus = 3
+speed_effort_cost = 2
+cost = 50
+notes = "Molded synthetic chest armor"
+
+# Heavy Armor (+3 Armor, Speed Effort cost +3)
+[[armor]]
+name = "Plate Armor"
+category = "heavy"
+armor_bonus = 3
+speed_effort_cost = 3
+cost = 12
+notes = "Full metal plate protection"
+
+[[armor]]
+name = "Scale Armor"
+category = "heavy"
+armor_bonus = 3
+speed_effort_cost = 3
+cost = 15
+notes = "Overlapping metal scales"
+
+[[armor]]
+name = "Half-Plate"
+category = "heavy"
+armor_bonus = 3
+speed_effort_cost = 3
+cost = 12
+notes = "Partial plate coverage"
+
+# ==========================================
+# SHIELDS
+# ==========================================
+
+[[shields]]
+name = "Light Shield"
+armor_bonus = 0
+speed_defense_asset = true
+cost = 3
+notes = "Provides +1 asset to Speed defense tasks"
+
+[[shields]]
+name = "Medium Shield"
+armor_bonus = 0
+speed_defense_asset = true
+cost = 4
+notes = "Provides +1 asset to Speed defense tasks"
+
+[[shields]]
+name = "Heavy Shield"
+armor_bonus = 0
+speed_defense_asset = true
+cost = 5
+notes = "Provides +1 asset to Speed defense tasks, bulkier"
+
+# ==========================================
+# COMMON GEAR
+# ==========================================
+
+[[gear]]
+name = "Backpack"
+category = "container"
+cost = 2
+notes = "Holds basic adventuring kit"
+
+[[gear]]
+name = "Bedroll"
+category = "camping"
+cost = 2
+notes = "Warm sleeping roll"
+
+[[gear]]
+name = "Book"
+category = "knowledge"
+cost = 10
+notes = "Provides +1 asset to relevant knowledge tasks"
+
+[[gear]]
+name = "Candle"
+category = "light"
+cost = 1
+notes = "Burns for several hours, provides dim light"
+
+[[gear]]
+name = "Compass"
+category = "navigation"
+cost = 10
+notes = "Synth or crystal, shows magnetic north"
+
+[[gear]]
+name = "Crowbar"
+category = "tool"
+cost = 2
+notes = "Leverage tool for prying"
+
+[[gear]]
+name = "Disguise Kit"
+category = "tool"
+cost = 12
+notes = "Provides +1 asset to disguise tasks"
+
+[[gear]]
+name = "Explorer's Pack"
+category = "container"
+cost = 20
+notes = "Rope (15m), rations x3, spikes, hammer, boots, torches x3, glowglobes x2"
+
+[[gear]]
+name = "First Aid Kit"
+category = "medical"
+cost = 10
+notes = "Provides +1 asset to healing tasks"
+
+[[gear]]
+name = "Grappling Hook"
+category = "tool"
+cost = 3
+notes = "Iron or synthsteel hook for climbing"
+
+[[gear]]
+name = "Hammer"
+category = "tool"
+cost = 2
+notes = "Useful for construction and driving spikes"
+
+[[gear]]
+name = "Lantern"
+category = "light"
+cost = 3
+notes = "Provides bright light, burns oil"
+
+[[gear]]
+name = "Lockpicks"
+category = "tool"
+cost = 5
+notes = "Fine metal tools for picking locks"
+
+[[gear]]
+name = "Rope (15 meters)"
+category = "tool"
+cost = 2
+notes = "Durable fiber or synth rope"
+
+[[gear]]
+name = "Rope (50 feet)"
+category = "tool"
+cost = 2
+notes = "Durable fiber or synth rope"
+
+[[gear]]
+name = "Spikes (10)"
+category = "tool"
+cost = 1
+notes = "Metal or synth spikes for climbing"
+
+[[gear]]
+name = "Tent (2-person)"
+category = "camping"
+cost = 3
+notes = "Water-resistant synth cloth shelter"
+
+[[gear]]
+name = "Torch (2)"
+category = "light"
+cost = 1
+notes = "Each burns approximately 1 hour"
+
+[[gear]]
+name = "Waterskin"
+category = "container"
+cost = 1
+notes = "Holds water or other liquids"
+
+[[gear]]
+name = "Bag of Light Tools"
+category = "tool"
+cost = 5
+notes = "Fine tools, wire, small tongs, string"
+
+[[gear]]
+name = "Bag of Heavy Tools"
+category = "tool"
+cost = 10
+notes = "Crowbar, hammer, cable, spikes"
+
+# ==========================================
+# FOOD & CLOTHING
+# ==========================================
+
+[[consumables]]
+name = "Rations (1 day)"
+category = "food"
+cost = 2
+notes = "Preserved food for one person"
+
+[[consumables]]
+name = "Meal (common)"
+category = "food"
+cost = 1
+notes = "Simple meal at an inn"
+
+[[consumables]]
+name = "Meal (fine)"
+category = "food"
+cost = 5
+notes = "Quality meal with multiple courses"
+
+[[consumables]]
+name = "Alcohol (glass)"
+category = "drink"
+cost = 1
+notes = "Local brew or spirits"
+
+[[consumables]]
+name = "Alcohol (bottle)"
+category = "drink"
+cost = 3
+notes = "Full bottle of spirits"
+
+[[clothing]]
+name = "Clothing (standard)"
+category = "outfit"
+cost = 1
+notes = "Basic everyday clothes"
+
+[[clothing]]
+name = "Clothing (fine)"
+category = "outfit"
+cost = 5
+notes = "Quality garments"
+
+[[clothing]]
+name = "Boots"
+category = "footwear"
+cost = 1
+notes = "Durable leather boots"
+
+[[clothing]]
+name = "Shoes"
+category = "footwear"
+cost = 1
+notes = "Basic footwear"
+
+# ==========================================
+# SPECIAL EQUIPMENT (Common)
+# ==========================================
+
+[[special_equipment]]
+name = "Clear Synth Bag (Small)"
+category = "container"
+cost = 1
+availability = "common"
+notes = "Transparent, flexible storage"
+
+[[special_equipment]]
+name = "Clear Synth Bag (Large)"
+category = "container"
+cost = 2
+availability = "common"
+notes = "Transparent, flexible storage, larger"
+
+[[special_equipment]]
+name = "Glowglobe (Minor)"
+category = "light"
+cost = 5
+availability = "common"
+notes = "Emits soft light for 1 hour, hovers autonomously"
+
+[[special_equipment]]
+name = "Ink Pen"
+category = "writing"
+cost = 2
+availability = "common"
+notes = "Self-inking stylus"
+
+# ==========================================
+# SPECIAL EQUIPMENT (Rare)
+# ==========================================
+
+[[special_equipment]]
+name = "Binoculars"
+category = "vision"
+cost = 50
+availability = "rare"
+notes = "Magnifies distant objects"
+
+[[special_equipment]]
+name = "Telescope"
+category = "vision"
+cost = 50
+availability = "rare"
+notes = "Magnifies very distant objects"
+
+[[special_equipment]]
+name = "Ecledda Clothing"
+category = "clothing"
+cost = 15
+availability = "rare"
+notes = "Woven from adamant silk, extremely durable"
+
+[[special_equipment]]
+name = "Glow Ink"
+category = "writing"
+cost = 10
+availability = "rare"
+notes = "Permanently luminous writing fluid"
+
+[[special_equipment]]
+name = "Glowglobe (Major)"
+category = "light"
+cost = 30
+availability = "rare"
+notes = "Continuous hovering light source"
+
+[[special_equipment]]
+name = "Shock Ring"
+category = "weapon"
+cost = 500
+availability = "rare"
+notes = "Razor ring charged with electricity, +4 damage, returns to hand"
+
+# ==========================================
+# SPECIAL EQUIPMENT (Very Rare)
+# ==========================================
+
+[[special_equipment]]
+name = "Brilliance Cloth"
+category = "clothing"
+cost = 100
+availability = "very_rare"
+notes = "Synthcloth that reshapes and recolors by thought (10 min per major change)"
+
+[[special_equipment]]
+name = "Floatstone"
+category = "utility"
+cost = 20
+availability = "very_rare"
+notes = "Rock with negative weight, levitates objects ≤10 lbs lighter than itself"
+
+[[special_equipment]]
+name = "Memory Ants"
+category = "utility"
+cost = 10
+availability = "very_rare"
+notes = "Tiny insects replicate any text once when given ink"
+
+[[special_equipment]]
+name = "Shaper Key"
+category = "tool"
+cost = 20
+availability = "very_rare"
+notes = "Putty forms a key when inserted into lock, hardens permanently"
+
+[[special_equipment]]
+name = "Sprayflesh"
+category = "medical"
+cost = 100
+availability = "very_rare"
+notes = "Seals wounds, restores 6 Might Pool points"
+
+[[special_equipment]]
+name = "Spraymetal"
+category = "tool"
+cost = 50
+availability = "very_rare"
+notes = "Repairs simple object damage, not for complex devices"
+
+[[special_equipment]]
+name = "Stingcharge"
+category = "weapon"
+cost = 750
+availability = "very_rare"
+notes = "Fires electrical bolt (3 damage immediate / 2 damage short range), rapid fire"
+
+[[special_equipment]]
+name = "Whisperlock"
+category = "tool"
+cost = 20
+availability = "very_rare"
+notes = "Synthsteel padlock without keyhole, opens via chosen spoken word"
+
+# ==========================================
+# AMMUNITION
+# ==========================================
+
+[[ammunition]]
+name = "Arrows (12)"
+category = "projectile"
+cost = 1
+notes = "For bows"
+
+[[ammunition]]
+name = "Crossbow Bolts (12)"
+category = "projectile"
+cost = 1
+notes = "For crossbows"
+
+[[ammunition]]
+name = "Sling Stones (12)"
+category = "projectile"
+cost = 0
+notes = "Can be gathered for free"

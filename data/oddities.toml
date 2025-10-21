@@ -1,0 +1,154 @@
+# Numenera Oddities Database
+
+[[oddity]]
+id = "d100"
+name = "d100"
+category = "Oddity"
+theme = ""
+value_shins = 10
+tags = []
+source = "Discovery"
+
+description = """
+An oddity found in the Ninth World.
+"""
+
+[[oddity]]
+id = "crystal_that_shatters_then_instantly_reforms"
+name = "Crystal that shatters then instantly reforms"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 1
+
+[[oddity]]
+id = "metallic_egg_that_spins_and_mutters_in_unknown_tongue"
+name = "Metallic egg that spins and mutters in unknown tongue"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 2
+
+[[oddity]]
+id = "box_of_tiny_musicians_who_look_horrified_when_closed"
+name = "Box of tiny musicians who look horrified when closed"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 7
+
+[[oddity]]
+id = "pants_that_fit_perfectly_but_are_always_chilly"
+name = "Pants that fit perfectly but are always chilly"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 9
+
+[[oddity]]
+id = "bottle_of_infinite_stain_remover_spray"
+name = "Bottle of infinite stain-remover spray"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 20
+
+[[oddity]]
+id = "cape_that_billows_in_still_air"
+name = "Cape that billows in still air"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 42
+
+[[oddity]]
+id = "shirt_that_reveals_wearer_s_anatomy_when_worn"
+name = "Shirt that reveals wearer’s anatomy when worn"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 55
+
+[[oddity]]
+id = "seeds_that_grow_into_golden_daffodils"
+name = "Seeds that grow into golden daffodils"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 68
+
+[[oddity]]
+id = "chair_stored_in_extradimensional_space"
+name = "Chair stored in extradimensional space"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 81
+
+[[oddity]]
+id = "drinking_glasses_that_change_color_with_contents"
+name = "Drinking glasses that change color with contents"
+category = "Curiosity"
+theme = "Random oddity"
+value_shins = 10
+tags = ['discovery', 'random']
+source = "Discovery"
+
+description = """
+An oddity from the d100 table.
+"""
+table_number = 100

@@ -1,0 +1,514 @@
+# Numenera Character Types
+
+[[types]]
+name = "Glaive"
+source = "Discovery"
+tagline = "A master of arms, body, and discipline"
+
+special_abilities = [
+    "Combat Prowess: +1 damage with either melee or ranged attacks (choose one)",
+    "Trained in Armor: Reduces Speed Effort cost by 1 when wearing armor"
+]
+
+[types.stat_pools]
+might = 11
+speed = 10
+intellect = 7
+bonus_points = 6
+
+[types.edge]
+might = 1
+speed = 1
+intellect = 0
+
+[types.starting_tier]
+effort = 1
+cypher_limit = 2
+
+[types.intrusions]
+cost = "1 XP"
+examples = [
+    "Perfect Setup: Strike up to three foes as one action; roll separately",
+    "Old Friend: A comrade from your past appears to aid briefly",
+    "Weapon Break: Enemy's weapon drops two steps on the object-damage track"
+]
+
+[types.equipment]
+weapons = ["Sword", "Dagger", "Battleaxe", "Handaxe"]
+armor = "Leather Jerkin"
+explorer_pack = true
+shins = 5
+other = []
+
+[types.skills]
+trained = ["One physical skill (balancing, climbing, jumping, or swimming)"]
+specialized = []
+inabilities = ["Crafting numenera", "Salvaging numenera", "Understanding numenera"]
+
+[[types.tier_abilities]]
+tier = 1
+count = 2
+abilities = [
+    { name = "Aggression", cost = "2 Might", type = "Enabler", description = "Gain melee asset but hinder Speed defense (maintained)" },
+    { name = "Fleet of Foot", cost = "1+ Speed", type = "Enabler", description = "Move short as part of action or long as full turn; add attack with Effort (hindered)" },
+    { name = "Impressive Display", cost = "2 Might", type = "Action", description = "Feat of strength/speed grants asset to interactions for 1 min" },
+    { name = "Misdirect", cost = "3 Speed", type = "Enabler", description = "Redirect a missed attack to another target" },
+    { name = "No Need for Weapons", cost = "0", type = "Enabler", description = "Unarmed attacks count as medium weapons" },
+    { name = "Trained Without Armor", cost = "0", type = "Enabler", description = "Trained in Speed defense when unarmored" }
+]
+
+[[types.tier_progression]]
+tier = 2
+effort = 2
+cypher_limit = 2
+
+[[types.tier_progression]]
+tier = 3
+effort = 3
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 4
+effort = 4
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 5
+effort = 5
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 6
+effort = 6
+cypher_limit = 4
+
+# -----------------------------------------------------------------------------
+
+[[types]]
+name = "Nano"
+source = "Discovery"
+tagline = "Techno-mystic who manipulates nanites and the datasphere"
+
+special_abilities = [
+    "Expert Cypher Use: Can carry 3 cyphers instead of 2"
+]
+
+[types.stat_pools]
+might = 7
+speed = 9
+intellect = 12
+bonus_points = 6
+
+[types.edge]
+might = 0
+speed = 0
+intellect = 1
+
+[types.starting_tier]
+effort = 1
+cypher_limit = 3
+
+[types.intrusions]
+cost = "1 XP"
+examples = [
+    "Advantageous Malfunction: Enemy device malfunctions to your benefit",
+    "Convenient Glimmer: Datasphere glimmer reveals a crucial hint or answer",
+    "Inexplicably Unbroken: A ruined device functions briefly one last time"
+]
+
+[types.equipment]
+weapons = ["Knife"]
+armor = ""
+explorer_pack = false
+shins = 4
+other = ["Numenera book"]
+
+[types.skills]
+trained = ["Understanding numenera"]
+specialized = []
+inabilities = []
+
+[[types.tier_abilities]]
+tier = 1
+count = 2
+abilities = [
+    { name = "Hedge Magic", cost = "1 Intellect", type = "Action", description = "Minor utility effects (clean, color, lift small objects)" },
+    { name = "Onslaught", cost = "1 Intellect", type = "Action", description = "Force ray (4 DMG) or mind blast (2 Int DMG, ignores Armor)" },
+    { name = "Push", cost = "2 Intellect", type = "Action", description = "Shove target immediate distance" },
+    { name = "Scan", cost = "2 Intellect", type = "Action", description = "Learn level + facts about 10 ft cube" },
+    { name = "Ward", cost = "0", type = "Enabler", description = "+1 Armor (constant field)" }
+]
+
+[[types.tier_progression]]
+tier = 2
+effort = 2
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 3
+effort = 3
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 4
+effort = 4
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 5
+effort = 5
+cypher_limit = 5
+
+[[types.tier_progression]]
+tier = 6
+effort = 6
+cypher_limit = 5
+
+# -----------------------------------------------------------------------------
+
+[[types]]
+name = "Jack"
+source = "Discovery"
+tagline = "Versatile generalist who bridges combat and knowledge"
+
+special_abilities = [
+    "Flex Skill: Each day choose one task to be trained in"
+]
+
+[types.stat_pools]
+might = 10
+speed = 10
+intellect = 10
+bonus_points = 6
+
+[types.edge]
+might = 0
+speed = 0
+intellect = 0
+
+[types.starting_tier]
+effort = 1
+cypher_limit = 2
+
+[types.intrusions]
+cost = "1 XP"
+examples = [
+    "Familiar Insight: Know someone's motives and how to sway them",
+    "Inspirational Recall: Sudden memory grants crucial clue or plan",
+    "Lucky Break: Coincidence or environment tilts events in your favor"
+]
+
+[types.equipment]
+weapons = ["Sword", "Dagger"]
+armor = "Leather Jerkin"
+explorer_pack = false
+shins = 8
+other = []
+
+[types.skills]
+trained = ["One non-combat task of choice", "Flex Skill (choose different skill each day)"]
+specialized = []
+inabilities = []
+
+[[types.tier_abilities]]
+tier = 1
+count = 2
+abilities = [
+    { name = "Trained in Armor", cost = "0", type = "Enabler", description = "Reduce armor Speed penalty by 1" },
+    { name = "Face Morph", cost = "2+ Intellect", type = "Action", description = "Alter facial features for 1 hour" },
+    { name = "Fleet of Foot", cost = "1 Speed", type = "Enabler", description = "Move short distance as part of another action" },
+    { name = "Late Inspiration", cost = "2 Intellect", type = "Enabler", description = "Retry a failed Intellect roll" },
+    { name = "Link Senses", cost = "2 Intellect", type = "Action", description = "See/hear through willing creature's senses for 1 minute" },
+    { name = "Phased Pocket", cost = "0", type = "Enabler", description = "Access extradimensional storage (up to 10 items)" },
+    { name = "Vanish", cost = "2 Intellect", type = "Action", description = "Become invisible for 10 minutes while stationary" }
+]
+
+[[types.tier_progression]]
+tier = 2
+effort = 2
+cypher_limit = 2
+
+[[types.tier_progression]]
+tier = 3
+effort = 3
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 4
+effort = 4
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 5
+effort = 5
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 6
+effort = 6
+cypher_limit = 4
+
+# =============================================================================
+# DESTINY TYPES
+# =============================================================================
+
+[[types]]
+name = "Arkus"
+source = "Destiny"
+tagline = "Gifted leader who persuades, unifies, and guides others"
+
+special_abilities = [
+    "Community Leader: While personally helping a community, its rank increases by 1",
+    "Demeanor of Command: Project authority for 1 hour (2 Intellect); gain free Effort level on one Persuasion task"
+]
+
+[types.stat_pools]
+might = 8
+speed = 9
+intellect = 11
+bonus_points = 6
+
+[types.edge]
+might = 0
+speed = 0
+intellect = 1
+
+[types.starting_tier]
+effort = 1
+cypher_limit = 2
+
+[types.intrusions]
+cost = "1 XP"
+examples = [
+    "Friendly NPC: A stranger or neutral NPC suddenly aids you",
+    "Perfect Suggestion: A follower or ally proposes an ideal course of action",
+    "Unexpected Gift: An NPC offers a helpful item or insight at just the right time"
+]
+
+[types.equipment]
+weapons = ["Knife"]
+armor = ""
+explorer_pack = false
+shins = 9
+other = ["Stylish clothes"]
+
+[types.skills]
+trained = ["Persuasion", "One of: Negotiation, Deceiving, Public Speaking, Intimidation, or Seeing Through Deception"]
+specialized = []
+inabilities = ["Crafting numenera", "Salvaging numenera", "Understanding numenera"]
+
+[[types.tier_abilities]]
+tier = 1
+count = 2
+abilities = [
+    { name = "Anecdote", cost = "2 Intellect", type = "Action", description = "Tell a story that grants training on a related non-attack/defense task for 1 hour" },
+    { name = "Babel", cost = "3 Intellect", type = "Action", description = "Speak one language you've heard for the day" },
+    { name = "Connection With an Organization", cost = "0", type = "Enabler", description = "Asset on interactions and information within one chosen group" },
+    { name = "Goad", cost = "1 Intellect", type = "Action", description = "Provoke target to charge and attack you next turn" },
+    { name = "Powerful Rhetoric", cost = "1 Intellect", type = "Action", description = "Influence how others perceive someone (friend, fool, or enemy)" },
+    { name = "Trained Without Armor", cost = "0", type = "Enabler", description = "Trained in Speed defense when unarmored" },
+    { name = "Understanding", cost = "1 Intellect", type = "Action", description = "Observe a target to gain one asset on next interaction" },
+    { name = "Disincentivize", cost = "1 Intellect", type = "Action", description = "Hinder all actions by chosen targets in short range for 1 round" },
+    { name = "Follower", cost = "0", type = "Enabler", description = "Gain a level 2 follower (persuasion mod). Multiple takes add followers" },
+    { name = "Gather Intelligence", cost = "2 Intellect", type = "Action", description = "Ask around in a settlement to gain useful information in 1 hour" },
+    { name = "Inspire Action", cost = "4 Intellect", type = "Action", description = "An ally immediately takes an extra specified action" },
+    { name = "Skill With Defense", cost = "0", type = "Enabler", description = "Trained in one type of defense (Might/Speed/Intellect). May take thrice" }
+]
+
+[[types.tier_progression]]
+tier = 2
+effort = 2
+cypher_limit = 2
+
+[[types.tier_progression]]
+tier = 3
+effort = 3
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 4
+effort = 4
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 5
+effort = 5
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 6
+effort = 6
+cypher_limit = 4
+
+# -----------------------------------------------------------------------------
+
+[[types]]
+name = "Wright"
+source = "Destiny"
+tagline = "Inventor who crafts wonders from iotum and ancient plans"
+
+special_abilities = [
+    "Iotum Understanding: Identify and evaluate iotum on sight",
+    "Build Plans: Can design and construct plans, cyphers, artifacts, and installations using iotum",
+    "Crafter's Eye: After 10 minutes study, know function and approximate level of a machine or device"
+]
+
+[types.stat_pools]
+might = 9
+speed = 7
+intellect = 12
+bonus_points = 6
+
+[types.edge]
+might = 0
+speed = 0
+intellect = 1
+
+[types.starting_tier]
+effort = 1
+cypher_limit = 3
+
+[types.intrusions]
+cost = "1 XP"
+examples = [
+    "Device Perfection: A creation or cypher performs better than expected",
+    "Crafting Insight: You see a shortcut—reduce construction time by half",
+    "Tinkering Vision: An improvised gadget functions exactly as you hoped"
+]
+
+[types.equipment]
+weapons = ["Knife"]
+armor = ""
+explorer_pack = false
+shins = 15
+other = ["Bag of Light Tools"]
+
+[types.skills]
+trained = ["Crafting numenera", "Salvaging numenera", "One additional crafting field (architecture, chemistry, metallurgy, etc.)"]
+specialized = []
+inabilities = ["Persuasion", "Social interaction"]
+
+[[types.tier_abilities]]
+tier = 1
+count = 2
+abilities = [
+    { name = "Analyze Creature", cost = "1 Intellect", type = "Action", description = "Learn level, defense weakness, and attack type" },
+    { name = "Analyze Device", cost = "1 Intellect", type = "Action", description = "Learn purpose and operation of one machine" },
+    { name = "Bolster Structure", cost = "2 Intellect", type = "Action", description = "Increase object's Armor by 2 for 1 hour" },
+    { name = "Enhance Item", cost = "2 Intellect", type = "Action", description = "Increase a weapon's or armor's effect by +1 for 1 hour" },
+    { name = "Quick Repair", cost = "2 Intellect", type = "Action", description = "Fix a damaged object ≤ level 4 instantly" },
+    { name = "Refine Iotum", cost = "2 Intellect", type = "Action", description = "Improve one iotum grade (≤ level 2)" },
+    { name = "Shock Device", cost = "1 Intellect", type = "Action", description = "Overcharge a machine to deal 2 electric damage to its user" },
+    { name = "Trained in Armor", cost = "0", type = "Enabler", description = "Reduce Speed penalty by 1 when wearing armor" }
+]
+
+[[types.tier_progression]]
+tier = 2
+effort = 2
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 3
+effort = 3
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 4
+effort = 4
+cypher_limit = 5
+
+[[types.tier_progression]]
+tier = 5
+effort = 5
+cypher_limit = 5
+
+[[types.tier_progression]]
+tier = 6
+effort = 6
+cypher_limit = 5
+
+# -----------------------------------------------------------------------------
+
+[[types]]
+name = "Delve"
+source = "Destiny"
+tagline = "Explorer who survives where others perish"
+
+special_abilities = [
+    "Salvage Expert: Gain +1 asset on all salvage tasks and know approximate value of discovered iotum",
+    "Assess Danger: GM must tell you if a location seems immediately dangerous"
+]
+
+[types.stat_pools]
+might = 10
+speed = 10
+intellect = 8
+bonus_points = 6
+
+[types.edge]
+might = 0
+speed = 1
+intellect = 0
+
+[types.starting_tier]
+effort = 1
+cypher_limit = 2
+
+[types.intrusions]
+cost = "1 XP"
+examples = [
+    "Fortuitous Find: You uncover a hidden cache or clue at the perfect time",
+    "Perfect Timing: You avoid or disable a trap just before it activates",
+    "Survivor's Luck: Natural hazard or collapse narrowly misses you"
+]
+
+[types.equipment]
+weapons = ["Dagger", "Sword"]
+armor = "Leather Jerkin"
+explorer_pack = true
+shins = 10
+other = []
+
+[types.skills]
+trained = ["Navigation", "Perception", "Finding hidden objects"]
+specialized = []
+inabilities = ["Persuasion"]
+
+[[types.tier_abilities]]
+tier = 1
+count = 2
+abilities = [
+    { name = "Analyze Numenera", cost = "1 Intellect", type = "Action", description = "Identify a cypher/artifact in 1 min" },
+    { name = "Danger Sense", cost = "2 Speed", type = "Action", description = "Gain +2 Speed defense for 1 minute" },
+    { name = "Experienced Finder", cost = "0", type = "Enabler", description = "Specialized in Perception and Search tasks" },
+    { name = "Find the Way", cost = "1 Intellect", type = "Action", description = "Determine fastest or safest path through area" },
+    { name = "Know Territory", cost = "0", type = "Enabler", description = "Specialized in tracking and navigation locally" },
+    { name = "Light Footed", cost = "0", type = "Enabler", description = "Trained in Stealth and balancing tasks" },
+    { name = "Scavenger", cost = "0", type = "Enabler", description = "When salvaging, always gain one extra unit of iotum" },
+    { name = "Sense Iotum", cost = "1 Intellect", type = "Action", description = "Detect iotum within short range for 1 minute" }
+]
+
+[[types.tier_progression]]
+tier = 2
+effort = 2
+cypher_limit = 2
+
+[[types.tier_progression]]
+tier = 3
+effort = 3
+cypher_limit = 3
+
+[[types.tier_progression]]
+tier = 4
+effort = 4
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 5
+effort = 5
+cypher_limit = 4
+
+[[types.tier_progression]]
+tier = 6
+effort = 6
+cypher_limit = 4

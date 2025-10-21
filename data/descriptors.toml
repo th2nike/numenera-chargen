@@ -1,0 +1,1577 @@
+# Numenera Character Descriptors Database
+
+[[descriptors]]
+name = "Charming"
+source = "Discovery"
+tagline = "Charismatic persuader and social manipulator"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Positive social interaction", "Mental-influence abilities"]
+
+[descriptors.skills.inabilities]
+hindered = ["Lore/knowledge tasks", "Resisting mental attacks"]
+
+[[descriptors.special_abilities]]
+name = "Contact"
+description = "Important ally (noble, guard captain, Aeon Priest, gang leader)"
+
+[descriptors.equipment]
+shins = 10
+
+[[descriptors.initial_links]]
+text = "You charmed or recruited one of the PCs"
+
+[[descriptors.initial_links]]
+text = "You owed one of the PCs a favor"
+
+[[descriptors.initial_links]]
+text = "You joined for the reward"
+
+[[descriptors.initial_links]]
+text = "You were specifically invited by one PC"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Clever"
+source = "Discovery"
+tagline = "Quick thinker, perceptive and deceptive"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Lies and trickery", "Resisting mental effects", "Assessing danger or value"]
+
+[descriptors.skills.inabilities]
+hindered = ["Lore or academic knowledge"]
+
+[descriptors.equipment]
+shins = 10
+
+[[descriptors.initial_links]]
+text = "You noticed or engineered the adventure"
+
+[[descriptors.initial_links]]
+text = "You think the group needs you"
+
+[[descriptors.initial_links]]
+text = "You were investigating something nearby"
+
+[[descriptors.initial_links]]
+text = "You're running from something and need allies"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Graceful"
+source = "Discovery"
+tagline = "Agile, balanced, and poised"
+
+[descriptors.stat_modifiers]
+speed = 2
+
+[descriptors.skills]
+trained = ["Balance and careful movement", "Performing arts", "Speed defense"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You joined to protect others"
+
+[[descriptors.initial_links]]
+text = "You were persuaded by the PCs"
+
+[[descriptors.initial_links]]
+text = "You feared the consequences of failure"
+
+[[descriptors.initial_links]]
+text = "You seek reward"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Intelligent"
+source = "Discovery"
+tagline = "Naturally bright, quick learner, excellent memory"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["One area of knowledge of choice", "Remembering or memorizing experiences"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You valued the mission's logic or discovery"
+
+[[descriptors.initial_links]]
+text = "You were asked by a peer"
+
+[[descriptors.initial_links]]
+text = "Research led you here"
+
+[[descriptors.initial_links]]
+text = "You're documenting the Ninth World"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Learned"
+source = "Discovery"
+tagline = "Educated scholar and expert"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Three areas of knowledge (player choice)"]
+
+[descriptors.skills.inabilities]
+hindered = ["Charm or persuasion"]
+
+[descriptors.equipment]
+other = ["Two books on topics of choice"]
+
+[[descriptors.initial_links]]
+text = "You joined to fund your studies"
+
+[[descriptors.initial_links]]
+text = "You want to advance your research"
+
+[[descriptors.initial_links]]
+text = "A scholarly request brought you here"
+
+[[descriptors.initial_links]]
+text = "Ancient texts mention this location"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Mystical"
+source = "Discovery"
+tagline = "Sensitive to the numenera, magical or technological"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Understanding numenera"]
+
+[[descriptors.special_abilities]]
+name = "Sense Magic"
+description = "Spend 1 minute to detect nearby active numenera"
+
+[[descriptors.special_abilities]]
+name = "Hedge Magic"
+description = "Minor utility tricks (float, clean, mend, recolor; non-damaging)"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "Dreams or omens led you here"
+
+[[descriptors.initial_links]]
+text = "Curiosity about the numenera brought you"
+
+[[descriptors.initial_links]]
+text = "You sensed something important nearby"
+
+[[descriptors.initial_links]]
+text = "A vision showed you this path"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Rugged"
+source = "Discovery"
+tagline = "Wilderness survivor, animal-wise"
+
+[descriptors.stat_modifiers]
+
+[descriptors.skills]
+trained = ["Climbing", "Running", "Swimming", "Training or riding animals", "Identifying plants"]
+
+[descriptors.skills.inabilities]
+hindered = ["Social tasks"]
+
+[descriptors.equipment]
+other = ["Explorer's pack (or rope + rations + extra ranged weapon)"]
+
+[[descriptors.initial_links]]
+text = "You joined to protect others"
+
+[[descriptors.initial_links]]
+text = "You were persuaded by the PCs"
+
+[[descriptors.initial_links]]
+text = "You seek reward"
+
+[[descriptors.initial_links]]
+text = "The wilderness led you to civilization"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Stealthy"
+source = "Discovery"
+tagline = "Sneaky, deceptive, unseen"
+
+[descriptors.stat_modifiers]
+speed = 2
+
+[descriptors.skills]
+trained = ["Stealth", "Trickery", "Illusion-based esoteries"]
+
+[descriptors.skills.inabilities]
+hindered = ["Pure movement (sprinting, leaping)"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You were spying on the group"
+
+[[descriptors.initial_links]]
+text = "You were stealing something nearby"
+
+[[descriptors.initial_links]]
+text = "You were paid to infiltrate the PCs' endeavor"
+
+[[descriptors.initial_links]]
+text = "You're hiding from something"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Strong"
+source = "Discovery"
+tagline = "Physically powerful and bold"
+
+[descriptors.stat_modifiers]
+might = 4
+
+[descriptors.skills]
+trained = ["Breaking objects", "Jumping"]
+
+[descriptors.equipment]
+weapons = ["Additional medium or heavy weapon"]
+
+[[descriptors.initial_links]]
+text = "You joined for protection"
+
+[[descriptors.initial_links]]
+text = "You were persuaded"
+
+[[descriptors.initial_links]]
+text = "You seek profit"
+
+[[descriptors.initial_links]]
+text = "A PC challenged you to prove your strength"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Strong-Willed"
+source = "Discovery"
+tagline = "Mentally unbreakable, independent"
+
+[descriptors.stat_modifiers]
+intellect = 4
+
+[descriptors.skills]
+trained = ["Resisting mental effects", "Maintaining focus"]
+
+[descriptors.skills.inabilities]
+hindered = ["Puzzles", "Memorization", "Lore"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You joined reluctantly"
+
+[[descriptors.initial_links]]
+text = "You were persuaded despite reservations"
+
+[[descriptors.initial_links]]
+text = "You fear others' failure"
+
+[[descriptors.initial_links]]
+text = "Someone needs your willpower"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Swift"
+source = "Discovery"
+tagline = "Fast, reactive, and athletic"
+
+[descriptors.stat_modifiers]
+speed = 4
+
+[descriptors.skills]
+trained = ["Initiative", "Running"]
+
+[descriptors.skills.inabilities]
+hindered = ["Balance tasks"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You joined to protect others"
+
+[[descriptors.initial_links]]
+text = "You were persuaded"
+
+[[descriptors.initial_links]]
+text = "You seek reward"
+
+[[descriptors.initial_links]]
+text = "You're racing against time"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Tough"
+source = "Discovery"
+tagline = "Enduring and physically resilient"
+
+[descriptors.stat_modifiers]
+
+[descriptors.skills]
+trained = ["Might defense"]
+
+[[descriptors.special_abilities]]
+name = "Armor"
+description = "+1 Armor"
+
+[[descriptors.special_abilities]]
+name = "Healthy"
+description = "+1 point recovered on all recovery rolls"
+
+[descriptors.equipment]
+weapons = ["Additional light weapon"]
+
+[[descriptors.initial_links]]
+text = "You joined as bodyguard"
+
+[[descriptors.initial_links]]
+text = "You're protecting a sibling or friend"
+
+[[descriptors.initial_links]]
+text = "You owe a debt to a PC"
+
+[[descriptors.initial_links]]
+text = "You saved one PC's life"
+
+# =============================================================================
+# DESTINY DESCRIPTORS
+# =============================================================================
+
+[[descriptors]]
+name = "Adaptable"
+source = "Destiny"
+tagline = "Change is strength"
+
+[descriptors.stat_modifiers]
+# Note: Flexible +2 to any Pool (reassign after each ten-hour recovery)
+
+[descriptors.skills]
+trained = ["Pleasant social interactions", "Overcoming deprivation/sorrow/pain effects"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "PCs saw how quickly you adapted to a bad situation"
+
+[[descriptors.initial_links]]
+text = "You convinced them you were perfect for the job"
+
+[[descriptors.initial_links]]
+text = "You negotiated with a third party and joined"
+
+[[descriptors.initial_links]]
+text = "One PC remembered your adaptability from youth"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Articulate"
+source = "Destiny"
+tagline = "Words are my craft"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Persuasion", "Planning and explaining", "Convincing others to accept your plans"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You impressed another PC with your clarity"
+
+[[descriptors.initial_links]]
+text = "You admired a PC's eloquence"
+
+[[descriptors.initial_links]]
+text = "Enemies drove you to seek allies"
+
+[[descriptors.initial_links]]
+text = "Someone insisted the mission would fail without you"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Beneficent"
+source = "Destiny"
+tagline = "Helping others is its own reward"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Pleasant social interaction", "Putting others at ease", "Gaining trust"]
+
+[[descriptors.special_abilities]]
+name = "Devoted"
+description = "Allies who've spent the last day with you (and you) gain +1 to recovery rolls"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You invited yourself to help the group"
+
+[[descriptors.initial_links]]
+text = "You saw them struggling and joined"
+
+[[descriptors.initial_links]]
+text = "You're certain they'll fail without you"
+
+[[descriptors.initial_links]]
+text = "You chose compassion over self-interest"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Cheerful"
+source = "Destiny"
+tagline = "Every sunrise brings promise"
+
+[descriptors.stat_modifiers]
+intellect = 4
+
+[descriptors.skills]
+trained = ["One artistic or hobby task (player choice)", "Making friends", "Ending conflicts", "Good first impressions"]
+
+[descriptors.skills.inabilities]
+hindered = ["Detecting falsehoods or disguises"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "Another PC wanted your positivity to bond the team"
+
+[[descriptors.initial_links]]
+text = "You agreed to help to be agreeable"
+
+[[descriptors.initial_links]]
+text = "You inspired the expedition idea yourself"
+
+[[descriptors.initial_links]]
+text = "Your charm turned would-be attackers into informants"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Civic"
+source = "Destiny"
+tagline = "Community is strength"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Uncovering local news and secrets", "All tasks aiding a community (repairing, defending, mediating)"]
+
+[[descriptors.special_abilities]]
+name = "Civic Minded"
+description = "Add +1 to the Health of any community you currently live in"
+
+[descriptors.equipment]
+other = ["Numenera plan for an installation"]
+
+[[descriptors.initial_links]]
+text = "While cleaning up the streets, you overheard the mission"
+
+[[descriptors.initial_links]]
+text = "You need allies for future civic goals"
+
+[[descriptors.initial_links]]
+text = "The job required your knowledge of community matters"
+
+[[descriptors.initial_links]]
+text = "You feared danger to your town if you didn't help"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Committed"
+source = "Destiny"
+tagline = "Once I choose a cause, nothing sways me"
+
+[descriptors.stat_modifiers]
+might = 4
+
+[descriptors.skills]
+trained = ["Enduring physical or mental trials"]
+
+[descriptors.skills.inabilities]
+hindered = ["Persuasion (single-mindedness)"]
+
+[[descriptors.special_abilities]]
+name = "Dedication"
+description = "Once between each 10-hour recovery, gain an asset on repeated actions of the same task"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "Your cause overlaps the group's goal"
+
+[[descriptors.initial_links]]
+text = "You sought commitment; their task needed yours"
+
+[[descriptors.initial_links]]
+text = "Their mission clearly required someone resolute"
+
+[[descriptors.initial_links]]
+text = "After another success, you overheard them and joined"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Confident"
+source = "Destiny"
+tagline = "I can do this—of course I can"
+
+[descriptors.stat_modifiers]
+might = 1
+speed = 1
+intellect = 1
+
+[descriptors.skills]
+trained = ["Three non-combat, non-physical skills of your choice"]
+
+[[descriptors.special_abilities]]
+name = "Confident Outlook"
+description = "Once per rest, become trained in one task for ten minutes (non-attack/defense)"
+
+[[descriptors.special_abilities]]
+name = "Failure Consequence"
+description = "GM intrusions occur on rolls of 1-2 instead of just 1"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You dragged a PC into adventure out of confidence"
+
+[[descriptors.initial_links]]
+text = "They sought your reliable help"
+
+[[descriptors.initial_links]]
+text = "You insisted the job required your touch"
+
+[[descriptors.initial_links]]
+text = "Overconfidence led you exactly here"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Cultured"
+source = "Destiny"
+tagline = "Refinement is its own weapon"
+
+[descriptors.stat_modifiers]
+
+[descriptors.skills]
+trained = ["Current events and history", "Discerning fine differences", "Detecting flaws or strengths in art/craft/behavior"]
+
+[descriptors.skills.inabilities]
+hindered = ["Tasks requiring others to trust you (seen as snobbish)"]
+
+[[descriptors.special_abilities]]
+name = "Learned"
+description = "Once per recovery, attempt one untrained task as if trained"
+
+[descriptors.equipment]
+other = ["Fine clothing", "One scholarly book"]
+
+[[descriptors.initial_links]]
+text = "You saw the PCs would fail without refinement"
+
+[[descriptors.initial_links]]
+text = "You convinced them of your value"
+
+[[descriptors.initial_links]]
+text = "You seek experience beyond books"
+
+[[descriptors.initial_links]]
+text = "You crave travel and a name beyond salons"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Curious"
+source = "Destiny"
+tagline = "The world hides wonders—I'll find them"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Perception", "Detecting falsehoods/illusions/disguises"]
+
+[descriptors.equipment]
+other = ["Three books on subjects of choice"]
+
+[[descriptors.initial_links]]
+text = "Curiosity made you follow the PCs"
+
+[[descriptors.initial_links]]
+text = "You begged to accompany them to new places"
+
+[[descriptors.initial_links]]
+text = "They rescued you from research gone wrong"
+
+[[descriptors.initial_links]]
+text = "One PC fascinates you with strange abilities"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Earnest"
+source = "Destiny"
+tagline = "Honesty is my compass"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Persuasion", "One chosen lore field", "Resisting disease and poison", "Consoling or emotionally supporting others"]
+
+[descriptors.skills.inabilities]
+hindered = ["Detecting lies or trickery"]
+
+[descriptors.equipment]
+other = ["An expensive gift (≈ 10 shins) from a true friend"]
+
+[[descriptors.initial_links]]
+text = "A PC confided in you, and you joined them"
+
+[[descriptors.initial_links]]
+text = "Hard times drove you to their company"
+
+[[descriptors.initial_links]]
+text = "Their cause spoke to your heart"
+
+[[descriptors.initial_links]]
+text = "You simply trusted them"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Empirical"
+source = "Destiny"
+tagline = "I trust evidence, not faith"
+
+[descriptors.stat_modifiers]
+intellect = 4
+
+[descriptors.skills]
+trained = ["Experimentation and truth-testing tasks"]
+
+[[descriptors.special_abilities]]
+name = "Quick Study"
+description = "After spending 1 round to observe, gain an asset on next non-combat action"
+
+[[descriptors.special_abilities]]
+name = "Non-Resilient"
+description = "If acting without time to study, any action following a GM intrusion is hindered"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You believe another PC has knowledge vital to your research"
+
+[[descriptors.initial_links]]
+text = "You joined to gather materials for study"
+
+[[descriptors.initial_links]]
+text = "You had to verify an 'impossible' local story yourself"
+
+[[descriptors.initial_links]]
+text = "You realized wisdom also lies outside books"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Exacting"
+source = "Destiny"
+tagline = "Perfection or nothing"
+
+[descriptors.stat_modifiers]
+might = 4
+
+[descriptors.skills]
+trained = ["Persuasion and intimidation", "Sensing lies"]
+
+[descriptors.skills.inabilities]
+hindered = ["Pleasant social interactions", "Intellect defense (mental strain)"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "The PCs met your high standards, so you joined"
+
+[[descriptors.initial_links]]
+text = "You repay a PC's earlier help"
+
+[[descriptors.initial_links]]
+text = "They show promise worth your guidance"
+
+[[descriptors.initial_links]]
+text = "Even perfectionists need company"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Forward-Thinking"
+source = "Destiny"
+tagline = "Preparation conquers chaos"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Initiative tasks", "Tasks of chance or risk assessment"]
+
+[descriptors.equipment]
+shins = 30
+# Note: Hidden for emergencies
+
+[[descriptors.initial_links]]
+text = "You anticipated the new danger and were ready"
+
+[[descriptors.initial_links]]
+text = "You arrived exactly when forethought dictated"
+
+[[descriptors.initial_links]]
+text = "You joined to gain resources for long-term projects"
+
+[[descriptors.initial_links]]
+text = "You claimed nothing could surprise you—so they tested it"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Gregarious"
+source = "Destiny"
+tagline = "I thrive among people"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+
+[[descriptors.special_abilities]]
+name = "People Person"
+description = "When near ≥ 2 allies, ease one non-combat task each rest"
+
+[[descriptors.special_abilities]]
+name = "Getting the Word"
+description = "Spend 1 hour in a crowd to gather rumors and gossip"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You heard the group's plan and offered to join"
+
+[[descriptors.initial_links]]
+text = "You bought them a drink and were welcomed"
+
+[[descriptors.initial_links]]
+text = "You gathered them for the task yourself"
+
+[[descriptors.initial_links]]
+text = "Anything's better than loneliness"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Heroic"
+source = "Destiny"
+tagline = "Courage is my default state"
+
+[descriptors.stat_modifiers]
+might = 2
+
+[descriptors.skills]
+trained = ["All social interactions", "Perception and finding hidden things"]
+
+[descriptors.skills.inabilities]
+hindered = ["Detecting falsehoods (you trust easily)"]
+
+[[descriptors.special_abilities]]
+name = "Hero Complication"
+description = "GM may introduce intrusions as if you rolled a 1 (no XP reward). Every other time, your heroism also creates a beneficial twist"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "Only you could save the day"
+
+[[descriptors.initial_links]]
+text = "You needed coin, so you joined"
+
+[[descriptors.initial_links]]
+text = "You sought experience worthy of legend"
+
+[[descriptors.initial_links]]
+text = "It simply sounded like an adventure"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Industrious"
+source = "Destiny"
+tagline = "Work is worship"
+
+[descriptors.stat_modifiers]
+speed = 4
+
+[descriptors.skills]
+
+[descriptors.skills.inabilities]
+hindered = ["Movement-related tasks (energetic but not fast)"]
+
+[[descriptors.special_abilities]]
+name = "Ready for What's Next"
+description = "+1 to recovery rolls"
+
+[[descriptors.special_abilities]]
+name = "Imaginative Solution"
+description = "First Effort on an Intellect task grants one free level of Effort (once per 10-hour recovery)"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "Following your plan led here"
+
+[[descriptors.initial_links]]
+text = "You needed resources for your ambitions"
+
+[[descriptors.initial_links]]
+text = "The mission teaches how to remove obstacles"
+
+[[descriptors.initial_links]]
+text = "A PC offered help if you helped them"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Intimidating"
+source = "Destiny"
+tagline = "Fear is a tool"
+
+[descriptors.stat_modifiers]
+# Note: +2 Might or +2 Intellect (or +1 each - player choice)
+
+[descriptors.skills]
+trained = ["Intimidation"]
+
+[descriptors.skills.inabilities]
+hindered = ["Lore and knowledge tasks"]
+
+[[descriptors.special_abilities]]
+name = "Threaten"
+description = "Foes within immediate range hesitate; their next action hindered (once per recovery)"
+
+[[descriptors.special_abilities]]
+name = "Menace"
+description = "One foe within immediate range must spend its next action to retreat (once per recovery)"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You stepped in when they were in danger"
+
+[[descriptors.initial_links]]
+text = "Rumors of excitement drew you in"
+
+[[descriptors.initial_links]]
+text = "A PC is an old friend"
+
+[[descriptors.initial_links]]
+text = "You were hired as bodyguard"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Intuitive"
+source = "Destiny"
+tagline = "I just know"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Perception"]
+
+[[descriptors.special_abilities]]
+name = "Know What to Do"
+description = "Act immediately (out of turn); your next regular turn is hindered (once per recovery)"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You knew you must come"
+
+[[descriptors.initial_links]]
+text = "You convinced a PC of your foresight"
+
+[[descriptors.initial_links]]
+text = "You foresaw disaster if you didn't"
+
+[[descriptors.initial_links]]
+text = "You trust destiny will explain itself"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Irrepressible"
+source = "Destiny"
+tagline = "Nothing keeps me down"
+
+[descriptors.stat_modifiers]
+might = 4
+
+[descriptors.skills]
+trained = ["Positive social interactions"]
+
+[descriptors.skills.inabilities]
+hindered = ["Intellect defense vs cons or confidence games"]
+
+[[descriptors.special_abilities]]
+name = "Bounces Back"
+description = "+1 to recovery rolls"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "They needed your optimism to stay on track"
+
+[[descriptors.initial_links]]
+text = "You came to protect a friend"
+
+[[descriptors.initial_links]]
+text = "You sought a new start"
+
+[[descriptors.initial_links]]
+text = "You figured 'how hard can it be?'"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Lawful"
+source = "Destiny"
+tagline = "Order above all"
+
+[descriptors.stat_modifiers]
+might = 2
+speed = 2
+
+[descriptors.skills]
+trained = ["Law and codes of conduct"]
+
+[descriptors.skills.inabilities]
+hindered = ["When breaking any law, Intellect tasks are hindered"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You offered legal expertise to the group"
+
+[[descriptors.initial_links]]
+text = "You gathered them for a righteous cause"
+
+[[descriptors.initial_links]]
+text = "You needed funds to support your order"
+
+[[descriptors.initial_links]]
+text = "You plan to bring law to the lawless—with their aid"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Loyal"
+source = "Destiny"
+tagline = "I stand by my own"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+
+[descriptors.skills.inabilities]
+hindered = ["Detecting falsehoods or disguises"]
+
+[[descriptors.special_abilities]]
+name = "Devoted"
+description = "When an ally within immediate range drops a step on the damage track, you may act immediately to move or heal them"
+
+[[descriptors.special_abilities]]
+name = "Faithful"
+description = "When you help another's attack or defense, regain 1 point to any Pool (once per recovery)"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You instantly helped a PC in need"
+
+[[descriptors.initial_links]]
+text = "You tagged along unasked"
+
+[[descriptors.initial_links]]
+text = "They sought your steady presence"
+
+[[descriptors.initial_links]]
+text = "You left a faithless institution to join them"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Meddlesome"
+source = "Destiny"
+tagline = "Curiosity is my compass"
+
+[descriptors.stat_modifiers]
+intellect = 2
+
+[descriptors.skills]
+trained = ["Perception and detecting falsehoods", "Stealth", "Recalling details you once heard or read"]
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "The group needed someone nosy—you volunteered"
+
+[[descriptors.initial_links]]
+text = "Bad luck found you, but you turned it into opportunity"
+
+[[descriptors.initial_links]]
+text = "You promised aid and intend to keep your word"
+
+[[descriptors.initial_links]]
+text = "You answered a cry for help when a PC was in trouble"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Nurturing"
+source = "Destiny"
+tagline = "Care builds strength"
+
+[descriptors.stat_modifiers]
+might = 2
+
+[descriptors.skills]
+trained = ["Healing"]
+
+[[descriptors.special_abilities]]
+name = "Nurturing"
+description = "Allies (and you) gain +1 to recovery rolls after a day together"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You offered aid to an injured PC"
+
+[[descriptors.initial_links]]
+text = "You followed a cry for help and found the party"
+
+[[descriptors.initial_links]]
+text = "Their mission could help many—you joined"
+
+[[descriptors.initial_links]]
+text = "You'd finished caring for others and sought new purpose"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Obsessive"
+source = "Destiny"
+tagline = "Focus is everything"
+
+[descriptors.stat_modifiers]
+
+[descriptors.skills]
+
+[[descriptors.special_abilities]]
+name = "Your Obsession"
+description = "Each day choose one concept; all related tasks gain an asset, unrelated tasks are hindered"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You insisted on joining; they couldn't refuse"
+
+[[descriptors.initial_links]]
+text = "You agreed without realizing what it involved"
+
+[[descriptors.initial_links]]
+text = "You hoped to learn through the group's mission"
+
+[[descriptors.initial_links]]
+text = "A PC valued your intense focus and invited you"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Organized"
+source = "Destiny"
+tagline = "Everything in its place"
+
+[descriptors.stat_modifiers]
+intellect = 4
+
+[descriptors.skills]
+trained = ["Perception, planning, and organization"]
+
+[descriptors.skills.inabilities]
+hindered = ["Intellect defense in messy or chaotic settings"]
+
+[[descriptors.special_abilities]]
+name = "Benefits of Organization"
+description = "Once per ten-hour recovery, take one extra free action in a well-organized area or plan"
+
+[descriptors.equipment]
+other = ["Explorer's pack with extra compartments"]
+
+[[descriptors.initial_links]]
+text = "You knew immediately they needed structure"
+
+[[descriptors.initial_links]]
+text = "The team came to you for planning help"
+
+[[descriptors.initial_links]]
+text = "This was your backup plan when others failed"
+
+[[descriptors.initial_links]]
+text = "You left disorder behind to prove neatness works"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Optimistic"
+source = "Destiny"
+tagline = "Tomorrow will be better"
+
+[descriptors.stat_modifiers]
+intellect = 4
+
+[descriptors.skills]
+trained = ["Intellect defense"]
+
+[descriptors.skills.inabilities]
+hindered = ["Might defense"]
+
+[[descriptors.special_abilities]]
+name = "Shrugs Off Disappointment"
+description = "Retry a failed non-combat task next round with one free level of Effort"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "Persistence led you to the other PCs"
+
+[[descriptors.initial_links]]
+text = "Starting over brought you to them"
+
+[[descriptors.initial_links]]
+text = "Their success earned your respect"
+
+[[descriptors.initial_links]]
+text = "You joined because their mission sounded tough"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Passionate"
+source = "Destiny"
+tagline = "My heart leads my hand"
+
+[descriptors.stat_modifiers]
+
+[descriptors.skills]
+trained = ["Running, climbing, and swimming"]
+
+[descriptors.skills.inabilities]
+hindered = ["Tasks of subtlety or restraint"]
+
+[[descriptors.special_abilities]]
+name = "Fever"
+description = "+1 damage on attacks while angry"
+
+[[descriptors.special_abilities]]
+name = "Fire Inside"
+description = "Once per recovery, gain +1 asset on a task motivated by passion"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You're in love with a PC"
+
+[[descriptors.initial_links]]
+text = "Their mission matches your cause"
+
+[[descriptors.initial_links]]
+text = "A respected mentor sent you"
+
+[[descriptors.initial_links]]
+text = "You seek a cause worthy of you"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Persevering"
+source = "Destiny"
+tagline = "Never yield"
+
+[descriptors.stat_modifiers]
+# Note: +2 Intellect or +2 Might Pool (player choice)
+
+[descriptors.skills]
+trained = ["Endurance and sustained effort"]
+
+[descriptors.skills.inabilities]
+hindered = ["Interaction tasks"]
+
+[[descriptors.special_abilities]]
+name = "Irrepressible Reaction"
+description = "After any GM intrusion, your next action within 1 minute gains an asset"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You found the group in trouble and helped"
+
+[[descriptors.initial_links]]
+text = "They freed you from a bind"
+
+[[descriptors.initial_links]]
+text = "It was do or die — so you did"
+
+[[descriptors.initial_links]]
+text = "Protecting a loved one tied you to their quest"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Prepared"
+source = "Destiny"
+tagline = "Preparation beats luck"
+
+[descriptors.stat_modifiers]
+speed = 4
+
+[descriptors.skills]
+trained = ["Initiative tasks"]
+
+[descriptors.skills.inabilities]
+hindered = ["First action after being surprised"]
+
+[[descriptors.special_abilities]]
+name = "Tool Aficionado"
+description = "Gain an asset when using a tool for non-combat tasks; if it already gives one, gain another"
+
+[descriptors.equipment]
+other = ["Bag of light tools"]
+
+[[descriptors.initial_links]]
+text = "You saw the team lacked proper gear"
+
+[[descriptors.initial_links]]
+text = "You know friends make the best prep"
+
+[[descriptors.initial_links]]
+text = "Lost plans forced you to join them"
+
+[[descriptors.initial_links]]
+text = "They asked for help getting ready—and you stayed"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Protective"
+source = "Destiny"
+tagline = "I watch over my own"
+
+[descriptors.stat_modifiers]
+might = 2
+intellect = 2
+
+[descriptors.skills]
+trained = ["Perception and initiative when protecting others"]
+
+[[descriptors.special_abilities]]
+name = "Safeguard"
+description = "When an ally within immediate range is attacked, redirect attack to yourself (once per recovery)"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You swore to protect a PC"
+
+[[descriptors.initial_links]]
+text = "Their mission saves innocent lives"
+
+[[descriptors.initial_links]]
+text = "You seek redemption through protection"
+
+[[descriptors.initial_links]]
+text = "A PC reminds you of someone you lost"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Relentless"
+source = "Destiny"
+tagline = "I don't know when to quit"
+
+[descriptors.stat_modifiers]
+might = 2
+speed = 2
+
+[descriptors.skills]
+
+[descriptors.skills.inabilities]
+hindered = ["Social niceties and patience"]
+
+[[descriptors.special_abilities]]
+name = "Push On"
+description = "Once per recovery, ignore being debilitated for one action"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You pursued a goal that led you to the group"
+
+[[descriptors.initial_links]]
+text = "A PC convinced you to redirect your energy"
+
+[[descriptors.initial_links]]
+text = "You won't stop until you achieve your aim"
+
+[[descriptors.initial_links]]
+text = "Failure is not an option—you joined to ensure success"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Resilient"
+source = "Destiny"
+tagline = "I endure what would break others"
+
+[descriptors.stat_modifiers]
+might = 4
+
+[descriptors.skills]
+trained = ["Might defense"]
+
+[[descriptors.special_abilities]]
+name = "Recover Quickly"
+description = "+2 to recovery rolls"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You survived something that killed others—a PC knows"
+
+[[descriptors.initial_links]]
+text = "They need someone who won't break"
+
+[[descriptors.initial_links]]
+text = "You're proving you're stronger than your past"
+
+[[descriptors.initial_links]]
+text = "A PC saved you once; now you repay them"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Risk-Taking"
+source = "Destiny"
+tagline = "Fortune favors the bold"
+
+[descriptors.stat_modifiers]
+speed = 4
+
+[descriptors.skills]
+
+[descriptors.skills.inabilities]
+hindered = ["Caution, patience, and careful planning"]
+
+[[descriptors.special_abilities]]
+name = "Apply Effort"
+description = "When taking an action with a risk of failure, apply one free level of Effort (once per recovery)"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You took a crazy chance that led to meeting the PCs"
+
+[[descriptors.initial_links]]
+text = "A PC appreciates your daring"
+
+[[descriptors.initial_links]]
+text = "You're running from consequences of a past risk"
+
+[[descriptors.initial_links]]
+text = "Only a bold plan will work—you joined to provide it"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Skeptical"
+source = "Destiny"
+tagline = "Prove it"
+
+[descriptors.stat_modifiers]
+intellect = 4
+
+[descriptors.skills]
+trained = ["Identifying lies and trickery"]
+
+[descriptors.skills.inabilities]
+hindered = ["Trusting others, making friends quickly"]
+
+[[descriptors.special_abilities]]
+name = "Doubt Protects"
+description = "+1 to Intellect defense against mental effects"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "You're investigating the PCs to verify their intentions"
+
+[[descriptors.initial_links]]
+text = "A PC earned your rare trust"
+
+[[descriptors.initial_links]]
+text = "You need proof their plan will work"
+
+[[descriptors.initial_links]]
+text = "Your skepticism has saved others before"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Tongue-Tied"
+source = "Destiny"
+tagline = "Actions speak louder"
+
+[descriptors.stat_modifiers]
+might = 2
+speed = 2
+
+[descriptors.skills]
+trained = ["Non-verbal communication and reading body language"]
+
+[descriptors.skills.inabilities]
+hindered = ["All verbal interaction tasks"]
+
+[descriptors.equipment]
+other = ["Writing kit or communication device"]
+
+[[descriptors.initial_links]]
+text = "A PC understands you without words"
+
+[[descriptors.initial_links]]
+text = "You saved a PC through action, not talk"
+
+[[descriptors.initial_links]]
+text = "They need deeds, not promises"
+
+[[descriptors.initial_links]]
+text = "You're more comfortable with this group than most"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Vengeful"
+source = "Destiny"
+tagline = "Debts must be paid"
+
+[descriptors.stat_modifiers]
+might = 2
+speed = 2
+
+[descriptors.skills]
+
+[descriptors.skills.inabilities]
+hindered = ["Forgiveness, moving on, letting go"]
+
+[[descriptors.special_abilities]]
+name = "Vendetta"
+description = "When attacking someone who wronged you or an ally, deal +2 damage"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "Someone in the group wronged your enemy"
+
+[[descriptors.initial_links]]
+text = "A PC shares your thirst for justice"
+
+[[descriptors.initial_links]]
+text = "The mission leads to your target"
+
+[[descriptors.initial_links]]
+text = "You owe a PC a debt—you always repay"
+
+# -----------------------------------------------------------------------------
+
+[[descriptors]]
+name = "Vicious"
+source = "Destiny"
+tagline = "Mercy is weakness"
+
+[descriptors.stat_modifiers]
+might = 2
+speed = 2
+
+[descriptors.skills]
+
+[descriptors.skills.inabilities]
+hindered = ["Healing, showing mercy, positive social interactions"]
+
+[[descriptors.special_abilities]]
+name = "Killer Instinct"
+description = "Treat foes two steps lower on damage track as if dead for purposes of attacks"
+
+[descriptors.equipment]
+
+[[descriptors.initial_links]]
+text = "A PC knows you get results, however brutal"
+
+[[descriptors.initial_links]]
+text = "You need their skills; they tolerate your methods"
+
+[[descriptors.initial_links]]
+text = "Someone must do the dark work—that's you"
+
+[[descriptors.initial_links]]
+text = "A PC is trying to reform you"
