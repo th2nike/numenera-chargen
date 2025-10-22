@@ -738,10 +738,18 @@ fn render_right_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShe
 
 fn render_footer(f: &mut Frame, area: Rect, app: &App) {
     let save_text = if app.last_saved_file.is_some() {
-        "[S] Save Another" // After saving, show this
+        "[S] Save Another"
     } else {
-        "[S] Save" // Before saving, show this
+        "[S] Save"
     };
+
+    // ========== ADD EDIT OPTION IF LOADED CHARACTER ==========
+    let edit_option = if app.edit_original_filename.is_some() && !app.is_edit_mode {
+        "  |  [E] Edit Character"
+    } else {
+        ""
+    };
+    // =========================================================
 
     let actions = vec![
         Line::from(""),
@@ -754,6 +762,7 @@ fn render_footer(f: &mut Frame, area: Rect, app: &App) {
             ),
             Span::raw("  |  "),
             Span::styled("[N] New Character", Style::default().fg(Color::Cyan)),
+            Span::styled(edit_option, Style::default().fg(Color::Yellow)),  // ← ADD THIS
             Span::raw("  |  "),
             Span::styled("[Tab] Switch Panel", Style::default().fg(Color::Yellow)),
             Span::raw("  |  "),

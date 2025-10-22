@@ -1,0 +1,121 @@
+{
+  "name": "Finn Thornblade",
+  "gender": "Male",
+  "tier": 1,
+  "character_type": "Glaive",
+  "descriptor": "Adaptable",
+  "species": null,
+  "focus": "Augments Flesh With Grafts",
+  "pools": {
+    "current": {
+      "might": 14,
+      "speed": 13,
+      "intellect": 7
+    },
+    "maximum": {
+      "might": 14,
+      "speed": 13,
+      "intellect": 7
+    }
+  },
+  "edge": {
+    "might": 1,
+    "speed": 1,
+    "intellect": 0
+  },
+  "effort": {
+    "max_effort": 1
+  },
+  "armor": 1,
+  "damage_track": "Hale",
+  "skills": {
+    "trained": [
+      "One physical skill (balancing, climbing, jumping, or swimming)",
+      "Pleasant social interactions",
+      "Overcoming deprivation/sorrow/pain effects"
+    ],
+    "specialized": [],
+    "inabilities": [
+      "Crafting numenera",
+      "Salvaging numenera",
+      "Understanding numenera"
+    ]
+  },
+  "special_abilities": [
+    "Combat Prowess: +1 damage with either melee or ranged attacks (choose one)",
+    "Trained in Armor: Reduces Speed Effort cost by 1 when wearing armor"
+  ],
+  "type_abilities": [
+    "Trained Without Armor",
+    "Impressive Display"
+  ],
+  "focus_ability": "Anatomical Insight (0, Enabler): You are trained in tasks related to biological and creature lore. You know the weak points of living things and can identify useful biological materials.",
+  "equipment": {
+    "weapons": [
+      "Sword (4 damage)",
+      "Dagger (2 damage)",
+      "Battleaxe (4 damage)",
+      "Handaxe (2 damage)",
+      "Shortbow (4 damage)"
+    ],
+    "armor": "Leather Jerkin (+1 Armor, Speed Effort +1)",
+    "shield": "Heavy Shield",
+    "gear": [
+      "Explorer's Pack",
+      "Rope (15m)",
+      "Rations x3",
+      "Spikes (10)",
+      "Hammer",
+      "Boots",
+      "Torches x3",
+      "Glowglobes x2",
+      "Bio-sculpting tools",
+      "Healing salves"
+    ],
+    "shins": 5
+  },
+  "cypher_limit": 2,
+  "cyphers": [
+    {
+      "name": "Invisibility Projector",
+      "level": 2,
+      "cypher_type": "Wearable",
+      "effect": "User and carried gear become invisible; attacking or taking damage ends the effect for 1 round.\n",
+      "form": "Thin circlet emitting faint heat shimmer.",
+      "duration": "10 minutes × level"
+    },
+    {
+      "name": "Adhesion Clamps",
+      "level": 4,
+      "cypher_type": "Wearable",
+      "effect": "While active, the wearer can climb or hang from walls and ceilings with no skill roll.\n",
+      "form": "Pair of disk-shaped gauntlets or climbing boots that hum softly.",
+      "duration": "10 minutes × level"
+    }
+  ],
+  "artifacts": [],
+  "oddities": [
+    {
+      "id": "drinking_glasses_that_change_color_with_contents",
+      "name": "Drinking glasses that change color with contents",
+      "category": "Curiosity",
+      "theme": "Random oddity",
+      "value_shins": 10,
+      "tags": [
+        "discovery",
+        "random"
+      ],
+      "source": "Discovery",
+      "description": "An oddity from the d100 table.\n",
+      "table_number": 100
+    }
+  ],
+  "background": {
+    "connection_to_party": "",
+    "descriptor_link": "PCs saw how quickly you adapted to a bad situation",
+    "focus_link": "One PC helped you recover from a grafting procedure",
+    "notes": []
+  },
+  "xp": 0,
+  "advances": []
+}

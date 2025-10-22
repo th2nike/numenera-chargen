@@ -5,6 +5,8 @@ pub mod character_loader;
 pub mod character_preview;
 pub mod cypher_select;
 pub mod descriptor_select;
+pub mod edit_menu;
+pub mod edit_stats;
 pub mod equipment_shop;
 pub mod focus_select;
 pub mod gender_select;

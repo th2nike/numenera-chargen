@@ -24,10 +24,16 @@ pub struct App {
     pub last_saved_file: Option<String>,
 
     // ========== ADD LOADER STATE ==========
-    pub loader_files: Vec<String>, // List of .json files
-    pub loader_list_state: usize,  // Selected file index
-    pub loader_scroll_offset: usize, // Scroll position
-                                   // ======================================
+    pub loader_files: Vec<String>,                  // List of .json files
+    pub loader_list_state: usize,                   // Selected file index
+    pub loader_scroll_offset: usize,                // Scroll position
+    // ======================================
+
+    // ========== ADD EDIT MODE STATE ==========
+    pub is_edit_mode: bool,                         // Are we in edit mode?
+    pub editing_character: Option<CharacterSheet>,  // Character being edited
+    pub edit_original_filename: Option<String>,     // Original filename for saving
+    // =========================================
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -59,6 +65,12 @@ pub enum Screen {
     OdditySelect,
     EquipmentShop,
     CharacterPreview,
+    EditMenu,           // Choose what to edit
+    EditName,           // Edit character name
+    EditGender,         // Edit gender
+    EditStats,          // Edit current stat pools
+    EditCyphers,        // Swap cyphers
+    EditOddity,         // Change oddity
 }
 
 #[derive(Debug, Clone, PartialEq)]
@@ -148,8 +160,13 @@ impl App {
             loader_files: Vec::new(),
             loader_list_state: 0,
             loader_scroll_offset: 0,
-            // ===============================================
-        }
+
+            // ========== INITIALIZE EDIT MODE ==========
+            is_edit_mode: false,
+            editing_character: None,
+            edit_original_filename: None,
+            // ==========================================
+            }
     }
 
     /// Handle keyboard events
@@ -174,6 +191,12 @@ impl App {
         match self.current_screen {
             Screen::MainMenu => self.handle_main_menu_keys(key),
             Screen::CharacterLoader => self.handle_character_loader_keys(key),
+            Screen::EditMenu => self.handle_edit_menu_keys(key),
+            Screen::EditName => self.handle_edit_name_keys(key),
+            Screen::EditGender => self.handle_edit_gender_keys(key),
+            Screen::EditStats => self.handle_edit_stats_keys(key),
+            Screen::EditCyphers => self.handle_edit_cyphers_keys(key),
+            Screen::EditOddity => self.handle_edit_oddity_keys(key),
             Screen::NameInput => self.handle_name_input_keys(key),
             Screen::GenderSelect => self.handle_gender_select_keys(key),
             Screen::TypeSelect => self.handle_type_select_keys(key),
@@ -240,6 +263,7 @@ impl App {
                             self.generated_character = Some(character);
                             self.preview_left_scroll = 0;
                             self.preview_right_scroll = 0;
+                            self.edit_original_filename = Some(filename.clone());
                             self.current_screen = Screen::CharacterPreview;
                         }
                         Err(e) => {
@@ -250,6 +274,353 @@ impl App {
             }
             KeyCode::Esc => {
                 self.current_screen = Screen::MainMenu;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_edit_menu_keys(&mut self, key: KeyEvent) -> Result<()> {
+        match key.code {
+            KeyCode::Char('1') => {
+                // Edit name
+                if let Some(character) = &self.editing_character {
+                    self.character_builder.name = character.name.clone();
+                    self.character_builder.name_input_cursor = character.name.len();
+                }
+                self.current_screen = Screen::EditName;
+            }
+            KeyCode::Char('2') => {
+                // Edit gender
+                self.current_screen = Screen::EditGender;
+            }
+            KeyCode::Char('3') => {
+                // Edit stats
+                self.current_screen = Screen::EditStats;
+                self.character_builder.reset_list_state();
+            }
+            KeyCode::Char('4') => {
+                // Edit cyphers
+                if let Some(character) = &self.editing_character {
+                    // Pre-populate with current cyphers
+                    self.character_builder.selected_cyphers = character.cyphers.clone();
+                }
+                self.current_screen = Screen::EditCyphers;
+                self.character_builder.reset_list_state();
+            }
+            KeyCode::Char('5') => {
+                // Edit oddity
+                if let Some(character) = &self.editing_character {
+                    // Pre-populate with current oddity
+                    self.character_builder.selected_oddities = character.oddities.clone();
+                }
+                self.current_screen = Screen::EditOddity;
+                self.character_builder.reset_list_state();
+            }
+            KeyCode::Char('s') | KeyCode::Char('S') => {
+                // Save changes
+                self.save_edited_character()?;
+            }
+            KeyCode::Esc => {
+                // Cancel editing (discard changes)
+                self.exit_edit_mode();
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_edit_name_keys(&mut self, key: KeyEvent) -> Result<()> {
+        match key.code {
+            KeyCode::Enter => {
+                if !self.character_builder.name.is_empty() {
+                    // Apply name change to editing character
+                    if let Some(character) = &mut self.editing_character {
+                        character.name = self.character_builder.name.clone();
+                    }
+                    self.current_screen = Screen::EditMenu;
+                }
+            }
+            KeyCode::Char(c) => {
+                if !key.modifiers.contains(KeyModifiers::CONTROL)
+                    && !key.modifiers.contains(KeyModifiers::ALT)
+                {
+                    self.character_builder
+                        .name
+                        .insert(self.character_builder.name_input_cursor, c);
+                    self.character_builder.name_input_cursor += 1;
+                }
+            }
+            KeyCode::Backspace => {
+                if self.character_builder.name_input_cursor > 0 {
+                    self.character_builder.name_input_cursor -= 1;
+                    self.character_builder
+                        .name
+                        .remove(self.character_builder.name_input_cursor);
+                }
+            }
+            KeyCode::Left => {
+                if self.character_builder.name_input_cursor > 0 {
+                    self.character_builder.name_input_cursor -= 1;
+                }
+            }
+            KeyCode::Right => {
+                if self.character_builder.name_input_cursor < self.character_builder.name.len() {
+                    self.character_builder.name_input_cursor += 1;
+                }
+            }
+            KeyCode::Esc => {
+                self.current_screen = Screen::EditMenu;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_edit_gender_keys(&mut self, key: KeyEvent) -> Result<()> {
+        match key.code {
+            KeyCode::Char('1') | KeyCode::Char('m') | KeyCode::Char('M') => {
+                if let Some(character) = &mut self.editing_character {
+                    character.gender = Gender::Male;
+                }
+                self.current_screen = Screen::EditMenu;
+            }
+            KeyCode::Char('2') | KeyCode::Char('f') | KeyCode::Char('F') => {
+                if let Some(character) = &mut self.editing_character {
+                    character.gender = Gender::Female;
+                }
+                self.current_screen = Screen::EditMenu;
+            }
+            KeyCode::Char('3') | KeyCode::Char('o') | KeyCode::Char('O') => {
+                if let Some(character) = &mut self.editing_character {
+                    character.gender = Gender::Other;
+                }
+                self.current_screen = Screen::EditMenu;
+            }
+            KeyCode::Esc => {
+                self.current_screen = Screen::EditMenu;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_edit_stats_keys(&mut self, key: KeyEvent) -> Result<()> {
+        if let Some(character) = &mut self.editing_character {
+            match key.code {
+                KeyCode::Up | KeyCode::Char('k') => {
+                    if self.character_builder.list_state > 0 {
+                        self.character_builder.list_state -= 1;
+                    }
+                }
+                KeyCode::Down | KeyCode::Char('j') | KeyCode::Tab => {
+                    if self.character_builder.list_state < 2 {
+                        self.character_builder.list_state += 1;
+                    }
+                }
+                KeyCode::Right | KeyCode::Char('+') | KeyCode::Char('=') => {
+                    // Increase current pool (cannot exceed maximum)
+                    match self.character_builder.list_state {
+                        0 => {
+                            if character.pools.current.might < character.pools.maximum.might {
+                                character.pools.current.might += 1;
+                            }
+                        }
+                        1 => {
+                            if character.pools.current.speed < character.pools.maximum.speed {
+                                character.pools.current.speed += 1;
+                            }
+                        }
+                        2 => {
+                            if character.pools.current.intellect < character.pools.maximum.intellect {
+                                character.pools.current.intellect += 1;
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+                KeyCode::Left | KeyCode::Char('-') | KeyCode::Char('_') => {
+                    // Decrease current pool (cannot go below 0)
+                    match self.character_builder.list_state {
+                        0 => {
+                            if character.pools.current.might > 0 {
+                                character.pools.current.might -= 1;
+                            }
+                        }
+                        1 => {
+                            if character.pools.current.speed > 0 {
+                                character.pools.current.speed -= 1;
+                            }
+                        }
+                        2 => {
+                            if character.pools.current.intellect > 0 {
+                                character.pools.current.intellect -= 1;
+                            }
+                        }
+                        _ => {}
+                    }
+                }
+                KeyCode::Enter => {
+                    // Save and return to edit menu
+                    self.current_screen = Screen::EditMenu;
+                }
+                KeyCode::Esc => {
+                    // Cancel - restore original character
+                    if let Some(original) = &self.generated_character {
+                        self.editing_character = Some(original.clone());
+                    }
+                    self.current_screen = Screen::EditMenu;
+                }
+                _ => {}
+            }
+        }
+        Ok(())
+    }
+
+    fn handle_edit_cyphers_keys(&mut self, key: KeyEvent) -> Result<()> {
+        let total_cyphers = self.game_data.cyphers.len();
+        
+        // Get cypher limit from character
+        let cypher_limit = self
+            .editing_character
+            .as_ref()
+            .map(|c| c.cypher_limit as usize)
+            .unwrap_or(2);
+
+        match key.code {
+            KeyCode::Up | KeyCode::Char('k') => {
+                self.character_builder.move_up();
+            }
+            KeyCode::Down | KeyCode::Char('j') => {
+                self.character_builder.move_down(total_cyphers);
+            }
+            KeyCode::Char(' ') => {
+                // Toggle selection
+                let idx = self.character_builder.list_state;
+
+                // Check if already selected
+                if let Some(pos) = self
+                    .character_builder
+                    .selected_cyphers
+                    .iter()
+                    .position(|c| {
+                        if let Some(cypher) = self.game_data.cyphers.get(idx) {
+                            c.name == cypher.name
+                        } else {
+                            false
+                        }
+                    })
+                {
+                    // Remove it
+                    self.character_builder.selected_cyphers.remove(pos);
+                } else if self.character_builder.selected_cyphers.len() < cypher_limit {
+                    // Add new instance
+                    if let Some(cypher) = self.game_data.cyphers.get(idx) {
+                        let instance = crate::data::create_cypher_instance(cypher);
+                        self.character_builder.selected_cyphers.push(instance);
+                    }
+                }
+            }
+            KeyCode::Char('r') | KeyCode::Char('R') => {
+                // Random selection
+                use rand::Rng;
+                let mut rng = rand::thread_rng();
+                self.character_builder.selected_cyphers.clear();
+
+                let mut available: Vec<usize> = (0..total_cyphers).collect();
+                for _ in 0..cypher_limit.min(total_cyphers) {
+                    let idx = rng.gen_range(0..available.len());
+                    let cypher_idx = available.remove(idx);
+
+                    if let Some(cypher) = self.game_data.cyphers.get(cypher_idx) {
+                        let instance = crate::data::create_cypher_instance(cypher);
+                        self.character_builder.selected_cyphers.push(instance);
+                    }
+                }
+            }
+            KeyCode::Char('c') | KeyCode::Char('C') => {
+                self.character_builder.selected_cyphers.clear();
+            }
+            KeyCode::Enter => {
+                // Apply changes to character
+                if let Some(character) = &mut self.editing_character {
+                    character.cyphers = self.character_builder.selected_cyphers.clone();
+                }
+                self.current_screen = Screen::EditMenu;
+            }
+            KeyCode::Esc => {
+                // Cancel - don't apply changes
+                self.current_screen = Screen::EditMenu;
+            }
+            _ => {}
+        }
+        Ok(())
+    }
+
+    fn handle_edit_oddity_keys(&mut self, key: KeyEvent) -> Result<()> {
+        let total_oddities = self.game_data.oddities.len();
+
+        match key.code {
+            KeyCode::Up | KeyCode::Char('k') => {
+                self.character_builder.move_up();
+            }
+            KeyCode::Down | KeyCode::Char('j') => {
+                self.character_builder.move_down(total_oddities);
+            }
+            KeyCode::Char(' ') => {
+                let idx = self.character_builder.list_state;
+
+                // Check if already selected
+                if let Some(pos) = self
+                    .character_builder
+                    .selected_oddities
+                    .iter()
+                    .position(|o| {
+                        if let Some(oddity) = self.game_data.oddities.get(idx) {
+                            o.name == oddity.name
+                        } else {
+                            false
+                        }
+                    })
+                {
+                    self.character_builder.selected_oddities.remove(pos);
+                } else {
+                    // Replace with new selection (only 1 allowed)
+                    self.character_builder.selected_oddities.clear();
+                    if let Some(oddity) = self.game_data.oddities.get(idx) {
+                        self.character_builder
+                            .selected_oddities
+                            .push(oddity.clone());
+                    }
+                }
+            }
+            KeyCode::Char('r') | KeyCode::Char('R') => {
+                // Random selection
+                use rand::seq::SliceRandom;
+                let mut rng = rand::thread_rng();
+                self.character_builder.selected_oddities.clear();
+
+                if let Some(oddity) = self.game_data.oddities.choose(&mut rng) {
+                    self.character_builder
+                        .selected_oddities
+                        .push(oddity.clone());
+                }
+            }
+            KeyCode::Char('c') | KeyCode::Char('C') => {
+                self.character_builder.selected_oddities.clear();
+            }
+            KeyCode::Enter => {
+                // Apply changes (must have exactly 1)
+                if self.character_builder.selected_oddities.len() == 1 {
+                    if let Some(character) = &mut self.editing_character {
+                        character.oddities = self.character_builder.selected_oddities.clone();
+                    }
+                    self.current_screen = Screen::EditMenu;
+                }
+            }
+            KeyCode::Esc => {
+                // Cancel
+                self.current_screen = Screen::EditMenu;
             }
             _ => {}
         }
@@ -613,6 +984,15 @@ impl App {
                     Err(e) => {
                         eprintln!("Failed to save character: {}", e);
                     }
+                }
+            }
+
+            // ========== ADD EDIT MODE TRIGGER ==========
+            KeyCode::Char('e') | KeyCode::Char('E') => {
+                // Only allow editing if we loaded a character
+                if self.generated_character.is_some() && self.last_saved_file.is_none() {
+                    // This is a loaded character (has generated_character but no last_saved_file)
+                    self.enter_edit_mode();
                 }
             }
 
@@ -1254,13 +1634,11 @@ impl App {
         // Read all .json files from output directory
         let entries = fs::read_dir("output")?;
 
-        for entry in entries {
-            if let Ok(entry) = entry {
-                let path = entry.path();
-                if path.extension().and_then(|s| s.to_str()) == Some("json") {
-                    if let Some(filename) = path.file_name().and_then(|s| s.to_str()) {
-                        self.loader_files.push(filename.to_string());
-                    }
+        for entry in entries.flatten() {
+            let path = entry.path();
+            if path.extension().and_then(|s| s.to_str()) == Some("json") {
+                if let Some(filename) = path.file_name().and_then(|s| s.to_str()) {
+                    self.loader_files.push(filename.to_string());
                 }
             }
         }
@@ -1281,6 +1659,49 @@ impl App {
         let character: CharacterSheet = serde_json::from_str(&json_content)?;
 
         Ok(character)
+    }
+
+    /// Enter edit mode with the currently displayed character
+    fn enter_edit_mode(&mut self) {
+        if let Some(character) = &self.generated_character {
+            self.is_edit_mode = true;
+            self.editing_character = Some(character.clone());
+            
+            // Store the original filename if we loaded from a file
+            // (We'll need to track this separately when loading)
+            
+            self.current_screen = Screen::EditMenu;
+        }
+    }
+
+    /// Exit edit mode without saving
+    fn exit_edit_mode(&mut self) {
+        self.is_edit_mode = false;
+        self.editing_character = None;
+        self.edit_original_filename = None;
+        self.current_screen = Screen::CharacterPreview;
+    }
+
+    /// Save edited character back to JSON file
+    fn save_edited_character(&mut self) -> Result<()> {
+        if let Some(character) = &self.editing_character {
+            if let Some(filename) = &self.edit_original_filename {
+                // Update the JSON file
+                let path = format!("output/{}", filename);
+                let json = serde_json::to_string_pretty(character)?;
+                std::fs::write(&path, json)?;
+                
+                // Update the generated character with edited version
+                self.generated_character = Some(character.clone());
+                
+                // Show success
+                self.last_saved_file = Some(filename.clone());
+                
+                // Exit edit mode
+                self.exit_edit_mode();
+            }
+        }
+        Ok(())
     }
 }
 
