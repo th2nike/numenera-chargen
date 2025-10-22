@@ -920,6 +920,7 @@ mod tests {
                     ability_type: "Action".to_string(),
                     description: "Test".to_string(),
                 },
+                ..Default::default()
             },
             Focus {
                 name: "Leads".to_string(),
@@ -934,6 +935,7 @@ mod tests {
                     ability_type: "Enabler".to_string(),
                     description: "Test".to_string(),
                 },
+                ..Default::default()
             },
         ];
 

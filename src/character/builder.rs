@@ -759,6 +759,7 @@ mod tests {
                 ability_type: "Enabler".to_string(),
                 description: "Trained in one weapon".to_string(),
             },
+            ..Default::default()
         }
     }
 

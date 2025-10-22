@@ -9,7 +9,7 @@ use ratatui::{
     Frame,
 };
 
-use crate::{data::Focus, tui::{app::App, ui::centered_block}};
+use crate::{tui::{app::App, ui::centered_block}};
 
 pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let block = centered_block("Step 6: Allocate Bonus Points");
@@ -32,7 +32,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     // Get base stats and modifiers
     let (base_might, base_speed, base_intellect, bonus_points) = get_base_stats(app);
     let (desc_might, desc_speed, desc_intellect) = get_descriptor_modifiers(app);
-    
+    let (focus_might, focus_speed, focus_intellect) = get_focus_modifiers(app);
+
+   
     let bonus_might = app.character_builder.bonus_might;
     let bonus_speed = app.character_builder.bonus_speed;
     let bonus_intellect = app.character_builder.bonus_intellect;
@@ -41,9 +43,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let remaining = bonus_points - total_allocated;
 
     // Calculate final stats
-    let final_might = base_might + desc_might + bonus_might;
-    let final_speed = base_speed + desc_speed + bonus_speed;
-    let final_intellect = base_intellect + desc_intellect + bonus_intellect;
+    let final_might = base_might + desc_might + focus_might + bonus_might;
+    let final_speed = base_speed + desc_speed + focus_speed + bonus_speed;
+    let final_intellect = base_intellect + desc_intellect + focus_intellect + bonus_intellect;
 
     // Instructions
     let instructions = Paragraph::new(vec![
@@ -83,6 +85,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         "Might",
         base_might,
         desc_might,
+        focus_might,
         bonus_might,
         final_might,
         Color::Red,
@@ -95,6 +98,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         "Speed",
         base_speed,
         desc_speed,
+        focus_speed,
         bonus_speed,
         final_speed,
         Color::Green,
@@ -107,6 +111,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         "Intellect",
         base_intellect,
         desc_intellect,
+        focus_intellect,
         bonus_intellect,
         final_intellect,
         Color::Blue,
@@ -118,6 +123,8 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         Span::styled("Base", Style::default().fg(Color::White)),
         Span::raw(" + "),
         Span::styled("Descriptor", Style::default().fg(Color::Cyan)),
+        Span::raw(" + "),
+        Span::styled("Focus", Style::default().fg(Color::Magenta)),
         Span::raw(" + "),
         Span::styled("Bonus", Style::default().fg(Color::Yellow)),
         Span::raw(" = "),
@@ -131,12 +138,14 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     f.render_widget(legend, chunks[7]);
 }
 
+#[allow(clippy::too_many_arguments)]
 fn render_stat_breakdown(
     f: &mut Frame,
     area: Rect,
     label: &str,
     base: i32,
     descriptor_mod: i32,
+    focus_mod: i32,
     bonus: i32,
     final_value: i32,
     color: Color,
@@ -168,18 +177,17 @@ fn render_stat_breakdown(
         label_style,
     ));
 
-    // Breakdown display
-    let descriptor_display = if descriptor_mod >= 0 {
-        format!("+{}", descriptor_mod)
-    } else {
-        format!("{}", descriptor_mod)
-    };
+    // Format helper for positive/negative
+    let fmt = |v: i32| if v >= 0 { format!("+{}", v) } else { v.to_string() };
 
+    // Breakdown line with Focus bonus included
     let breakdown_lines = vec![
         Line::from(vec![
             Span::styled(format!("{:2}", base), Style::default().fg(Color::White)),
             Span::raw("  +  "),
-            Span::styled(format!("{:>3}", descriptor_display), Style::default().fg(Color::Cyan)),
+            Span::styled(fmt(descriptor_mod), Style::default().fg(Color::Cyan)),
+            Span::raw("  +  "),
+            Span::styled(fmt(focus_mod), Style::default().fg(Color::Magenta)),
             Span::raw("  +  "),
             Span::styled(format!("{:2}", bonus), Style::default().fg(Color::Yellow)),
             Span::raw("  =  "),
@@ -213,6 +221,7 @@ fn render_stat_breakdown(
     f.render_widget(label_text, chunks[0]);
     f.render_widget(breakdown, chunks[1]);
 }
+
 
 /// Get base stat pools and bonus points from character type
 fn get_base_stats(app: &App) -> (i32, i32, i32, i32) {
@@ -253,4 +262,15 @@ fn get_descriptor_modifiers(app: &App) -> (i32, i32, i32) {
         }
     }
     (0, 0, 0) // No modifiers
+}
+
+fn get_focus_modifiers(app: &App) -> (i32, i32, i32) {
+    if let Some(focus_name) = &app.character_builder.focus {
+        if let Some(focus) = app.game_data.foci.iter().find(|f| f.name == *focus_name) {
+            if let Some(stats) = &focus.stat_modifiers {
+                return (stats.might, stats.speed, stats.intellect);
+            }
+        }
+    }
+    (0, 0, 0)
 }

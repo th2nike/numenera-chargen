@@ -74,7 +74,7 @@ pub struct TierAbilities {
     pub abilities: Vec<Ability>,
 }
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Ability {
     pub name: String,
     pub cost: String,
@@ -172,7 +172,7 @@ pub struct DescriptorsData {
 // FOCI (foci.toml)
 // ==========================================
 
-#[derive(Debug, Clone, Deserialize, Serialize)]
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
 pub struct Focus {
     pub name: String,
     pub source: String,
@@ -182,7 +182,20 @@ pub struct Focus {
     #[serde(default)]
     pub equipment: Vec<String>,
     pub tier_1_ability: Ability,
+    #[serde(default)]
+    pub stat_modifiers: Option<StatModifiers>,
 }
+
+#[derive(Debug, Clone, Deserialize, Serialize, Default)]
+pub struct StatModifiers {
+    #[serde(default)]
+    pub might: i32,
+    #[serde(default)]
+    pub speed: i32,
+    #[serde(default)]
+    pub intellect: i32,
+}
+
 
 // Root structure for foci.toml
 #[derive(Debug, Clone, Deserialize, Serialize)]
