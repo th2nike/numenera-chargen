@@ -379,7 +379,6 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
             Style::default().fg(Color::Gray),
         )));
         for skill in &character.skills.trained {
-            // REMOVED truncate() - show full skill name
             lines.push(Line::from(Span::styled(
                 format!("  • {}", skill),
                 Style::default().fg(Color::Green),
@@ -393,7 +392,6 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
             Style::default().fg(Color::Gray),
         )));
         for skill in &character.skills.specialized {
-            // REMOVED truncate() - show full skill name
             lines.push(Line::from(Span::styled(
                 format!("  • {}", skill),
                 Style::default().fg(Color::Yellow),
@@ -416,7 +414,6 @@ fn render_left_panel(f: &mut Frame, area: Rect, character: &crate::CharacterShee
             Style::default().fg(Color::Gray),
         )));
         for ability in &character.type_abilities {
-            // REMOVED truncate() - show full ability name
             lines.push(Line::from(Span::styled(
                 format!("  • {}", ability),
                 Style::default().fg(Color::Yellow),
@@ -818,12 +815,3 @@ fn get_pool_color(current: i32, maximum: i32) -> Style {
         Style::default().fg(Color::Red)
     }
 }
-
-// /// Truncate string to max length with ellipsis
-// fn truncate(s: &str, max_len: usize) -> String {
-//     if s.len() <= max_len {
-//         s.to_string()
-//     } else {
-//         format!("{}...", &s[..max_len.saturating_sub(3)])
-//     }
-// }

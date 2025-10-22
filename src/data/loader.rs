@@ -553,7 +553,6 @@ fn validate_descriptors(
                 .any(|w| w.name == *weapon_name)
             {
                 report.add_warning(format!(
-                    // ← CHANGED from add_error
                     "Descriptor '{}' references non-existent weapon: '{}'",
                     descriptor.name, weapon_name
                 ));
@@ -563,7 +562,6 @@ fn validate_descriptors(
         for armor_name in &descriptor.equipment.armor {
             if !data.equipment.armor.iter().any(|a| a.name == *armor_name) {
                 report.add_warning(format!(
-                    // ← CHANGED from add_error
                     "Descriptor '{}' references non-existent armor: '{}'",
                     descriptor.name, armor_name
                 ));
@@ -622,7 +620,6 @@ fn validate_foci(foci: &[Focus], data: &GameData, report: &mut ValidationReport)
 
             if !exists {
                 report.add_warning(format!(
-                    // ← CHANGED from add_error
                     "Focus '{}' references non-existent equipment: '{}'",
                     focus.name, equipment_name
                 ));

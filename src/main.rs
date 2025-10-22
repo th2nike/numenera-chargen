@@ -338,23 +338,6 @@ fn list_mode(game_data: &GameData, category: ListCategory) -> Result<()> {
     Ok(())
 }
 
-// fn validate_mode(game_data: &GameData) -> Result<()> {
-//     println!("{}", "Validating game data...".cyan());
-//     println!();
-
-//     validate_game_data(game_data)?;
-
-//     println!(
-//         "{}",
-//         "✓ All data files validated successfully!".green().bold()
-//     );
-//     println!();
-//     println!("{}", numenera_chargen::data::data_summary(game_data));
-//     println!();
-
-//     Ok(())
-// }
-
 fn info_mode() {
     println!("{}", numenera_chargen::app_info());
     println!();

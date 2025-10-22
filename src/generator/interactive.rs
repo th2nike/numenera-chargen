@@ -303,7 +303,7 @@ fn select_focus(game_data: &GameData, _character_type: &str) -> Result<String> {
 
         println!();
         let choice = prompt_choice(suitable_foci.len())?;
-        let selected = &suitable_foci[choice - 1]; // Added & here
+        let selected = &suitable_foci[choice - 1];
 
         println!("\n{} {}", "Selected:".green(), selected.name.bold());
 

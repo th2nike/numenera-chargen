@@ -230,7 +230,6 @@ impl App {
                 }
             }
             KeyCode::Char('3') => {
-                // ← ADD THIS
                 // Load character
                 self.load_character_list()?;
                 self.current_screen = Screen::CharacterLoader;
@@ -970,7 +969,7 @@ impl App {
             },
             KeyCode::End => {
                 match self.preview_panel_focus {
-                    PreviewPanel::Left => self.preview_left_scroll = 9999, // Will be clamped
+                    PreviewPanel::Left => self.preview_left_scroll = 9999,
                     PreviewPanel::Right => self.preview_right_scroll = 9999,
                 }
             }
@@ -1037,7 +1036,7 @@ impl App {
                 self.character_builder.move_down(total_cyphers);
             }
             KeyCode::Char(' ') => {
-                // Toggle selection - NOW WITH INSTANCES
+                // Toggle selection
                 let idx = self.character_builder.list_state;
 
                 // Check if already selected
@@ -1065,7 +1064,7 @@ impl App {
                 }
             }
             KeyCode::Char('r') | KeyCode::Char('R') => {
-                // Random selection - WITH INSTANCES
+                // Random selection
                 use rand::Rng;
                 let mut rng = rand::thread_rng();
                 self.character_builder.selected_cyphers.clear();
@@ -1165,7 +1164,7 @@ impl App {
 
     fn handle_oddity_select_keys(&mut self, key: KeyEvent) -> Result<()> {
         let total_oddities = self.game_data.oddities.len();
-        let required_oddities = 1; // ← Changed from max_oddities to required_oddities
+        let required_oddities = 1;
 
         match key.code {
             KeyCode::Up | KeyCode::Char('k') => {

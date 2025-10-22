@@ -1,7 +1,6 @@
 pub mod loader;
 pub mod models;
 
-// Re-export commonly used types for convenience
 pub use loader::{
     create_artifact_instance, create_cypher_instance, data_summary, find_descriptor, find_focus,
     find_species, find_type, get_armor_by_category, get_cyphers_by_category, get_suitable_foci,

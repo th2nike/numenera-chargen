@@ -4,7 +4,6 @@
 pub mod interactive;
 pub mod random;
 
-// Re-export commonly used functions
 pub use interactive::{display_preview, run as run_interactive};
 
 pub use random::{

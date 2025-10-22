@@ -168,7 +168,6 @@ pub fn generate_random_with_type(game_data: &GameData, type_name: &str) -> Resul
 
     // ========== ADD RANDOM STARTING EQUIPMENT ==========
     add_random_equipment(&mut rng, &mut character, game_data, type_name)?;
-    // ===================================================
 
     Ok(character)
 }
@@ -248,7 +247,6 @@ pub fn generate_random_with_type_and_descriptor(
 
     // ========== ADD RANDOM STARTING EQUIPMENT ==========
     add_random_equipment(&mut rng, &mut character, game_data, type_name)?;
-    // ===================================================
 
     Ok(character)
 }

@@ -284,7 +284,6 @@ fn render_right_panel(f: &mut Frame, area: Rect, app: &App) {
             Style::default().fg(Color::DarkGray),
         )));
     }
-    // =========================================
 
     let items_widget = Paragraph::new(display_lines)
         .block(
