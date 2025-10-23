@@ -2,7 +2,6 @@
 // Data models for all TOML files
 
 use serde::{Deserialize, Serialize};
-
 // ==========================================
 // CHARACTER TYPES (types.toml)
 // ==========================================

@@ -84,11 +84,25 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             continue;
         }
         if i >= descriptor_count {
-            break; // Safety check
+            break;
         }
 
         let is_selected = i == selected;
         lines.push(highlighted_item(&descriptor.name, is_selected));
+        
+        // Show stat modifiers if any
+        let stat_mod_text = format_stat_modifiers(
+            descriptor.stat_modifiers.might,
+            descriptor.stat_modifiers.speed,
+            descriptor.stat_modifiers.intellect,
+        );
+        if !stat_mod_text.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    {}", stat_mod_text),
+                Style::default().fg(Color::Cyan),
+            )));
+        }
+        
         lines.push(Line::from(Span::styled(
             format!("    {}", descriptor.tagline),
             Style::default().fg(Color::Gray),
@@ -171,4 +185,22 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     f.render_widget(block, area);
     f.render_widget(instructions, chunks[0]);
     f.render_widget(list, chunks[1]);
+}
+
+fn format_stat_modifiers(might: i32, speed: i32, intellect: i32) -> String {
+    let mut parts = Vec::new();
+    if might != 0 {
+        parts.push(format!("Might {:+}", might));
+    }
+    if speed != 0 {
+        parts.push(format!("Speed {:+}", speed));
+    }
+    if intellect != 0 {
+        parts.push(format!("Intellect {:+}", intellect));
+    }
+    if parts.is_empty() {
+        String::new()
+    } else {
+        format!("[{}]", parts.join(", "))
+    }
 }

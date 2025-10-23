@@ -87,6 +87,22 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
 
         let is_selected = i == selected;
         lines.push(highlighted_item(&focus.name, is_selected));
+        
+        // Show stat modifiers if any
+        if let Some(stat_mods) = &focus.stat_modifiers {
+            let stat_mod_text = format_stat_modifiers(
+                stat_mods.might,
+                stat_mods.speed,
+                stat_mods.intellect,
+            );
+            if !stat_mod_text.is_empty() {
+                lines.push(Line::from(Span::styled(
+                    format!("    {}", stat_mod_text),
+                    Style::default().fg(Color::Magenta),
+                )));
+            }
+        }
+        
         lines.push(Line::from(Span::styled(
             format!("    {}", focus.theme),
             Style::default().fg(Color::Gray),
@@ -120,4 +136,22 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     f.render_widget(block, area);
     f.render_widget(instruction_text, chunks[0]);
     f.render_widget(list, chunks[1]);
+}
+
+fn format_stat_modifiers(might: i32, speed: i32, intellect: i32) -> String {
+    let mut parts = Vec::new();
+    if might != 0 {
+        parts.push(format!("Might {:+}", might));
+    }
+    if speed != 0 {
+        parts.push(format!("Speed {:+}", speed));
+    }
+    if intellect != 0 {
+        parts.push(format!("Intellect {:+}", intellect));
+    }
+    if parts.is_empty() {
+        String::new()
+    } else {
+        format!("[{}]", parts.join(", "))
+    }
 }

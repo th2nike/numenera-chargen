@@ -1,0 +1,117 @@
+{
+  "name": "Anja",
+  "gender": "Female",
+  "tier": 1,
+  "character_type": "Nano",
+  "descriptor": "Charming",
+  "species": null,
+  "focus": "Commands Mental Powers",
+  "pools": {
+    "current": {
+      "might": 8,
+      "speed": 10,
+      "intellect": 18
+    },
+    "maximum": {
+      "might": 8,
+      "speed": 10,
+      "intellect": 18
+    }
+  },
+  "edge": {
+    "might": 0,
+    "speed": 0,
+    "intellect": 1
+  },
+  "effort": {
+    "max_effort": 1
+  },
+  "armor": 0,
+  "damage_track": "Hale",
+  "skills": {
+    "trained": [
+      "Understanding numenera",
+      "Positive social interaction",
+      "Mental-influence abilities"
+    ],
+    "specialized": [],
+    "inabilities": [
+      "Lore/knowledge tasks",
+      "Resisting mental attacks",
+      "Intimidation"
+    ]
+  },
+  "special_abilities": [
+    "Expert Cypher Use: Can carry 3 cyphers instead of 2",
+    "Contact: Important ally (noble, guard captain, Aeon Priest, gang leader)"
+  ],
+  "type_abilities": [
+    "Onslaught",
+    "Scan"
+  ],
+  "focus_ability": "Telepathic (, Action): Two-way mental speech within short range (10 min; Effort may extend to 28 h).",
+  "equipment": {
+    "weapons": [
+      "Knife (2 damage)"
+    ],
+    "armor": "",
+    "shield": null,
+    "gear": [
+      "Numenera book",
+      "A crystal or jewel artifact worn on your forehead (+1 Intellect Pool; –5 if lost)."
+    ],
+    "shins": 14
+  },
+  "cypher_limit": 3,
+  "cyphers": [
+    {
+      "name": "Blinking Nodule",
+      "level": 3,
+      "cypher_type": "Wearable",
+      "effect": "Each time the user takes damage, they instantly teleport to a random point within short range.\n",
+      "form": "Tiny node embedded beneath the skin, pulsing with violet light.",
+      "duration": "Instant"
+    },
+    {
+      "name": "Controlled Blinking Nodule",
+      "level": 3,
+      "cypher_type": "Wearable",
+      "effect": "When damaged, the user may choose to instantly teleport to any visible spot within short range instead of at random.\n",
+      "form": "Smooth silver stud or dermal implant engraved with control runes.",
+      "duration": "Instant"
+    },
+    {
+      "name": "Detonation (General Template)",
+      "level": 3,
+      "cypher_type": "Usable (thrown or placed)",
+      "effect": "When activated (usually by a button or impact), it creates a burst affecting a short-range area for **damage = cypher level** unless noted. \nTargets in the area make Speed Defense rolls.\n",
+      "form": "Metal spheres, crystalline pods, or syringes that shatter on impact.",
+      "duration": "Instant"
+    }
+  ],
+  "artifacts": [],
+  "oddities": [
+    {
+      "id": "drinking_glasses_that_change_color_with_contents",
+      "name": "Drinking glasses that change color with contents",
+      "category": "Curiosity",
+      "theme": "Random oddity",
+      "value_shins": 10,
+      "tags": [
+        "discovery",
+        "random"
+      ],
+      "source": "Discovery",
+      "description": "An oddity from the d100 table.\n",
+      "table_number": 100
+    }
+  ],
+  "background": {
+    "connection_to_party": "",
+    "descriptor_link": "You charmed or recruited one of the PCs",
+    "focus_link": "One PC is attuned to your mind; constant telepathy within short range.",
+    "notes": []
+  },
+  "xp": 0,
+  "advances": []
+}
