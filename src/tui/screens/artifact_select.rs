@@ -94,7 +94,7 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             Style::default().fg(Color::Gray),
         )));
         lines.push(Line::from(Span::styled(
-            format!("    {}", truncate(&artifact.effect, 70)),
+            format!("    {}", artifact.effect),
             Style::default().fg(Color::DarkGray),
         )));
         lines.push(Line::from(""));
@@ -138,12 +138,4 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     f.render_widget(instructions_widget, chunks[0]);
     f.render_widget(list, chunks[1]);
     f.render_widget(summary, chunks[2]);
-}
-
-fn truncate(s: &str, max_len: usize) -> String {
-    if s.len() <= max_len {
-        s.to_string()
-    } else {
-        format!("{}...", &s[..max_len - 3])
-    }
 }

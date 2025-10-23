@@ -36,13 +36,13 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let descriptor_count = app.game_data.descriptors.len();
     let total_count = descriptor_count + app.game_data.species.len();
 
-    // Calculate visible range - account for headers (each takes 2 lines) and items (3 lines each)
+    // Calculate visible range - account for headers (each takes 2 lines) and items (now ~7 lines each)
     // Available height for content
     let available_height = chunks[1].height.saturating_sub(4) as usize; // Leave space for scroll indicators
 
-    // Each item takes 3 lines (name, tagline, blank), headers take 2 lines each
-    let items_per_screen = available_height / 3;
-    let visible_items = items_per_screen.max(5); // Minimum 5 items visible
+    // Each item now takes more lines (name, tagline, stats, skills, abilities, blank)
+    let items_per_screen = available_height / 7;
+    let visible_items = items_per_screen.max(3); // Minimum 3 items visible
 
     // Smart scrolling: keep selected item in middle third of screen
     let scroll_offset = if selected < visible_items / 3 {
@@ -90,6 +90,12 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         let is_selected = i == selected;
         lines.push(highlighted_item(&descriptor.name, is_selected));
         
+        // Tagline
+        lines.push(Line::from(Span::styled(
+            format!("    {}", descriptor.tagline),
+            Style::default().fg(Color::Gray),
+        )));
+        
         // Show stat modifiers if any
         let stat_mod_text = format_stat_modifiers(
             descriptor.stat_modifiers.might,
@@ -103,10 +109,42 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             )));
         }
         
-        lines.push(Line::from(Span::styled(
-            format!("    {}", descriptor.tagline),
-            Style::default().fg(Color::Gray),
-        )));
+        // Show trained skills
+        if !descriptor.skills.trained.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    Trained: {}", descriptor.skills.trained.join(", ")),
+                Style::default().fg(Color::Green),
+            )));
+        }
+        
+        // Show specialized skills
+        if !descriptor.skills.specialized.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    Specialized: {}", descriptor.skills.specialized.join(", ")),
+                Style::default().fg(Color::LightGreen),
+            )));
+        }
+        
+        // Show inabilities (hindered)
+        if !descriptor.skills.inabilities.hindered.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    Hindered: {}", descriptor.skills.inabilities.hindered.join(", ")),
+                Style::default().fg(Color::Red),
+            )));
+        }
+        
+        // Show special abilities
+        if !descriptor.special_abilities.is_empty() {
+            let ability_names: Vec<_> = descriptor.special_abilities
+                .iter()
+                .map(|a| a.name.as_str())
+                .collect();
+            lines.push(Line::from(Span::styled(
+                format!("    Special: {}", ability_names.join(", ")),
+                Style::default().fg(Color::Magenta),
+            )));
+        }
+        
         lines.push(Line::from(""));
     }
 
@@ -166,6 +204,44 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             format!("    {}", species.tagline),
             Style::default().fg(Color::Gray),
         )));
+        
+        // Show stat modifiers for species
+        let stat_mod_text = format_stat_modifiers(
+            species.stat_modifiers.might,
+            species.stat_modifiers.speed,
+            species.stat_modifiers.intellect,
+        );
+        if !stat_mod_text.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    {}", stat_mod_text),
+                Style::default().fg(Color::Yellow),
+            )));
+        }
+        
+        // Show trained skills
+        if !species.skills.trained.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    Trained: {}", species.skills.trained.join(", ")),
+                Style::default().fg(Color::Green),
+            )));
+        }
+        
+        // Show specialized skills
+        if !species.skills.specialized.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    Specialized: {}", species.skills.specialized.join(", ")),
+                Style::default().fg(Color::LightGreen),
+            )));
+        }
+        
+        // Show hindered skills
+        if !species.skills.hindered.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("    Hindered: {}", species.skills.hindered.join(", ")),
+                Style::default().fg(Color::Red),
+            )));
+        }
+        
         lines.push(Line::from(""));
     }
 

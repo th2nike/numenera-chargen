@@ -12,7 +12,7 @@ use ratatui::{
 use crate::tui::{app::App, ui::centered_block};
 
 pub fn render(f: &mut Frame, area: Rect, app: &App) {
-    let block = centered_block("Step 6: Select Type Abilities");
+    let block = centered_block("Step 5: Select Type Abilities");
 
     let chunks = Layout::default()
         .direction(Direction::Vertical)
@@ -37,17 +37,20 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         let required = tier_abilities.count as usize;
         let selected_count = app.character_builder.selected_abilities.len();
 
-        // Instructions
+        // Instructions with dynamic status
+        let status_text = if selected_count == required {
+            format!("✓ Ready to continue - {} abilities selected", required)
+        } else {
+            format!("Select {} abilities (currently: {})", required, selected_count)
+        };
+        
         let instructions = vec![
             Line::from(Span::styled(
-                format!(
-                    "Select {} abilities from your type's Tier 1 options",
-                    required
-                ),
+                format!("Choose {} Tier 1 abilities for your type", required),
                 Style::default().fg(Color::Gray),
             )),
             Line::from(Span::styled(
-                format!("Selected: {}/{}", selected_count, required),
+                status_text,
                 if selected_count == required {
                     Style::default()
                         .fg(Color::Green)
@@ -65,8 +68,8 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         let current_index = app.character_builder.list_state;
         let total_abilities = tier_abilities.abilities.len();
 
-        // Calculate visible range
-        let visible_items = (chunks[1].height as usize / 4).max(3); // Each ability takes ~4 lines
+        // Calculate visible range - each ability takes ~5 lines
+        let visible_items = (chunks[1].height as usize / 5).max(2);
         let scroll_offset = if current_index > visible_items / 2 {
             (current_index - visible_items / 2).min(total_abilities.saturating_sub(visible_items))
         } else {
@@ -94,7 +97,9 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             let indicator = if is_selected { "> " } else { "  " };
 
             let checkbox_style = if is_checked {
-                Style::default().fg(Color::Green)
+                Style::default()
+                    .fg(Color::Green)
+                    .add_modifier(Modifier::BOLD)
             } else {
                 Style::default().fg(Color::DarkGray)
             };
@@ -104,20 +109,30 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
                     .fg(Color::Yellow)
                     .add_modifier(Modifier::BOLD)
             } else if is_checked {
-                Style::default().fg(Color::Green)
+                Style::default()
+                    .fg(Color::Green)
+                    .add_modifier(Modifier::BOLD)
             } else {
                 Style::default().fg(Color::White)
             };
 
-            // Ability line
+            // Ability name line with cost
+            let cost_display = if ability.cost.is_empty() {
+                String::new()
+            } else {
+                format!(" ({})", ability.cost)
+            };
+            
             lines.push(Line::from(vec![
                 Span::raw(indicator),
                 Span::styled(checkbox, checkbox_style),
                 Span::raw(" "),
                 Span::styled(&ability.name, name_style),
+                Span::styled(cost_display, Style::default().fg(Color::Cyan)),
+                Span::raw(" - "),
                 Span::styled(
-                    format!(" ({})", ability.cost),
-                    Style::default().fg(Color::Cyan),
+                    &ability.ability_type,
+                    Style::default().fg(Color::Magenta),
                 ),
             ]));
 
@@ -125,12 +140,6 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             lines.push(Line::from(Span::styled(
                 format!("    {}", ability.description),
                 Style::default().fg(Color::Gray),
-            )));
-
-            // Type
-            lines.push(Line::from(Span::styled(
-                format!("    Type: {}", ability.ability_type),
-                Style::default().fg(Color::DarkGray),
             )));
 
             lines.push(Line::from(""));
@@ -142,14 +151,18 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
                 1,
                 Line::from(Span::styled(
                     "↑ More above ↑",
-                    Style::default().fg(Color::DarkGray),
+                    Style::default()
+                        .fg(Color::DarkGray)
+                        .add_modifier(Modifier::BOLD),
                 )),
             );
         }
         if scroll_offset + visible_items < total_abilities {
             lines.push(Line::from(Span::styled(
                 "↓ More below ↓",
-                Style::default().fg(Color::DarkGray),
+                Style::default()
+                    .fg(Color::DarkGray)
+                    .add_modifier(Modifier::BOLD),
             )));
         }
 

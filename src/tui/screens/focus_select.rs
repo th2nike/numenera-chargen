@@ -3,7 +3,7 @@
 
 use ratatui::{
     layout::{Alignment, Constraint, Direction, Layout, Rect},
-    style::{Color, Style},
+    style::{Color, Modifier, Style},
     text::{Line, Span},
     widgets::Paragraph,
     Frame,
@@ -68,8 +68,8 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
     let selected = app.character_builder.list_state;
     let total_count = suitable_foci.len();
 
-    // Calculate visible range
-    let visible_items = (chunks[1].height as usize / 4).max(3);
+    // Each item now takes ~8 lines (name, theme, stat mods, source, ability name, cost/type, description, blank)
+    let visible_items = (chunks[1].height as usize / 8).max(2);
     let scroll_offset = if selected > visible_items / 2 {
         (selected - visible_items / 2).min(total_count.saturating_sub(visible_items))
     } else {
@@ -86,7 +86,15 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
         }
 
         let is_selected = i == selected;
+        
+        // Focus name
         lines.push(highlighted_item(&focus.name, is_selected));
+        
+        // Theme
+        lines.push(Line::from(Span::styled(
+            format!("    {}", focus.theme),
+            Style::default().fg(Color::Gray),
+        )));
         
         // Show stat modifiers if any
         if let Some(stat_mods) = &focus.stat_modifiers {
@@ -103,14 +111,57 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             }
         }
         
-        lines.push(Line::from(Span::styled(
-            format!("    {}", focus.theme),
-            Style::default().fg(Color::Gray),
-        )));
+        // Source
         lines.push(Line::from(Span::styled(
             format!("    Source: {}", focus.source),
             Style::default().fg(Color::DarkGray),
         )));
+        
+        // Tier 1 Ability header
+        lines.push(Line::from(Span::styled(
+            "    Tier 1 Ability:",
+            Style::default()
+                .fg(Color::Cyan)
+                .add_modifier(Modifier::BOLD),
+        )));
+        
+        // Ability name with cost and type
+        let ability = &focus.tier_1_ability;
+        let cost_str = if ability.cost.is_empty() {
+            String::new()
+        } else {
+            format!(" ({})", ability.cost)
+        };
+        
+        lines.push(Line::from(vec![
+            Span::raw("      "),
+            Span::styled(
+                format!("{}{}", ability.name, cost_str),
+                Style::default()
+                    .fg(Color::Yellow)
+                    .add_modifier(Modifier::BOLD),
+            ),
+            Span::raw(" - "),
+            Span::styled(
+                &ability.ability_type,
+                Style::default().fg(Color::Cyan),
+            ),
+        ]));
+        
+        // Ability description (truncate if too long)
+        let desc = if ability.description.len() > 100 {
+            format!("{}...", &ability.description[..97])
+        } else {
+            ability.description.clone()
+        };
+        
+        if !desc.is_empty() {
+            lines.push(Line::from(Span::styled(
+                format!("      {}", desc),
+                Style::default().fg(Color::White),
+            )));
+        }
+        
         lines.push(Line::from(""));
     }
 
@@ -120,14 +171,18 @@ pub fn render(f: &mut Frame, area: Rect, app: &App) {
             1,
             Line::from(Span::styled(
                 "↑ More above ↑",
-                Style::default().fg(Color::DarkGray),
+                Style::default()
+                    .fg(Color::DarkGray)
+                    .add_modifier(Modifier::BOLD),
             )),
         );
     }
     if scroll_offset + visible_items < total_count {
         lines.push(Line::from(Span::styled(
             "↓ More below ↓",
-            Style::default().fg(Color::DarkGray),
+            Style::default()
+                .fg(Color::DarkGray)
+                .add_modifier(Modifier::BOLD),
         )));
     }
 
